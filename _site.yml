@@ -6,6 +6,7 @@ navbar:
       icon: fa-home
       href: index.html
     - text: "About"
+      icon: ion-person
       href: about.html
     - text: "Resources"
       href: resources.html
@@ -21,6 +22,16 @@ navbar:
           href: QIIME2-DiversityPhylogeny.html
         - text: "Taxonomy"
           href: QIIME2-Taxonomy.html
+    - text: "R analysis"
+      menu:
+        - text: "Phyloseq Intro"
+          href: R-PhyloseqIntro.html
+        - text: "Alpha Diversity & Seq depth"
+          href: R-AlphaDiversity.html
+        - text: "Microbial Composition"
+          href: R-MicrobialComposition.html
+        - text: "Beta Diversity and PCoA"
+          href: R-BetaPCoA.html          
 output:
   html_document:
     theme: cosmo

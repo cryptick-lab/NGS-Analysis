@@ -40,6 +40,9 @@ Popular sites include:
 
 This pipeline makes use of USEARCH and QIIME2 for analysis and taxonomy assignment of next generation sequencing data - however there are a number of different programs and options available.
 
+* [Introduction to R for Genomics](http://www.datacarpentry.org/R-genomics/01-intro-to-R.html) - the module on cloud computing may not be applicable to many
+* [RNAseq analysis](https://bioinformatics-core-shared-training.github.io/RNAseq-R/) - a link to similar content of RNAseq by combine Australia is also available [here](http://combine-australia.github.io/RNAseq-R/) 
+
 ## Microbial analysis
 
 Some good tutorials available for microbial analysis - of which we make use of here are available for you to browse and pick what you like.
@@ -47,3 +50,18 @@ There can be alot of overlap in these so its up to you to see what works for you
 
 
 ## R information
+
+In addition to the above resources some additional R ones include:
+
+* [Swirl](http://swirlstats.com/) is a great interactive tutorials that run directly in R. Useful for statistical analysis and basic functions.
+* [R Tutorial](http://www.r-tutor.com/r-introduction) offers here a couple of introductory tutorials on basic R concepts.
+* [Code School](http://tryr.codeschool.com/) provides some more tutorials on basic R syntax and basics.
+* [Quick-R](https://www.statmethods.net/r-tutorial/index.html) is great for tutorials on statistical analysis.
+
+**R Cheat Sheets**
+There are a number of cheatsheets and other reference documenation available for R.
+
+* A link to the offical R cheat sheets is [here](https://www.rstudio.com/resources/cheatsheets/).
+* Other useful cheatsheets by DataCamp are available [here](https://www.datacamp.com/community/data-science-cheatsheets).
+* Links to other useful resources availbale [here](http://www.datasciencefree.com/cheatsheets.html), [here](https://r-dir.com/reference/crib-sheets.html), [here](https://www.analyticsvidhya.com/blog/2017/02/top-28-cheat-sheets-for-machine-learning-data-science-probability-sql-big-data/) and [here](https://sites.google.com/site/rdatamining/docs/R-refcard-data-mining.pdf?attredirects=0)
+
