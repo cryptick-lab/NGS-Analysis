@@ -22,7 +22,7 @@ This analysis is for paired-end reads
 
 I strongly suggest you take a small sub-set of your data though the pipeline outlined below step-by-step first to get an understanding of what each command is doing. Importantly it will also allow to explore the influence of the different variables on your dataset.
 
-Once you are happy with the parameters and that the script is working you can use the full script to analyse all your samples.
+Once you are happy with the parameters and that the script is working you can use the full script to analyse all your samples - available at this github [link](https://github.com/cryptick-lab/NGS-Analysis/blob/master/NGS-16S-usearch.sh)
 
 Simply edit the script with your parameters, and save it in a directory with your raw fastq files.
 
