@@ -1,0 +1,132 @@
+---
+title: "Data Import and Preliminary Analysis"
+---
+
+This workflow follows documentation from QIIME2 documents on [data import](https://docs.qiime2.org/2017.12/tutorials/importing/). 
+
+**16S amplicon NGS analysis**
+This notebook continues on from the notebook on native installation of QIIME2 and the USEARCH pipeline.
+
+**Assumptions**
+* Using a macOS environment
+* Installed QIIME2 following their [native installation guide](https://docs.qiime2.org/2017.12/install/native/)
+* Worked through the USEARCH Pipeline as outlined [INSERT LINK HERE]
+
+**What you will need**
+
+* `biom` file: this is generated from the UNOISE algothrim in the USEARCH pipeline. At present the UNOISE pipeline generates a v1 format, however it is worth checking this is still the case on the USEARCH webpage before proceding further. See here for more information on the `biom` format.
+* `sequences` file: Unaligned sequence data is imported from a fasta formatted file containing DNA sequences that are not aligned (i.e., do not contain - or . characters). The sequences may contain degenerate nucleotide characters, such as N, but some QIIME2 actions may not support these characters. See the scikit-bio fasta format description for more information about the fasta format. From the USEARCH pipeline this will be the clustered (UNOISE or UPARSE) output fasta file
+
+***
+
+### 1. BIOMV1.0.0 and Feature Table
+
+##### (a) Import BIOM file
+
+```{python eval=FALSE}
+qiime tools import \
+--input-path unoise_otu_biom.biom \
+--type 'FeatureTable[Frequency]' \
+--source-format BIOMV100Format \
+--output-path feature-table-1.qza
+```
+
+<div class="alert alert-info">
+**Note** The input-path will dependend on where your biom file is located and what it is called. In this example the biom file is called `unoise_otu_biom` and is located in the current working directory.</div>
+
+**Output artifacts:**
+```{python eval=FALSE}
+feature-table-1.qza
+```
+<div class="alert alert-danger">
+**Issues with biom file**
+There are currently issues with the UNOISE3 output of the biom file. If you are having issues with importing your biom file into QIIME try the following. All you will need is your otu_table.txt file from your clustering output (in this workflow it will be from usearch). Try the following:
+
+This needs to be in the qiime environment, unless you have the biom package installed locally. 
+Navigate to the final unoise file /7.unoise_all (it should have the file unoise_otu_tab.txt) and execute the following:
+```{python eval=FALSE}
+biom convert -i unoise_otu_tab.txt -o table.from_txt_json.biom --table-type="OTU table" --to-json
+```
+
+Now in the QIIME environment, navigate to the relevent excute the following:
+```{python eval=FALSE}
+qiime tools import \
+--input-path table.from_txt_json.biom \
+--type 'FeatureTable[Frequency]' \
+--source-format BIOMV100Format \
+--output-path feature-table-1.qza
+```
+</div>
+
+##### (b) Import per-feature unaligned sequence data (i.e., representative sequences)
+
+```{python eval=FALSE}
+qiime tools import \
+--input-path unoise_zotus_relabeled.fasta \
+--output-path sequences.qza \
+--type 'FeatureData[Sequence]'
+```
+
+<div class="alert alert-info">
+**Note** The input-path will dependend on where your sequences file is located and what it is called. In this example the sequences file is called `sequences`, with the file extension `.fna` and is located in the current directory.</div>
+
+**Output artifacts:**
+```{python eval=FALSE}
+sequences.qza
+```
+
+<div class="alert alert-info">
+**Note** The file format for the input path is written as `.fna`. This format is the `fasta format` - and is synonymous with the file formats `.fa` and `.fasta`. - but **NOT** the same as `.fq` or `.fastq`.</div>
+
+***
+
+### 2. Create Feature Table and Feature Data Summaries
+Once the BIOM file and sequences have been import then the feature table and data summaries can be generated
+
+**Requirements**
+
+* Feature table - called `feature-table-1.qza`
+* Sequences called `sequences.qza`
+* Metadata called `metadata.tsv` - it is essential that the metadata is in the correct format, see below for more info
+
+##### (a) Create Feature Table Summary
+
+```{python eval=FALSE}
+qiime feature-table summarize \
+--i-table feature-table-1.qza \
+--o-visualization table.qzv \
+--m-sample-metadata-file metadata.tsv
+```
+
+**Output artifacts:**
+```{python eval=FALSE}
+table.qzv
+```
+<div class="alert alert-danger">
+**Error messages while creating Feature Table?**
+If you are having trouble with the above code it is most likely there is an issue with your metadata and/or your sequences matching your metadata. To check this is the case you can run the above script without the last line adding in your metadata:
+```{python eval=FALSE}
+qiime feature-table summarize \
+--i-table feature-table-1.qza \
+--o-visualization table.qzv 
+```
+
+**Output visualization:**
+```{python eval=FALSE}
+table.qzv
+```
+Go to the second tab interactive sample detail and check the name of the samples matches what is in your metadata. If you are still having issues see QIIME documenation of metadata available [here](https://docs.qiime2.org/2017.12/tutorials/metadata/).</div>
+
+##### (b) Create Feature Table Sequences
+```{python eval=FALSE}
+qiime feature-table tabulate-seqs \
+--i-data sequences.qza \
+--o-visualization sequences.qzv
+```
+**Output visualization:**
+```{python eval=FALSE}
+sequences.qzv
+```
+
+### What next?
+From here you can move into diversity analysis or taxonomic assignment.

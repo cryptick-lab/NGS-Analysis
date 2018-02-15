@@ -3,6 +3,7 @@ navbar:
   title: "My Website"
   left:
     - text: "Home"
+      icon: fa-home
       href: index.html
     - text: "About"
       href: about.html
@@ -10,6 +11,14 @@ navbar:
       href: resources.html
     - text: "USEARCH Analysis"
       href: usearch-analysis.html
+    - text: "QIIME2"
+      menu:
+        - text: "Install"
+          href: QIIME2-NativeInstall.html
+        - text: "Data Import"
+          href: QIIME2-DataImport.html
+        - text: "Diversity and phylogeny"
+          href: QIIME2-DiversityPhylogeny.html
 output:
   html_document:
     theme: cosmo

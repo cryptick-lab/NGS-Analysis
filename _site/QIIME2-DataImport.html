@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Data Import and Preliminary Analysis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="resources.html">Resources</a>
+</li>
+<li>
+  <a href="usearch-analysis.html">USEARCH Analysis</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    QIIME2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="QIIME2-NativeInstall.html">Install</a>
+    </li>
+    <li>
+      <a href="QIIME2-DataImport.html">Data Import</a>
+    </li>
+    <li>
+      <a href="QIIME2-DiversityPhylogeny.html">Diversity and phylogeny</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Data Import and Preliminary Analysis</h1>
+
+</div>
+
+
+<p>This workflow follows documentation from QIIME2 documents on <a href="https://docs.qiime2.org/2017.12/tutorials/importing/">data import</a>.</p>
+<p><strong>16S amplicon NGS analysis</strong> This notebook continues on from the notebook on native installation of QIIME2 and the USEARCH pipeline.</p>
+<p><strong>Assumptions</strong> * Using a macOS environment * Installed QIIME2 following their <a href="https://docs.qiime2.org/2017.12/install/native/">native installation guide</a> * Worked through the USEARCH Pipeline as outlined [INSERT LINK HERE]</p>
+<p><strong>What you will need</strong></p>
+<ul>
+<li><code>biom</code> file: this is generated from the UNOISE algothrim in the USEARCH pipeline. At present the UNOISE pipeline generates a v1 format, however it is worth checking this is still the case on the USEARCH webpage before proceding further. See here for more information on the <code>biom</code> format.</li>
+<li><code>sequences</code> file: Unaligned sequence data is imported from a fasta formatted file containing DNA sequences that are not aligned (i.e., do not contain - or . characters). The sequences may contain degenerate nucleotide characters, such as N, but some QIIME2 actions may not support these characters. See the scikit-bio fasta format description for more information about the fasta format. From the USEARCH pipeline this will be the clustered (UNOISE or UPARSE) output fasta file</li>
+</ul>
+<hr />
+<div id="biomv1.0.0-and-feature-table" class="section level3">
+<h3>1. BIOMV1.0.0 and Feature Table</h3>
+<div id="a-import-biom-file" class="section level5">
+<h5>(a) Import BIOM file</h5>
+<pre class="python"><code>qiime tools import \
+--input-path unoise_otu_biom.biom \
+--type &#39;FeatureTable[Frequency]&#39; \
+--source-format BIOMV100Format \
+--output-path feature-table-1.qza</code></pre>
+<div class="alert alert-info">
+<strong>Note</strong> The input-path will dependend on where your biom file is located and what it is called. In this example the biom file is called <code>unoise_otu_biom</code> and is located in the current working directory.
+</div>
+<p><strong>Output artifacts:</strong></p>
+<pre class="python"><code>feature-table-1.qza</code></pre>
+<div class="alert alert-danger">
+<p><strong>Issues with biom file</strong> There are currently issues with the UNOISE3 output of the biom file. If you are having issues with importing your biom file into QIIME try the following. All you will need is your otu_table.txt file from your clustering output (in this workflow it will be from usearch). Try the following:</p>
+<p>This needs to be in the qiime environment, unless you have the biom package installed locally. Navigate to the final unoise file /7.unoise_all (it should have the file unoise_otu_tab.txt) and execute the following:</p>
+<pre class="python"><code>biom convert -i unoise_otu_tab.txt -o table.from_txt_json.biom --table-type=&quot;OTU table&quot; --to-json</code></pre>
+<p>Now in the QIIME environment, navigate to the relevent excute the following:</p>
+<pre class="python"><code>qiime tools import \
+--input-path table.from_txt_json.biom \
+--type &#39;FeatureTable[Frequency]&#39; \
+--source-format BIOMV100Format \
+--output-path feature-table-1.qza</code></pre>
+</div>
+</div>
+<div id="b-import-per-feature-unaligned-sequence-data-i.e.-representative-sequences" class="section level5">
+<h5>(b) Import per-feature unaligned sequence data (i.e., representative sequences)</h5>
+<pre class="python"><code>qiime tools import \
+--input-path unoise_zotus_relabeled.fasta \
+--output-path sequences.qza \
+--type &#39;FeatureData[Sequence]&#39;</code></pre>
+<div class="alert alert-info">
+<strong>Note</strong> The input-path will dependend on where your sequences file is located and what it is called. In this example the sequences file is called <code>sequences</code>, with the file extension <code>.fna</code> and is located in the current directory.
+</div>
+<p><strong>Output artifacts:</strong></p>
+<pre class="python"><code>sequences.qza</code></pre>
+<div class="alert alert-info">
+<strong>Note</strong> The file format for the input path is written as <code>.fna</code>. This format is the <code>fasta format</code> - and is synonymous with the file formats <code>.fa</code> and <code>.fasta</code>. - but <strong>NOT</strong> the same as <code>.fq</code> or <code>.fastq</code>.
+</div>
+<hr />
+</div>
+</div>
+<div id="create-feature-table-and-feature-data-summaries" class="section level3">
+<h3>2. Create Feature Table and Feature Data Summaries</h3>
+<p>Once the BIOM file and sequences have been import then the feature table and data summaries can be generated</p>
+<p><strong>Requirements</strong></p>
+<ul>
+<li>Feature table - called <code>feature-table-1.qza</code></li>
+<li>Sequences called <code>sequences.qza</code></li>
+<li>Metadata called <code>metadata.tsv</code> - it is essential that the metadata is in the correct format, see below for more info</li>
+</ul>
+<div id="a-create-feature-table-summary" class="section level5">
+<h5>(a) Create Feature Table Summary</h5>
+<pre class="python"><code>qiime feature-table summarize \
+--i-table feature-table-1.qza \
+--o-visualization table.qzv \
+--m-sample-metadata-file metadata.tsv</code></pre>
+<p><strong>Output artifacts:</strong></p>
+<pre class="python"><code>table.qzv</code></pre>
+<div class="alert alert-danger">
+<p><strong>Error messages while creating Feature Table?</strong> If you are having trouble with the above code it is most likely there is an issue with your metadata and/or your sequences matching your metadata. To check this is the case you can run the above script without the last line adding in your metadata:</p>
+<pre class="python"><code>qiime feature-table summarize \
+--i-table feature-table-1.qza \
+--o-visualization table.qzv </code></pre>
+<p><strong>Output visualization:</strong></p>
+<pre class="python"><code>table.qzv</code></pre>
+Go to the second tab interactive sample detail and check the name of the samples matches what is in your metadata. If you are still having issues see QIIME documenation of metadata available <a href="https://docs.qiime2.org/2017.12/tutorials/metadata/">here</a>.
+</div>
+</div>
+<div id="b-create-feature-table-sequences" class="section level5">
+<h5>(b) Create Feature Table Sequences</h5>
+<pre class="python"><code>qiime feature-table tabulate-seqs \
+--i-data sequences.qza \
+--o-visualization sequences.qzv</code></pre>
+<p><strong>Output visualization:</strong></p>
+<pre class="python"><code>sequences.qzv</code></pre>
+</div>
+</div>
+<div id="what-next" class="section level3">
+<h3>What next?</h3>
+<p>From here you can move into diversity analysis or taxonomic assignment.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

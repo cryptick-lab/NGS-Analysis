@@ -34,6 +34,8 @@ chmod +x this_script.sh
 ./this_script.sh > 16S-NGS-usearch-output.txt
 ```
 
+***
+
 ### Fastq info
 
 
@@ -555,7 +557,7 @@ $usearch -fastx_relabel unoise_zotus.fasta -prefix Otu -fastaout unoise_zotus_re
 
 $usearch -otutab all_samples_SF_DR.fasta -zotus unoise_zotus_relabelled.fasta -otutabout unoise_otu_tab.txt -biomout unoise_otu_biom.biom -mapout unoise_map.txt -notmatched unoise_notmatched.fasta -dbmatched dbmatches.fasta -sizeout
 
-$usearch -cluster_agg unoise_zotus_relabelled.fasta -treeout unoise_zotusb.tree -clusterout clusters.txt -id 0.80 -linkage min
+$usearch -cluster_agg unoise_zotus_relabelled.fasta -treeout unoise_zotus.tree -clusterout clusters.txt -id 0.80 -linkage min
 
 cd ..
 cd ..

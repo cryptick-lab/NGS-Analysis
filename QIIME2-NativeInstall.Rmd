@@ -1,0 +1,101 @@
+---
+title: "Native Install"
+---
+
+
+[QIIME2 homepage](https://qiime2.org/)
+
+[QIIME2 native installation](https://docs.qiime2.org/2017.12/install/native/)
+
+QIIME2 can now be installed natively on a MacOS environment or Linux environment (if using windows you will need to use virtual box).
+
+This workbook will assume you have a MacOS environment.
+
+*QIIME2 is rapidly evolving - while we will endeavour to ensure this workbook is up to date we recommend you consult the offical QIIME2 documenation and related forums for any issues*
+
+***
+### Native installation
+
+**Step One - Conda environment**
+
+You need to have a conda environment for QIIME2 to run. This can be in the form of Miniconda (as is recommended by QIIME developers. However, can also be in the form of conda, or if you are using this notebook in an Anaconda environment you have already installed conda *(YAY!)*. Assuming you are working within an Anaconda environment we will now proceed with the assumption you have a conda environment installed.
+
+Open a new Bash terminal and execute the following
+This will update your conda environment and also install the wget plug to be able to easily install packages
+```{bash eval=FALSE}
+conda update conda
+conda install wget
+```
+
+**Step Two - Install QIIME2**
+You will then need to install QIIME2. The developers recommend you do this in a new environment.
+
+From the Bash window execute the following
+```{bash eval=FALSE}
+wget https://data.qiime2.org/distro/core/qiime2-2017.12-py35-osx-conda.yml
+conda env create -n qiime2-2017.12 --file qiime2-2017.12-py35-osx-conda.yml
+
+# OPTIONAL CLEANUP
+rm qiime2-2017.12-py35-osx-conda.yml
+```
+
+**Step three - Activate QIIME2 environment**
+Activate the QIIME2 environment. This needs to be done everytime you want to "open" QIIME2
+```{bash eval=FALSE}
+source activate qiime2-2017.12
+```
+
+To check that it has been installed correctly
+```{bash eval=FALSE}
+qiime --help
+```
+
+***
+
+### Basic usage
+Run qiime to see a list of available subcommands:
+```{python eval=FALSE}
+qiime
+```
+
+There will be several subcommands listed, including plugin commands (e.g. `feature-table`, `diversity`) and built-in commands (e.g. `info`, `tools`).
+
+You can discover what plugins you currently have installed, as well as other information about your QIIME deployment, by running qiime info: qiime
+
+```{python eval=FALSE}
+qiime info
+```
+
+Supply `--help` to any command to display information about the command, including any subcommands, options, and arguments the command defines. For example, to learn more about the `feature-table` plugin command, run:
+
+```{python eval=FALSE}
+qiime feature-table --help
+```
+
+This will list the actions (subcommands) made available by the feature-table plugin, as well as information about the plugin itself (e.g. citation, website, user support).
+
+Try learning about other commands using `--help`. For example, what actions are available in the built-in tools command?
+
+**Enable command-line tab completion**
+If you are using Bash or Zsh as your shell, you can enable tab completion, which substantially improves the usability of the QIIME 2 command-line interface (CLI). When tab completion is enabled, pressing the tab key will attempt to complete the command or option you have typed, or provide you with a list of available commands or options based on what you have typed so far. This reduces the amount of typing you have to do and makes commands and options more easily discoverable without passing --help to every command you’re wanting to run.
+
+*For a Bash environment run the following:*
+```{python eval=FALSE}
+source tab-qiime
+```
+
+*Verify tab completion*
+
+To test that tab completion is working, try typing in the following partial command, and without actually running the command, press the tab key (you may need to press it a couple of times). If tab completion is working, the command should auto-complete to qiime info.
+```{python eval=FALSE}
+qiime i
+```
+
+**Viewing qzv file formats**
+Files in the format `.qzv` can be viewed from within the terminal, where a webpage will open with the figure/table.
+```{python eval=FALSE}
+qiime tools view table.qzv
+```
+
+<div class="alert alert-warning"> **Issues viewing your qzv files? **
+If you find you are having issues visualizing the qzv files from your terminal. You can visit the QIIME view https://view.qiime2.org/ webpage and drag & drop your qzv files to view.</div>

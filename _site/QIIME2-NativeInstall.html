@@ -11,7 +11,7 @@
 
 
 
-<title>Homepage</title>
+<title>Native Install</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -222,29 +222,59 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Homepage</h1>
+<h1 class="title toc-ignore">Native Install</h1>
 
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<p><a href="https://qiime2.org/">QIIME2 homepage</a></p>
+<p><a href="https://docs.qiime2.org/2017.12/install/native/">QIIME2 native installation</a></p>
+<p>QIIME2 can now be installed natively on a MacOS environment or Linux environment (if using windows you will need to use virtual box).</p>
+<p>This workbook will assume you have a MacOS environment.</p>
+<p><em>QIIME2 is rapidly evolving - while we will endeavour to ensure this workbook is up to date we recommend you consult the offical QIIME2 documenation and related forums for any issues</em></p>
+<hr />
+<div id="native-installation" class="section level3">
+<h3>Native installation</h3>
+<p><strong>Step One - Conda environment</strong></p>
+<p>You need to have a conda environment for QIIME2 to run. This can be in the form of Miniconda (as is recommended by QIIME developers. However, can also be in the form of conda, or if you are using this notebook in an Anaconda environment you have already installed conda <em>(YAY!)</em>. Assuming you are working within an Anaconda environment we will now proceed with the assumption you have a conda environment installed.</p>
+<p>Open a new Bash terminal and execute the following This will update your conda environment and also install the wget plug to be able to easily install packages</p>
+<pre class="bash"><code>conda update conda
+conda install wget</code></pre>
+<p><strong>Step Two - Install QIIME2</strong> You will then need to install QIIME2. The developers recommend you do this in a new environment.</p>
+<p>From the Bash window execute the following</p>
+<pre class="bash"><code>wget https://data.qiime2.org/distro/core/qiime2-2017.12-py35-osx-conda.yml
+conda env create -n qiime2-2017.12 --file qiime2-2017.12-py35-osx-conda.yml
+
+# OPTIONAL CLEANUP
+rm qiime2-2017.12-py35-osx-conda.yml</code></pre>
+<p><strong>Step three - Activate QIIME2 environment</strong> Activate the QIIME2 environment. This needs to be done everytime you want to “open” QIIME2</p>
+<pre class="bash"><code>source activate qiime2-2017.12</code></pre>
+<p>To check that it has been installed correctly</p>
+<pre class="bash"><code>qiime --help</code></pre>
+<hr />
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="index_files/figure-html/pressure-1.png" width="672" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<div id="basic-usage" class="section level3">
+<h3>Basic usage</h3>
+<p>Run qiime to see a list of available subcommands:</p>
+<pre class="python"><code>qiime</code></pre>
+<p>There will be several subcommands listed, including plugin commands (e.g. <code>feature-table</code>, <code>diversity</code>) and built-in commands (e.g. <code>info</code>, <code>tools</code>).</p>
+<p>You can discover what plugins you currently have installed, as well as other information about your QIIME deployment, by running qiime info: qiime</p>
+<pre class="python"><code>qiime info</code></pre>
+<p>Supply <code>--help</code> to any command to display information about the command, including any subcommands, options, and arguments the command defines. For example, to learn more about the <code>feature-table</code> plugin command, run:</p>
+<pre class="python"><code>qiime feature-table --help</code></pre>
+<p>This will list the actions (subcommands) made available by the feature-table plugin, as well as information about the plugin itself (e.g. citation, website, user support).</p>
+<p>Try learning about other commands using <code>--help</code>. For example, what actions are available in the built-in tools command?</p>
+<p><strong>Enable command-line tab completion</strong> If you are using Bash or Zsh as your shell, you can enable tab completion, which substantially improves the usability of the QIIME 2 command-line interface (CLI). When tab completion is enabled, pressing the tab key will attempt to complete the command or option you have typed, or provide you with a list of available commands or options based on what you have typed so far. This reduces the amount of typing you have to do and makes commands and options more easily discoverable without passing –help to every command you’re wanting to run.</p>
+<p><em>For a Bash environment run the following:</em></p>
+<pre class="python"><code>source tab-qiime</code></pre>
+<p><em>Verify tab completion</em></p>
+<p>To test that tab completion is working, try typing in the following partial command, and without actually running the command, press the tab key (you may need to press it a couple of times). If tab completion is working, the command should auto-complete to qiime info.</p>
+<pre class="python"><code>qiime i</code></pre>
+<p><strong>Viewing qzv file formats</strong> Files in the format <code>.qzv</code> can be viewed from within the terminal, where a webpage will open with the figure/table.</p>
+<pre class="python"><code>qiime tools view table.qzv</code></pre>
+<div class="alert alert-warning">
+<strong>Issues viewing your qzv files? </strong> If you find you are having issues visualizing the qzv files from your terminal. You can visit the QIIME view <a href="https://view.qiime2.org/" class="uri">https://view.qiime2.org/</a> webpage and drag &amp; drop your qzv files to view.
+</div>
 </div>
 
 

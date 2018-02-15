@@ -22,6 +22,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -176,7 +177,11 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
 </li>
 <li>
   <a href="about.html">About</a>
@@ -186,6 +191,24 @@ $(document).ready(function () {
 </li>
 <li>
   <a href="usearch-analysis.html">USEARCH Analysis</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    QIIME2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="QIIME2-NativeInstall.html">Install</a>
+    </li>
+    <li>
+      <a href="QIIME2-DataImport.html">Data Import</a>
+    </li>
+    <li>
+      <a href="QIIME2-DiversityPhylogeny.html">Diversity and phylogeny</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -220,6 +243,7 @@ $(document).ready(function () {
 <pre class="bash"><code>cd /Users/name/Documents/NGS-Analysis
 chmod +x this_script.sh
 ./this_script.sh &gt; 16S-NGS-usearch-output.txt</code></pre>
+<hr />
 <div id="fastq-info" class="section level3">
 <h3>Fastq info</h3>
 <p><a href="https://www.drive5.com/usearch/manual/cmd_fastx_info.html">fastq_info command</a></p>
@@ -664,7 +688,7 @@ $usearch -fastx_relabel unoise_zotus.fasta -prefix Otu -fastaout unoise_zotus_re
 
 $usearch -otutab all_samples_SF_DR.fasta -zotus unoise_zotus_relabelled.fasta -otutabout unoise_otu_tab.txt -biomout unoise_otu_biom.biom -mapout unoise_map.txt -notmatched unoise_notmatched.fasta -dbmatched dbmatches.fasta -sizeout
 
-$usearch -cluster_agg unoise_zotus_relabelled.fasta -treeout unoise_zotusb.tree -clusterout clusters.txt -id 0.80 -linkage min
+$usearch -cluster_agg unoise_zotus_relabelled.fasta -treeout unoise_zotus.tree -clusterout clusters.txt -id 0.80 -linkage min
 
 cd ..
 cd ..</code></pre>
