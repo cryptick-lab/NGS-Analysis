@@ -1,0 +1,179 @@
+---
+title: "Taxonomy Assignment"
+---
+
+<script type="text/javascript">
+  // When the document is fully rendered...
+  $(document).ready(function() {
+    // ...select all header elements...
+    $('h1, h2, h3, h4, h5').each(function() {
+      // ...and add an id to them corresponding to their 'titles'
+      $(this).attr('id', $(this).html());
+    });
+  });
+</script>
+
+This workflow follows documentation from QIIME2 documents on [tutorials](https://docs.qiime2.org/2017.12/tutorials/) - mainly from the moving pictures tutorial. 
+
+*16S amplicon NGS analysis*
+
+This notebook continues on from the notebook on data import & preliminary analysis, and native installation of QIIME2 following the USEARCH pipeline.
+
+An analysis of both the [SILVA](https://www.arb-silva.de/) and [Greengenes](http://greengenes.lbl.gov/Download/) databases (current Jan 2018) found that for tick-microbiome analysis Greengenes allowed for finer resolution of taxonomy and thus is recommended and used here. Both GreenGenes and Silva along with other curated datasets have comparable results overall and it is suggested that for new analysis a comparison is made to determine thebest datasets for your use. Other taxonomy classifer methods can be used such as vsearch and BLAST+, see QIIME2 `feature-classifier` documenation for more information [here](https://docs.qiime2.org/2017.12/plugins/available/feature-classifier/).
+
+### Training Feature Classifier
+This workbook will follow instructions detailed by QIIME2 - full documentation available [here](https://docs.qiime2.org/2017.12/tutorials/feature-classifier/).
+
+<div class="alert alert-success">
+Before doing this tutorial it is worth checking is a classifier has already been made for your target region. Currently there are both Green genes and Silva classifiers for primer sets 27F/338Y and 515/806 saved on the CrypTick lab iMac and google drive (link [here](https://drive.google.com/drive/folders/1YfYi9AHjxG3KOVE47FL15NIT4SsaKV8f?usp=sharing))- if this is the case you can skip to the section <a href="#Test the classifier">**Testing the Classififer**</a><br>
+
+It is recommended you try both the green genes and silva taxonomy classifiers to find the best fit for your data, as results do differ. For example I have found that for the tick-microbiome analysis using the 27F/338 primer set the green genes gives much better resolution, however in analysis of blood samples using the 515/806 primer set the silva classifier gave better results. Depending on your sequencing platform and level of coverage you should find the classifer that best suits your needs. </div>
+
+This tutorial will demonstrate how to train `q2-feature-classifier` for a particular dataset. We will train the Naive Bayes classifier using Greengenes reference sequences and classify the representative sequences.
+
+It is recommended you make another sub-directory within your `/NGS_analysis` directory
+
+```{bash eval=FALSE}
+mkdir training-feature-classifiers 
+cd training-feature-classifiers
+```
+
+### Dowloading the reference dataset
+
+As at Feb 2018 the latest release is the `13_8`(most recent) dataset available.
+
+This will automatically download. Open the zipped file in your Finder or file browser. You will see the following:
+```{bash eval=FALSE}
+- /otus
+- /rep_set
+- /rep_set_aligned
+- /taxonomy
+- /trees
+- notes
+```
+Depending on your analysis you may want to use different classifer thresholds, however for this instance we will use 99% datasets. Particularly if you are following the USEARCH pipeline in this analysis where ZOTUs are >97% similar.
+
+We recommend copying the relevent files to your current directory. `/training-feature-classifers`. Alternatively you may like to store it in a central file and refer to the full file path when referencing the classifier in the QIIME2 scripts. In theory you should only need to train the classifer once for each set of primers (at each threshold), and therefore you may like to have this ready to train on your new set of sequences.
+
+For the sake of this workbook we will assume it is in your current directory.
+
+Locate the following files and copy & paste them in your current directory `/training-feature-classifiers`.
+```{bash eval=FALSE}
+/taxonomy/99_otu_taxonomy.txt
+/rep_set_aligned/99_otus.fasta
+```
+You will also need to move your sequences.qza file into this directory. We recommend copy & paste this file, to leave the original in the untouched.
+
+From the terminal in the QIIME environment a listing command should retrive the following
+```{bash eval=FALSE}
+ls
+- 99_otu_taxonomy.txt
+- 99_otus.fasta
+- sequences.qza
+```
+Since the Greengenes reference taxonomy file (`99_otu_taxonomy.txt`) is a tab-separated (`tsv`) file without a header, we must specify `HeaderlessTSVTaxonomyFormat` as the source format since the default source format requires a header.
+```{bash eval=FALSE}
+qiime tools import \
+--type 'FeatureData[Sequence]' \
+--input-path 99_otus.fasta \
+--output-path 99_otus.qza
+
+qiime tools import \
+--type 'FeatureData[Taxonomy]' \
+--source-format HeaderlessTSVTaxonomyFormat \
+--input-path 99_otu_taxonomy.txt \
+--output-path ref-taxonomy.qza
+```
+**Output artifacts:**
+```{bash eval=FALSE}
+99_otus.qza
+ref-taxonomy.qza
+```
+
+### Extract reference reads
+It has been shown that taxonomic classification accuracy improves when a Naive Bayes classifier is trained on only the region of the target sequences that was sequenced ([Werner et al., 2012](https://www.ncbi.nlm.nih.gov/pubmed/21716311)).
+
+For this tutorial we will use the primer set for the V1-2 hypervariable region as outlined by ([Gofton et al., 2015](https://www.ncbi.nlm.nih.gov/pubmed/26108374))
+```{bash eval=FALSE}
+qiime feature-classifier extract-reads \
+--i-sequences 99_otus.qza \
+--p-f-primer AGAGTTTGATCCTGGCTYAG \
+--p-r-primer TGCTGCCTCCCGTAGGAGT \
+--p-trunc-len 350 \
+--o-reads ref-seqs.qza
+```
+For V3-4 region primer set 515F-806R: ([Caporaso et al. 2011](https://www.ncbi.nlm.nih.gov/pubmed/20534432))
+```{bash eval=FALSE}
+qiime feature-classifier extract-reads \
+--i-sequences 99_otus.qza \
+--p-f-primer GTGBCAGCMGCCGCGGTAA \
+--p-r-primer GGACTACHVGGGTWTCTAAT \
+--p-trunc-len 350 \
+--o-reads ref-seqs.qza
+```
+**Otuput artifact:**
+```{bash eval=FALSE}
+ref-seqs.qza
+```
+
+### Train the classifier
+We can now train a Naive Bayes classifier as follows, using the reference reads and taxonomy that we just created.
+```{bash eval=FALSE}
+qiime feature-classifier fit-classifier-naive-bayes \
+--i-reference-reads ref-seqs.qza \
+--i-reference-taxonomy ref-taxonomy.qza \
+--o-classifier classifier.qza
+```
+**Otuput artifact:**
+```{bash eval=FALSE}
+classifier.qza
+```
+### Test the classifier
+Finally, we verify that the classifier works by classifying the representative sequences from the Moving Pictures tutorial and visualizing the resulting taxonomic assignments.
+```{bash eval=FALSE}
+qiime feature-classifier classify-sklearn \
+--i-classifier classifier.qza \
+--i-reads sequences.qza \
+--o-classification taxonomy.qza
+
+qiime metadata tabulate \
+--m-input-file taxonomy.qza \
+--o-visualization taxonomy.qzv
+```
+**Output artifacts:**
+```{bash eval=FALSE}
+taxonomy.qza
+```
+**Output visualizations:**
+```{bash eval=FALSE}
+taxonomy.qzv
+```
+<div class="alert alert-success">**Question**
+Recall that our `sequences.qzv` visualization allows you to easily BLAST the sequence associated with each feature against the NCBI nt database. Using that visualization and the taxonomy.qzv visualization created here, compare the taxonomic assignments with the taxonomy of the best BLAST hit for a few features. How similar are the assignments? If they’re dissimilar, at what taxonomic level do they begin to differ (e.g., species, genus, family, ...)?</div>
+
+Next, we can view the taxonomic composition of our samples with interactive bar plots. Generate those plots with the following command and then open the visualization.
+```{bash eval=FALSE}
+qiime taxa barplot \
+--i-table feature-table-1.qza \
+--i-taxonomy taxonomy.qza \
+--m-metadata-file metadata.tsv \
+--o-visualization taxa-bar-plots.qzv
+```
+
+***
+
+### Combining OTU table and taxonomy table
+You may encounter some issues when you try to combine your otu tab and taxonomy table. As explained [here](https://drive5.com/usearch/manual/otu_qc_missing.html) there are a number of reasons for this and it may be worth your time going through to investigate why there were missing otus in your table.
+
+However here is an easy way to identify the missing otus so you can ensure that your taxonomy table output (`qzv` file from QIIME) matches your otu output (`txt` file from usearch).
+
+Find the labels of the missing OTUs and make a FASTA file missing.fa with the sequences. You can do this by cutting the labels out of the OTU table and grepping the labels from the FASTA file with the OTU sequences, then using the Linux uniq command to find labels which appear only in the FASTA file. Finally, use the fastx_getseqs command to extract those sequences. For example,
+
+The following needs to be excuted in a Bash environment NOT in your QIIME2 environment (remember qiime 2 is a python environment).
+```{bash eval=FALSE}
+cut -f1 otutab.txt | grep -v "^#" > table_labels.txt
+grep "^>" otus.fa | sed "-es/>//" > seq_labels.txt
+sort seq_labels.txt table_labels.txt table_labels.txt | uniq -u > missing_labels.txt
+usearch -fastx_getseqs otus.fa -labels missing_labels.txt -fastaout missing.fa
+```
+The file missing_labels.txt is a print out of all the OTUS that are missing. You can copy and paste this into your OTU table and put zero's against the abundance for all samples. Now your taxonomy and otu table should match.

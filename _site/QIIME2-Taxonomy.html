@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Taxonomy Assignment</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="resources.html">Resources</a>
+</li>
+<li>
+  <a href="usearch-analysis.html">USEARCH Analysis</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    QIIME2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="QIIME2-NativeInstall.html">Install</a>
+    </li>
+    <li>
+      <a href="QIIME2-DataImport.html">Data Import</a>
+    </li>
+    <li>
+      <a href="QIIME2-DiversityPhylogeny.html">Diversity and phylogeny</a>
+    </li>
+    <li>
+      <a href="QIIME2-Taxonomy.html">Taxonomy</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Taxonomy Assignment</h1>
+
+</div>
+
+
+<script type="text/javascript">
+  // When the document is fully rendered...
+  $(document).ready(function() {
+    // ...select all header elements...
+    $('h1, h2, h3, h4, h5').each(function() {
+      // ...and add an id to them corresponding to their 'titles'
+      $(this).attr('id', $(this).html());
+    });
+  });
+</script>
+<p>This workflow follows documentation from QIIME2 documents on <a href="https://docs.qiime2.org/2017.12/tutorials/">tutorials</a> - mainly from the moving pictures tutorial.</p>
+<p><em>16S amplicon NGS analysis</em></p>
+<p>This notebook continues on from the notebook on data import &amp; preliminary analysis, and native installation of QIIME2 following the USEARCH pipeline.</p>
+<p>An analysis of both the <a href="https://www.arb-silva.de/">SILVA</a> and <a href="http://greengenes.lbl.gov/Download/">Greengenes</a> databases (current Jan 2018) found that for tick-microbiome analysis Greengenes allowed for finer resolution of taxonomy and thus is recommended and used here. Both GreenGenes and Silva along with other curated datasets have comparable results overall and it is suggested that for new analysis a comparison is made to determine thebest datasets for your use. Other taxonomy classifer methods can be used such as vsearch and BLAST+, see QIIME2 <code>feature-classifier</code> documenation for more information <a href="https://docs.qiime2.org/2017.12/plugins/available/feature-classifier/">here</a>.</p>
+<div id="training-feature-classifier" class="section level3">
+<h3>Training Feature Classifier</h3>
+<p>This workbook will follow instructions detailed by QIIME2 - full documentation available <a href="https://docs.qiime2.org/2017.12/tutorials/feature-classifier/">here</a>.</p>
+<div class="alert alert-success">
+<p>Before doing this tutorial it is worth checking is a classifier has already been made for your target region. Currently there are both Green genes and Silva classifiers for primer sets 27F/338Y and 515/806 saved on the CrypTick lab iMac and google drive (link <a href="https://drive.google.com/drive/folders/1YfYi9AHjxG3KOVE47FL15NIT4SsaKV8f?usp=sharing">here</a>)- if this is the case you can skip to the section <a href="#Test the classifier"><strong>Testing the Classififer</strong></a><br></p>
+It is recommended you try both the green genes and silva taxonomy classifiers to find the best fit for your data, as results do differ. For example I have found that for the tick-microbiome analysis using the 27F/338 primer set the green genes gives much better resolution, however in analysis of blood samples using the 515/806 primer set the silva classifier gave better results. Depending on your sequencing platform and level of coverage you should find the classifer that best suits your needs.
+</div>
+<p>This tutorial will demonstrate how to train <code>q2-feature-classifier</code> for a particular dataset. We will train the Naive Bayes classifier using Greengenes reference sequences and classify the representative sequences.</p>
+<p>It is recommended you make another sub-directory within your <code>/NGS_analysis</code> directory</p>
+<pre class="bash"><code>mkdir training-feature-classifiers 
+cd training-feature-classifiers</code></pre>
+</div>
+<div id="dowloading-the-reference-dataset" class="section level3">
+<h3>Dowloading the reference dataset</h3>
+<p>As at Feb 2018 the latest release is the <code>13_8</code>(most recent) dataset available.</p>
+<p>This will automatically download. Open the zipped file in your Finder or file browser. You will see the following:</p>
+<pre class="bash"><code>- /otus
+- /rep_set
+- /rep_set_aligned
+- /taxonomy
+- /trees
+- notes</code></pre>
+<p>Depending on your analysis you may want to use different classifer thresholds, however for this instance we will use 99% datasets. Particularly if you are following the USEARCH pipeline in this analysis where ZOTUs are &gt;97% similar.</p>
+<p>We recommend copying the relevent files to your current directory. <code>/training-feature-classifers</code>. Alternatively you may like to store it in a central file and refer to the full file path when referencing the classifier in the QIIME2 scripts. In theory you should only need to train the classifer once for each set of primers (at each threshold), and therefore you may like to have this ready to train on your new set of sequences.</p>
+<p>For the sake of this workbook we will assume it is in your current directory.</p>
+<p>Locate the following files and copy &amp; paste them in your current directory <code>/training-feature-classifiers</code>.</p>
+<pre class="bash"><code>/taxonomy/99_otu_taxonomy.txt
+/rep_set_aligned/99_otus.fasta</code></pre>
+<p>You will also need to move your sequences.qza file into this directory. We recommend copy &amp; paste this file, to leave the original in the untouched.</p>
+<p>From the terminal in the QIIME environment a listing command should retrive the following</p>
+<pre class="bash"><code>ls
+- 99_otu_taxonomy.txt
+- 99_otus.fasta
+- sequences.qza</code></pre>
+<p>Since the Greengenes reference taxonomy file (<code>99_otu_taxonomy.txt</code>) is a tab-separated (<code>tsv</code>) file without a header, we must specify <code>HeaderlessTSVTaxonomyFormat</code> as the source format since the default source format requires a header.</p>
+<pre class="bash"><code>qiime tools import \
+--type &#39;FeatureData[Sequence]&#39; \
+--input-path 99_otus.fasta \
+--output-path 99_otus.qza
+
+qiime tools import \
+--type &#39;FeatureData[Taxonomy]&#39; \
+--source-format HeaderlessTSVTaxonomyFormat \
+--input-path 99_otu_taxonomy.txt \
+--output-path ref-taxonomy.qza</code></pre>
+<p><strong>Output artifacts:</strong></p>
+<pre class="bash"><code>99_otus.qza
+ref-taxonomy.qza</code></pre>
+</div>
+<div id="extract-reference-reads" class="section level3">
+<h3>Extract reference reads</h3>
+<p>It has been shown that taxonomic classification accuracy improves when a Naive Bayes classifier is trained on only the region of the target sequences that was sequenced (<a href="https://www.ncbi.nlm.nih.gov/pubmed/21716311">Werner et al., 2012</a>).</p>
+<p>For this tutorial we will use the primer set for the V1-2 hypervariable region as outlined by (<a href="https://www.ncbi.nlm.nih.gov/pubmed/26108374">Gofton et al., 2015</a>)</p>
+<pre class="bash"><code>qiime feature-classifier extract-reads \
+--i-sequences 99_otus.qza \
+--p-f-primer AGAGTTTGATCCTGGCTYAG \
+--p-r-primer TGCTGCCTCCCGTAGGAGT \
+--p-trunc-len 350 \
+--o-reads ref-seqs.qza</code></pre>
+<p>For V3-4 region primer set 515F-806R: (<a href="https://www.ncbi.nlm.nih.gov/pubmed/20534432">Caporaso et al. 2011</a>)</p>
+<pre class="bash"><code>qiime feature-classifier extract-reads \
+--i-sequences 99_otus.qza \
+--p-f-primer GTGBCAGCMGCCGCGGTAA \
+--p-r-primer GGACTACHVGGGTWTCTAAT \
+--p-trunc-len 350 \
+--o-reads ref-seqs.qza</code></pre>
+<p><strong>Otuput artifact:</strong></p>
+<pre class="bash"><code>ref-seqs.qza</code></pre>
+</div>
+<div id="train-the-classifier" class="section level3">
+<h3>Train the classifier</h3>
+<p>We can now train a Naive Bayes classifier as follows, using the reference reads and taxonomy that we just created.</p>
+<pre class="bash"><code>qiime feature-classifier fit-classifier-naive-bayes \
+--i-reference-reads ref-seqs.qza \
+--i-reference-taxonomy ref-taxonomy.qza \
+--o-classifier classifier.qza</code></pre>
+<p><strong>Otuput artifact:</strong></p>
+<pre class="bash"><code>classifier.qza</code></pre>
+</div>
+<div id="test-the-classifier" class="section level3">
+<h3>Test the classifier</h3>
+<p>Finally, we verify that the classifier works by classifying the representative sequences from the Moving Pictures tutorial and visualizing the resulting taxonomic assignments.</p>
+<pre class="bash"><code>qiime feature-classifier classify-sklearn \
+--i-classifier classifier.qza \
+--i-reads sequences.qza \
+--o-classification taxonomy.qza
+
+qiime metadata tabulate \
+--m-input-file taxonomy.qza \
+--o-visualization taxonomy.qzv</code></pre>
+<p><strong>Output artifacts:</strong></p>
+<pre class="bash"><code>taxonomy.qza</code></pre>
+<p><strong>Output visualizations:</strong></p>
+<pre class="bash"><code>taxonomy.qzv</code></pre>
+<div class="alert alert-success">
+<strong>Question</strong> Recall that our <code>sequences.qzv</code> visualization allows you to easily BLAST the sequence associated with each feature against the NCBI nt database. Using that visualization and the taxonomy.qzv visualization created here, compare the taxonomic assignments with the taxonomy of the best BLAST hit for a few features. How similar are the assignments? If they’re dissimilar, at what taxonomic level do they begin to differ (e.g., species, genus, family, …)?
+</div>
+<p>Next, we can view the taxonomic composition of our samples with interactive bar plots. Generate those plots with the following command and then open the visualization.</p>
+<pre class="bash"><code>qiime taxa barplot \
+--i-table feature-table-1.qza \
+--i-taxonomy taxonomy.qza \
+--m-metadata-file metadata.tsv \
+--o-visualization taxa-bar-plots.qzv</code></pre>
+<hr />
+</div>
+<div id="combining-otu-table-and-taxonomy-table" class="section level3">
+<h3>Combining OTU table and taxonomy table</h3>
+<p>You may encounter some issues when you try to combine your otu tab and taxonomy table. As explained <a href="https://drive5.com/usearch/manual/otu_qc_missing.html">here</a> there are a number of reasons for this and it may be worth your time going through to investigate why there were missing otus in your table.</p>
+<p>However here is an easy way to identify the missing otus so you can ensure that your taxonomy table output (<code>qzv</code> file from QIIME) matches your otu output (<code>txt</code> file from usearch).</p>
+<p>Find the labels of the missing OTUs and make a FASTA file missing.fa with the sequences. You can do this by cutting the labels out of the OTU table and grepping the labels from the FASTA file with the OTU sequences, then using the Linux uniq command to find labels which appear only in the FASTA file. Finally, use the fastx_getseqs command to extract those sequences. For example,</p>
+<p>The following needs to be excuted in a Bash environment NOT in your QIIME2 environment (remember qiime 2 is a python environment).</p>
+<pre class="bash"><code>cut -f1 otutab.txt | grep -v &quot;^#&quot; &gt; table_labels.txt
+grep &quot;^&gt;&quot; otus.fa | sed &quot;-es/&gt;//&quot; &gt; seq_labels.txt
+sort seq_labels.txt table_labels.txt table_labels.txt | uniq -u &gt; missing_labels.txt
+usearch -fastx_getseqs otus.fa -labels missing_labels.txt -fastaout missing.fa</code></pre>
+<p>The file missing_labels.txt is a print out of all the OTUS that are missing. You can copy and paste this into your OTU table and put zero’s against the abundance for all samples. Now your taxonomy and otu table should match.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

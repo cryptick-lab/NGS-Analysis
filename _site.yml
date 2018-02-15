@@ -19,6 +19,8 @@ navbar:
           href: QIIME2-DataImport.html
         - text: "Diversity and phylogeny"
           href: QIIME2-DiversityPhylogeny.html
+        - text: "Taxonomy"
+          href: QIIME2-Taxonomy.html
 output:
   html_document:
     theme: cosmo
