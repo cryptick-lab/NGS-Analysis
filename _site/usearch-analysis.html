@@ -11,7 +11,7 @@
 
 
 
-<title>about</title>
+<title>USEARCH Analysis</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -199,13 +199,54 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">about</h1>
+<h1 class="title toc-ignore">USEARCH Analysis</h1>
 
 </div>
 
 
-<div id="about-my-website" class="section level1">
-<h1>About my website</h1>
+<p><strong>Input</strong></p>
+<p>Raw <code>fastq</code> files from illumina NGS platforms.</p>
+<p><strong>Output</strong></p>
+<p>Complied OTU table (taxonomy not assigned) and final OTU sequences in <code>fasta</code> format.</p>
+<p><strong>Assumptions</strong></p>
+<p>Working within MacOS environment - there are slight differences when working within a linux environment. If you are using a Pawsey virtual machine (Nimbus) then you will need to work within a linux environment. The documentation for usearch is the same for MacOS and linux with the exception that you will need to download the linux versions, however take note it is primarily written for MacOS and some features may not be available. Please provide feedback if functions are not working within a linux environment. Downloaded USEARCH. This pipeline requires USEARCH 8, 9.2 and 10. In most cases the 34-bit files are okay, however if undertaking analysis of large datasets you will need to purchase the 64-bit. The Cryptick lab has the 64-bit versions of USEARCH8, 9.2 and 10 - you will need to use the iMac to access these. Unfortunately we only have the 64-bit version of USEARCH9.2 on a linux environment, however this is sufficent for almost all steps. You will have to weight up your options between running the analysis on Nimbus vs iMac. You might consider doing the first steps on the Nimbus cloud and the final steps (i.e. UNOISE clustering) on the iMac.</p>
+<p><strong>Data type</strong></p>
+<p>This analysis is for paired-end reads</p>
+<p><strong>Using this pipeline</strong></p>
+<p>I strongly suggest you take a small sub-set of your data though the pipeline outlined below step-by-step first to get an understanding of what each command is doing. Importantly it will also allow to explore the influence of the different variables on your dataset.</p>
+<p>Once you are happy with the parameters and that the script is working you can use the full script to analyse all your samples.</p>
+<p>Simply edit the script with your parameters, and save it in a directory with your raw fastq files.</p>
+<p>In a bash terminal navigate to your directory and perform the following to execute the script and save the terminal output to a text file.</p>
+<pre class="bash"><code>cd /Users/name/Documents/NGS-Analysis
+chmod +x this_script.sh
+./this_script.sh &gt; 16S-NGS-usearch-output.txt</code></pre>
+<div id="fastq-info" class="section level3">
+<h3>Fastq info</h3>
+<p><a href="https://www.drive5.com/usearch/manual/cmd_fastx_info.html">fastq_info command</a></p>
+<p>This commands gives a short summary report of the sequences in a <code>fasta</code> or <code>fastq</code> file. It is useful for a first check on what is in a new file. The report is written to the console and can be saved to a text file using the <code>-output</code> option</p>
+<pre class="bash"><code>#!/bin/bash
+
+raw_data=&quot;raw_data&quot;
+read_summary=&quot;1.read_summary&quot;
+usearch=&quot;usearch10&quot;
+
+mkdir $read_summary
+
+ for fq in $raw_seqs/*R1*.fastq
+ do
+  $usearch -fastx_info $fq -output $read_summary/1a_fwd_fastq_info.txt
+ done
+
+ for fq in $raw_seqs/*R2*.fastq
+ do
+  $usearch -fastx_info $fq -output $read_summary/1b_rev_fastq_info.txt
+ done</code></pre>
+<p>To look at just one fasta or fastq files, for example inspect your concatenate dereplicated sequences. The -secs 5 options is good when just wanting a snap shot of a large sequences files, however can be deleted if you can it to scan the entire file.</p>
+<pre class="bash"><code>usearch10 -fastx_info sequences.fastq -secs 5 -output reads_info.txt</code></pre>
+<p><span style="color:red"><strong>IMPORTANT!</strong></span></p>
+<p>At this point it is important to look at the ‘EE’ value which means expected error.</p>
+<p>Detailed information on this can be found here.</p>
+<p>In short you want your EE value to be under 2, usually it is lower for the forward reads than the reverse reads.</p>
 </div>
 
 

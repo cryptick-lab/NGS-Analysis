@@ -8,6 +8,8 @@ navbar:
       href: about.html
     - text: "Resources"
       href: resources.html
+    - text: "USEARCH Analysis"
+      href: usearch-analysis.html
 output:
   html_document:
     theme: cosmo

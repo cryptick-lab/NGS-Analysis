@@ -1,0 +1,76 @@
+---
+title: "USEARCH Analysis"
+---
+**Input**
+
+Raw `fastq` files from illumina NGS platforms.
+
+**Output**
+
+Complied OTU table (taxonomy not assigned) and final OTU sequences in `fasta` format.
+
+**Assumptions**
+
+Working within MacOS environment - there are slight differences when working within a linux environment. If you are using a Pawsey virtual machine (Nimbus) then you will need to work within a linux environment. The documentation for usearch is the same for MacOS and linux with the exception that you will need to download the linux versions, however take note it is primarily written for MacOS and some features may not be available. Please provide feedback if functions are not working within a linux environment.
+Downloaded USEARCH. This pipeline requires USEARCH 8, 9.2 and 10. In most cases the 34-bit files are okay, however if undertaking analysis of large datasets you will need to purchase the 64-bit. The Cryptick lab has the 64-bit versions of USEARCH8, 9.2 and 10 - you will need to use the iMac to access these. Unfortunately we only have the 64-bit version of USEARCH9.2 on a linux environment, however this is sufficent for almost all steps. You will have to weight up your options between running the analysis on Nimbus vs iMac. You might consider doing the first steps on the Nimbus cloud and the final steps (i.e. UNOISE clustering) on the iMac.
+
+**Data type**
+
+This analysis is for paired-end reads
+
+**Using this pipeline**
+
+I strongly suggest you take a small sub-set of your data though the pipeline outlined below step-by-step first to get an understanding of what each command is doing. Importantly it will also allow to explore the influence of the different variables on your dataset.
+
+Once you are happy with the parameters and that the script is working you can use the full script to analyse all your samples.
+
+Simply edit the script with your parameters, and save it in a directory with your raw fastq files.
+
+In a bash terminal navigate to your directory and perform the following to execute the script and save the terminal output to a text file.
+
+```{bash eval=FALSE}
+cd /Users/name/Documents/NGS-Analysis
+chmod +x this_script.sh
+./this_script.sh > 16S-NGS-usearch-output.txt
+```
+
+### Fastq info
+
+
+[fastq_info command](https://www.drive5.com/usearch/manual/cmd_fastx_info.html)
+
+This commands gives a short summary report of the sequences in a `fasta` or `fastq` file. It is useful for a first check on what is in a new file. The report is written to the console and can be saved to a text file using the `-output` option
+
+```{bash eval=FALSE}
+#!/bin/bash
+
+raw_data="raw_data"
+read_summary="1.read_summary"
+usearch="usearch10"
+
+mkdir $read_summary
+
+ for fq in $raw_seqs/*R1*.fastq
+ do
+  $usearch -fastx_info $fq -output $read_summary/1a_fwd_fastq_info.txt
+ done
+
+ for fq in $raw_seqs/*R2*.fastq
+ do
+  $usearch -fastx_info $fq -output $read_summary/1b_rev_fastq_info.txt
+ done
+```
+ 
+To look at just one fasta or fastq files, for example inspect your concatenate dereplicated sequences. The -secs 5 options is good when just wanting a snap shot of a large sequences files, however can be deleted if you can it to scan the entire file.
+
+```{bash eval=FALSE}
+usearch10 -fastx_info sequences.fastq -secs 5 -output reads_info.txt
+```
+
+<span style="color:red">**IMPORTANT!**</span>
+
+At this point it is important to look at the 'EE' value which means expected error.
+
+Detailed information on this can be found here.
+
+In short you want your EE value to be under 2, usually it is lower for the forward reads than the reverse reads.
