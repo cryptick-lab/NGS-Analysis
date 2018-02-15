@@ -126,3 +126,16 @@ sample_data() Sample Data:       [ 1390 samples by 13 sample variables ]
 tax_table()   Taxonomy Table:    [ 15985 taxa by 7 taxonomic ranks ]
 phy_tree()    Phylogenetic Tree: [ 15985 tips and 15984 internal nodes ]
 ```
+
+### Basic commands to check your physeq object
+
+```{r eval=FALSE}
+nsamples(physeq1)       # number of samples
+ntaxa(physeq1)          # number of taxa (OTUs)
+sample_names(physeq1)[1:5]  # sample names - first five
+rank_names(physeq1)   # taxonomic ranks e.g. Phylum, Kingdom
+sample_variables(physeq1) # metadata variables
+otu_table(physeq1)[1:5, 1:5] # first 5 otus (no. of reads) and first 5 samples
+tax_table(physeq1)[1:5, 1:4] # first 5 samples and taxonomy first 4 columns 
+myTaxa = names(sort(taxa_sums(physeq1), decreasing = TRUE)[1:10])
+```

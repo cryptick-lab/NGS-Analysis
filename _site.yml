@@ -26,6 +26,8 @@ navbar:
       menu:
         - text: "Phyloseq Intro"
           href: R-PhyloseqIntro.html
+        - text: "Exploring Data"
+          href: R-SubsettingData.html
         - text: "Alpha Diversity & Seq depth"
           href: R-AlphaDiversity.html
         - text: "Microbial Composition"
