@@ -245,8 +245,434 @@ mkdir $read_summary
 <pre class="bash"><code>usearch10 -fastx_info sequences.fastq -secs 5 -output reads_info.txt</code></pre>
 <p><span style="color:red"><strong>IMPORTANT!</strong></span></p>
 <p>At this point it is important to look at the ‘EE’ value which means expected error.</p>
-<p>Detailed information on this can be found here.</p>
+<p>Detailed information on this can be found <a href="https://www.drive5.com/usearch/manual/exp_errs.html">here</a>.</p>
 <p>In short you want your EE value to be under 2, usually it is lower for the forward reads than the reverse reads.</p>
+<hr />
+</div>
+<div id="merge-pairs" class="section level3">
+<h3>Merge pairs</h3>
+<p><a href="https://www.drive5.com/usearch/manual/cmd_fastq_mergepairs.html">fastq_mergepairs command</a></p>
+<p>This command merges paired-end reads to create consensus sequences and, optionally, consensus quality scores. This command has many features and options so I recommend spending some time browsing the documentation to get familiar with the capabilities of fastq_mergepairs and issues that arise in read merging.</p>
+<p>As is the convention for illumina paried reads the forward sequences are labeled <code>samplename_SXX_L001_R1_001.fastq</code> and reverse sequences labeled <code>samplename_SXX_L001_R2_001.fastq</code>.</p>
+<p>There are many additional options for this command that are specified <a href="https://www.drive5.com/usearch/manual/merge_options.html">here</a>, and a thorough outline of reviewing fastq_mergepairs reports <a href="https://www.drive5.com/usearch/manual/merge_report.html">here</a>.</p>
+<pre class="bash"><code>#!/bin/bash
+
+raw_data=&quot;raw_data&quot;
+merged_reads=&quot;2.merged_reads&quot;
+usearch9=&quot;usearch9.2&quot;
+usearch8=&quot;usearch8&quot;
+# Maximum no of mismatches in the alignment - Default 5. Consider increasing if you have long overlaps.
+maxdiffs=&quot;15&quot;
+# Discard pair if alugnment is shorter than this value - Default 16 bp
+overlap=&quot;50&quot;
+
+mkdir ${merged_reads}
+mkdir working1
+
+#*****************************************************************************************
+# Step1: merge data with usearch9 -fastq-filter
+
+for file1 in ${raw_data}/*R1_001.fastq
+    do
+
+        echo &quot;&quot;
+        echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        echo Merging paired reads
+        echo forward reads are:
+        echo $(basename ${file1})
+        echo reverse reads are:
+        echo $(basename ${file1} R1_001.fastq)R2_001.fastq
+
+    $usearch -fastq_mergepairs ${file1} -reverse &quot;${raw_data}/$(basename -s R1_001.fastq ${file1})R2_001.fastq&quot; -fastqout &quot;working1/$(basename &quot;$file1&quot;)&quot; -fastq_maxdiffs ${maxdiffs} -fastq_minovlen ${overlap} -report ${merged_data}/2a_merging_seqs_report.txt -tabbedout ${merged_data}/2b_tabbedout.txt
+done
+
+#*****************************************************************************************
+# Step 2: Remove &quot;_L001_R1_001&quot; from filenames
+
+for file2 in working1/*.fastq
+    do
+
+        rename=&quot;$(basename ${file2} _L001_R1_001.fastq).fastq&quot;
+
+        mv ${file2} ${merged_data}/${rename}
+done
+
+#*****************************************************************************************
+# Removing working directory
+
+        rm -r working1</code></pre>
+<div class="alert alert-block alert-info">
+<strong> Note</strong> There are a number of other commands that you may find useful at this step available on the USEARCH documenation page here. After trials with tick NGS data I have found that in most cases altering these parameters make little to no difference to the outcome of the sequences (i.e % merged) and hence they are obmitted from this pipeline - however the two exceptions are <code>fastq_minovlen</code> and <code>fastq-maxdiffs</code>. Again it is important to remember the purpose of this line of code, it is simply to merge the forward and reverse sequences not to act as a quality control step.
+</div>
+<hr />
+</div>
+<div id="quality-control-and-removing-dimer-sequences" class="section level3">
+<h3>Quality control and removing dimer sequences</h3>
+<p><a href="https://www.drive5.com/usearch/manual/cmd_fastq_filter.html">fastq_filter command</a></p>
+<p>This command performs quality filtering and converts <code>fastq</code> files to <code>fasta</code> format. Again there are a number of filtering options available with this command that you can explore, however below are the most approriate for 16S amplicon NGS data.</p>
+<pre class="bash"><code>#!/bin/bash
+
+# This script works with usearch9.2 and usearch10
+# fastq_filter provides a quiality filter and max ee rate 
+
+merged_reads=&quot;2.merged_reads&quot;
+QF_reads=&quot;3.quality_filtered&quot;
+# Usearch executable
+usearch=&quot;usearch10&quot;
+# Enter % expected error rate threchold for seq quality filtering (1% = 0.01)
+error_rate=&quot;0.01&quot;
+# Enter min length of sequence for trimming in bp (eg. to keep all seqs above 200 bp enter &quot;200&quot;)
+minlen=&quot;150&quot;
+
+mkdir ${QF_reads}
+
+for file3 in ${merged_reads}/*.fastq
+    do
+        echo &quot;&quot;
+        echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        echo Quality control and removing dimer seqs
+        echo input is:
+        echo ${file3}
+
+    $usearch -fastq_filter ${file3} -fastaout &quot;$QF_reads/$(basename &quot;$file3&quot; .fastq).fasta&quot; -fastq_maxee_rate ${error_rate} -fastq_minlen ${minlen}
+done</code></pre>
+<hr />
+</div>
+<div id="trim-primers" class="section level3">
+<h3>Trim primers</h3>
+<p>usearch 9.2 <a href="https://www.drive5.com/usearch/manual/cmd_search_oligodb.html">search_oligodb command</a></p>
+<p>This command searches for matches of nucleotide sequences to a database containing short nucleotide sequences (oligonucleotides). In this context the command is used to search for matches to primers. By default, <code>-maxdiffs</code> 2 is assumed and other accept criteria are not used.</p>
+<p>usearch8 <a href="https://www.drive5.com/usearch/manual8.1/cmd_search_pcr.html">search_pcr command</a></p>
+<p>This command searches for predicted amplicons. The sequences specific for each primer are made into a <code>fasta</code> files (databases). Each query sequence is searched for matches to a pair of primers that would generate a PCR amplicon. The <code>-pcr_strip_primers</code> command is then used to strip the primers from each sequence.</p>
+<pre class="bash"><code>usearch9=&quot;usearch9.2&quot;
+usearch8=&quot;usearch9&quot;
+
+QF=&quot;3.quality_filtered&quot;
+trimmed_data=&quot;4.trimmed_data&quot;
+seqs_w_fwd_primer=&quot;5.seqs_w_fwd_primer&quot;
+seqs_wo_fwd_primer=&quot;6.seqs_wo_fwd_primer&quot;
+seqs_w_fwd_and_rev_primer=&quot;7.seqs_w_fwd_and_rev_primer&quot;
+seqs_w_fwd_butnot_rev_primer=&quot;8.seqs_w_fwd_butnot_rev_primer&quot;
+# Enter FWD primer sequence 5&#39;-3&#39; (degenerate bases OK)
+fwd_primer=&quot;AGAGTTTGATCCTGGCTYAG&quot;
+# Enter REV primer sequence 5&#39;-3&#39; (degenerate bases OK)
+rev_primer=&quot;TGCTGCCTCCCGTAGGAGT&quot;
+# Enter number of primer mismatched allowed
+pcr_missmatches=&quot;0&quot;
+
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+echo Triming primers and distal bases
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+echo &quot;&quot;
+
+# At the moment this usearch command can only take .fasta as input so can only be done
+# after QF
+
+# Creating working directories
+
+mkdir ${trimmed_data}
+mkdir ${seqs_w_fwd_primer}
+mkdir ${seqs_wo_fwd_primer}
+mkdir ${seqs_w_fwd_and_rev_primer}
+mkdir ${seqs_w_fwd_butnot_rev_primer}
+
+# Creating FWD primer db
+
+        echo &quot;&gt;fwd_primer&quot; &gt; fwd_primer_db.fasta
+        echo ${fwd_primer} &gt;&gt; fwd_primer_db.fasta
+
+# Creating REV primer db
+
+        echo &quot;&gt;rev_primer&quot; &gt; rev_primer_db.fasta
+        echo ${rev_primer} &gt;&gt; rev_primer_db.fasta
+
+# Creating FWD and REV primer db
+
+        echo &quot;&gt;fwd_primer&quot; &gt; both_primers_db.fasta
+        echo ${fwd_primer} &gt;&gt; both_primers_db.fasta
+        echo &quot;&gt;rev_primer&quot; &gt;&gt; both_primers_db.fasta
+        echo ${rev_primer} &gt;&gt; both_primers_db.fasta
+
+#*****************************************************************************************
+# Step 1: Finding seqs with FWD primer
+
+for file4 in ${QF}/*.fasta
+    do
+
+        echo &quot;&quot;
+        echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        echo Trimming primers step 1: finding seqs with FWD primer
+        echo input is:
+        echo ${file4}
+
+    $usearch9 -search_oligodb ${file4} -db fwd_primer_db.fasta -strand both -matched &quot;${seqs_w_fwd_primer}/$(basename ${file4})&quot; -notmatched &quot;${seqs_wo_fwd_primer}/$(basename ${file4})&quot;
+done
+#*****************************************************************************************
+# Step 2: Finding seqs with FWD and REV primers
+
+for file5 in ${seqs_w_fwd_primer}/*.fasta
+    do
+
+        echo &quot;&quot;
+        echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        echo Trimming primers step 2: finding seqs with FWD and REV primer
+        echo input is:
+        echo ${file5}
+
+    $usearch9 -search_oligodb ${file5} -db rev_primer_db.fasta -strand both -matched &quot;${seqs_w_fwd_and_rev_primer}/$(basename ${file5})&quot; -notmatched &quot;${seqs_w_fwd_butnot_rev_primer}/$(basename ${file5})&quot;
+done
+#*****************************************************************************************
+# Step 3: Trimming FWD and REV primers
+
+for file6 in ${seqs_w_fwd_and_rev_primer}/*.fasta
+    do
+
+        echo &quot;&quot;
+        echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        echo Trimming primers step 3: removing FWD and REV primers
+        echo input is:
+        echo ${file6}
+
+    $usearch8 -search_pcr ${file6} -db both_primers_db.fasta -strand both -maxdiffs ${pcr_missmatches} -pcr_strip_primers -ampout &quot;${trimmed_data}/$(basename ${file6} .fasta).fasta&quot;
+done
+
+#*****************************************************************************************
+# Removing working directories
+
+# rm -r seqs_w_fwd_primer
+# rm -r seqs_wo_fwd_primer
+# rm -r seqs_w_fwd_and_rev_primer
+# rm -r seqs_w_fwd_butnot_rev_primer
+
+##########################################################################################</code></pre>
+<hr />
+</div>
+<div id="renaming-sequences" class="section level3">
+<h3>Renaming sequences</h3>
+<p>There are no usearch commands or other parameters in this step, it is simply a series of bash commands to ensure the sequence labels are compatable for downstream OTU/ZOTU clustering.</p>
+<pre class="bash"><code>trimmed_data=&quot;4.trimmed_data&quot;
+labeled_data=&quot;9.labeled_data&quot;
+
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+echo Renameing sequences with &quot;&gt;barcodelabel=sample_id;sequence_id&quot;
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mkdir ${labeled_data}
+mkdir working2
+
+#*****************************************************************************************
+# Step 1: Remove &quot;&gt;&quot; from start of sequence_ID
+
+for file7 in ${trimmed_data}/*.fasta
+    do
+
+    sed -e &#39;s/&gt;/&gt;barcodelabel=;/g&#39; ${file7} &gt; working2/$(basename &quot;$file7&quot; .fasta).txt
+done
+
+#*****************************************************************************************
+# Step 2: Add sample_ID (should be filename) to produce &quot;&gt;barcodelabel=sample_ID;sequence_ID&quot;
+
+for file8 in working2/*.txt
+    do
+
+    sample_id=$(basename ${file8} .txt)
+    echo ${sample_id}
+
+    sed -e &quot;s/;/${sample_id};/g&quot; ${file8} &gt; &quot;${labeled_data}/$(basename &quot;$file8&quot; .txt).fasta&quot;
+done
+
+
+#*****************************************************************************************
+# Remove working directories
+
+rm -r working2
+
+##########################################################################################</code></pre>
+<hr />
+</div>
+<div id="removing-low-abundant-sequences" class="section level3">
+<h3>Removing low abundant sequences</h3>
+<p><a href="https://www.drive5.com/usearch/manual/cmd_fastx_uniques.html">fastx_uniques command</a> - This command finds the set of unique sequences in an input file, also called dereplication. In this case the input is a fasta file. Sequences are compared letter-by-letter and must be identical over the full length of both sequences (substrings do not match).</p>
+<p><a href="https://www.drive5.com/usearch/manual/cmd_sortbysize.html">sortbysize command</a> - This command sorts sequences by decreasing size annotation, which usually refers to the size of a cluster. In this case we also add a <code>-maxsize</code> option to specify singletons i.e. 1.</p>
+<p><a href="https://www.drive5.com/usearch/manual9.2/cmd_search_exact.html">search_exact command</a> - This command searches for exact, full-length matches to a database sequence. This alogorithm is only available with usearch8, however even for large datasets the 32-bit version is fine as it does not need to store alot of memory.</p>
+<pre class="bash"><code>usearch=&quot;usearch9.2&quot;
+labeled_data=&quot;9.labeled_data&quot;
+derep_dir=&quot;10.derep_data&quot;
+low_abund_seqs=&quot;11.low_abund_sequences&quot;
+SF=&quot;12.singleton_filtered&quot;
+# Enter max replicate cluster size (eg. to remove singletons enter 1, for duplicates enter 2)
+maxsize=&quot;1&quot;
+
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+echo Removing low abundant seqs singletons per sample
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+echo &quot;&quot;
+
+# Creating directories
+
+mkdir ${derep_dir}
+mkdir ${low_abund_seqs}
+mkdir ${SF}
+
+#*****************************************************************************************
+# Step 1: Dereplicating
+
+for file9 in ${labeled_data}/*.fasta
+    do
+
+        echo &quot;&quot;
+        echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        echo Removing singletons step 1: derep_fulllength
+        echo input is:
+        echo ${file9}
+
+    $usearch -fastx_uniques ${file9} -fastaout &quot;${derep_dir}/$(basename &quot;$file9&quot; .fasta).fasta&quot; -sizeout
+done
+
+
+#*****************************************************************************************
+# Step 2: Filtering low abundant seqs {maxsize}
+
+for file10 in ${derep_dir}/*.fasta
+    do
+
+        echo &quot;&quot;
+        echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        echo Removing singletons step 2: sorting uniques
+        echo input is:
+        echo ${file10}
+
+    $usearch9 -sortbysize ${file10} -fastaout &quot;${low_abund_seqs}/$(basename &quot;$file10&quot; .fasta).fasta&quot; -maxsize ${maxsize}
+done
+
+#*****************************************************************************************
+# Step 3: Mapping reads
+
+for file11 in ${labeled_data}/*.fasta
+    do
+
+        echo &quot;&quot;
+        echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        echo Removing singletons step 3: mapping reads to low abundant uniques
+        echo input is:
+        echo ${file11}
+
+    $usearch9 -search_exact ${file11} -db &quot;${low_abund_seqs}/$(basename &quot;$file11&quot; .fasta).fasta&quot; -strand plus -notmatched &quot;${SF}/$(basename &quot;$file11&quot; .fasta).fasta&quot;
+done
+
+
+#*****************************************************************************************</code></pre>
+<hr />
+</div>
+<div id="dereplicating-singleton-filtered-sequence" class="section level3">
+<h3>Dereplicating singleton filtered sequence</h3>
+<p>Note that this leads to a dead end essentially. However is is useful if wanting to just analyse a single sample, without having to import the large concatenated sequences.</p>
+<p><a href="https://www.drive5.com/usearch/manual9.2/cmd_fastx_uniques.html">fastx_uniques command</a></p>
+<pre class="bash"><code>usearch=&quot;usearch10&quot;
+SF=&quot;12.singleton_filtered&quot;
+SF_derep=&quot;13.singleton_filtered_derep&quot;
+
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+echo Dereplicating SF files
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mkdir ${SF_derep}
+
+#*****************************************************************************************
+for file15 in ${SF}/*.fasta
+    do
+
+        echo &quot;&quot;
+        echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        echo Derep_fulllength SF data
+        echo input is:
+        echo ${file15}
+
+    $usearch -fastx_uniques ${file15} -fastaout &quot;${SF_derep}/$(basename &quot;$file15&quot; .fasta).fasta&quot; -sizeout
+done</code></pre>
+<hr />
+</div>
+<div id="clustering" class="section level3">
+<h3>Clustering</h3>
+<p>This step is where you may encounter issues with enough memory, for 1 or 2 MiSeq runs, the 32-bit versions of usearch may be okay, however any larger and you will need to use the 64-bit, paid versions. There are alternative freely available software for this step such as vsearch, and it may be worth your time exploring these options if you encounter such limits. For this case we will assume you either have a small data set or have access to the 64-bit versions for larger datasets.</p>
+<p>There are two main alogorithms we recommend you do both and see what works. In my opinion I think that uparse OTUs are sufficent for 16S microbiome analysis in most cases. However if you are after more specific information (i.e. genotypes) or perhaps you targeted a more specific gene region (i.e. your primer were genus/family specific), you may want to go with ZOTUs. In short I think you should do both and make the descision of which makes biological sense in your study.</p>
+<p><strong>UPARSE algorithm to generate OTUs</strong> The UPARSE algorithm is available in usearch 9.2 and usearch 10. If you have a large dataset you will need the 64-bit version as it does hold memory. Detailed documentation on this algorithm can be found <a href="https://drive5.com/usearch/manual/uparseotu_algo.html">here</a>.</p>
+<p>The UPARSE-OTU algorithm constructs a set of OTU representative sequences from NGS amplicon reads. R</p>
+<p>Clustering criteria The goal of UPARSE-OTU is to identify a set of OTU representative sequences (a subset of the input sequences) satisfying the following criteria.</p>
+<p>All pairs of OTU sequences should have &lt; 97% pair-wise sequence identity. An OTU sequence should be the most abundant within a 97% neighborhood. Chimeric sequences should be discarded. All non-chimeric input sequences should match at least one OTU with ≥ 97% identity. UPARSE-OTU uses a greedy algorithm to find a biologically relevant solution, as follows. Since high-abundance reads are more likely to be correct amplicon sequences, and hence are more likely to be true biological sequences, UPARSE-OTU considers input sequences in order of decreasing abundance. This means that OTU centroids tend to be selected from the more abundant reads, and hence are more likely to be correct biological sequences.</p>
+<p><em>Reference</em> Edgar, R.C. (2013) UPARSE: Highly accurate OTU sequences from microbial amplicon reads, Nature Methods. <a href="https://www.nature.com/articles/nmeth.2604">Pubmed:23955772, dx.doi.org/10.1038/nmeth.2604</a>.</p>
+<pre class="bash"><code>SF=&quot;12.singleton_filtered&quot;&quot;
+cluster=&quot;13.cluster&quot;
+uparse_otus=&quot;13a.otus&quot;
+usearch=&quot;usearch9.2&quot;
+
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+echo UPARSE on all
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mkdir ${cluster}
+
+    cat ${SF}/*.fasta &gt; uparse_all/all_samples_SF.fasta
+
+cd ${cluster}
+
+mkdir ${uparse_otus}
+cd ${uparse_otus}
+
+$usearch -fastx_uniques ../all_samples_SF.fasta -fastaout all_samples_SF_DR.fasta -sizeout
+
+$usearch -cluster_otus all_samples_SF_DR.fasta -otus uparse_otus.fasta -relabel OTU
+
+$usearch -usearch_global all_samples_SF.fasta -db uparse_otus.fasta -strand both -id 0.97 -otutabout uparse_otu_tab.txt -biomout uparse_otu_biom.biom
+
+$usearch -cluster_agg uparse_otus.fasta -treeout uparse_otus.tree -clusterout clusters.txt
+
+cd ..
+cd ..</code></pre>
+<p><strong>UNOISE3 algorithm to generate ZOTUs</strong></p>
+<p>The UNOISE3 algorithm is only availed on usearch10. If you have a large data set you will need the 64-bit version as it does hold memory. Detailed documation on this algorithm can be found <a href="https://drive5.com/usearch/manual/cmd_unoise3.html">here</a>.</p>
+<p>There is a UNOISE2 option in Usearch9.2 with documentation available <a href="https://www.drive5.com/usearch/manual9.2/unoise_pipeline.html">here</a>.</p>
+<p>This algorithm is specifically designed for Illumina sequences.</p>
+<p>The UNOISE3 algorithm performs error-correction (denoising) on amplicon reads. It is implemented in the unoise3 command.</p>
+<p>Correct biological sequences are recovered from the reads, resolving distinct sequences down to a single difference (often) or two or more differences (almost always).</p>
+<p>Errors are corrected as follows: 1. Reads with sequencing and PCR point error are identified and removed. 2. Chimeras are removed.</p>
+<p><em>Reference</em> Edgar, R.C. (2016), UNOISE2: Improved error-correction for Illumina 16S and ITS amplicon reads.<a href="https://www.biorxiv.org/content/early/2016/10/15/081257">http://dx.doi.org/10.1101/081257</a></p>
+<pre class="bash"><code>SF=&quot;12.singleton_filtered&quot;&quot;
+cluster=&quot;13.cluster&quot;
+unoise_zotus=&quot;13b.zotus&quot;
+# Remember is must be Usearch 10 for the unoise3 algorithm
+usearch=&quot;usearch10&quot;
+
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+echo UNOISE on all
+echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mkdir ${cluster}
+
+cat ${SF}/*.fasta &gt; ${cluster}/all_samples_SF.fasta
+
+cd ${cluster}
+
+mkdir ${unoise_zotus}
+cd ${unoise_zotus}
+
+$usearch -fastx_uniques ../all_SF.fasta -fastaout all_samples_SF_DR.fasta -sizeout
+
+$usearch -unoise3 all_samples_SF_DR.fasta -zotus unoise_zotus.fasta -tabbedout unoise_tab.txt
+
+$usearch -fastx_relabel unoise_zotus.fasta -prefix Otu -fastaout unoise_zotus_relabelled.fasta -keep_annots
+
+$usearch -otutab all_samples_SF_DR.fasta -zotus unoise_zotus_relabelled.fasta -otutabout unoise_otu_tab.txt -biomout unoise_otu_biom.biom -mapout unoise_map.txt -notmatched unoise_notmatched.fasta -dbmatched dbmatches.fasta -sizeout
+
+$usearch -cluster_agg unoise_zotus_relabelled.fasta -treeout unoise_zotusb.tree -clusterout clusters.txt -id 0.80 -linkage min
+
+cd ..
+cd ..</code></pre>
+</div>
+<div id="what-next" class="section level3">
+<h3>What next?</h3>
+<p>This is downstream analysis that can done with usearch. For example, <a href="https://drive5.com/usearch/manual/cmds_taxonomy.html">taxonomy assignment</a> and <a href="https://drive5.com/usearch/manual/cmds_div.html">diversity analysis</a>.</p>
+<p>However, at present there are more robust taxonomy assignment options available (such as that in QIIME2), that are easier to use. With respect to diversity analysis, QIIME2 and R packages such as Phyloseq and Microbiome offer much more flexibility, robustness and are more aesthectically pleasing.</p>
 </div>
 
 
