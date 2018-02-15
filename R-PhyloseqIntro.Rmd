@@ -2,3 +2,37 @@
 title: "Phyloseq Introduction and Import"
 ---
 
+### Phyloseq and Microbiome analysis in R
+
+**Data Import and Exploration**
+There are a number of packages developed in R that make microbiome analysis easy and produce great figures. There is at times a lot of overlap between this analysis and QIIME - and the choice is yours.
+
+Personally I think that R allows alot more freedom and is more aesthetically pleasing, plus there are lots of things that cannot be done in QIIME that can be done in R. Having said that it does require some knowledge of R, and however this notebook tries to step you through what you need to know.
+
+Two packages in particular are useful for microbiome analysis - the microbiome package builds on phyloseq, and you may find you don't need the microbiome package.
+
+[Phyloseq](http://joey711.github.io/phyloseq/)
+[Microbiome](http://microbiome.github.io/microbiome/)
+
+As always there is more than one way to do things, this phyloseq import will follow the basic import tutorial, in other words importing files individually to create a phyloseq object. However, you may like to follow their tutorials on the QIIME, or mothur input. I do find that as these programs change over time there can be a delay in updating the latest data import workflow, hence why I have gone with the metheod of phyloseq-ize Data already in R that will work no matter what updates are made to QIIME, usearch or other pipelines you may use.
+
+**Libraries**
+
+Note: You will need to install the library first if you haven't already using install.packages
+
+Load the libraries
+```{r}
+library("phyloseq")
+library("tidyverse")
+library("ape")
+library("plyr")
+library("readr")
+library("microbiome")
+library("lattice")
+library("colorspace")
+library("RColorBrewer")
+library("vegan")
+library("microbiome")
+library("jsonlite")
+library("xlsx")
+```
