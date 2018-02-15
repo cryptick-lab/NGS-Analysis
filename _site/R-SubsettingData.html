@@ -303,7 +303,7 @@ f_Bartonellaceae = prune_samples(sample_sums(f_Bartonellaceae)&gt;=1, f_Bartonel
 <div id="rarefying-data" class="section level3">
 <h3>Rarefying data</h3>
 <div class="alert alert-block alert-info">
-<strong> Please note that the authors of phyloseq do not advocate using this as a normalization procedure, despite its recent popularity. See McMurdie and Holmes 2015 PLoS Comput. Biol. or <code>?rarefy_even_depth</code> in your R environment You will need to experiment with this line of code in order for it to make biological sense to your data set. We recommend reading the reference above about Rarefying microbial datasets.
+Please note that the authors of phyloseq do not advocate using this as a normalization procedure, despite its recent popularity. See McMurdie and Holmes 2015 PLoS Comput. Biol. or <code>?rarefy_even_depth</code> in your R environment You will need to experiment with this line of code in order for it to make biological sense to your data set. We recommend reading the reference above about Rarefying microbial datasets.
 </div>
 <pre class="r"><code>physeq1.rarified &lt;- rarefy_even_depth(physeq1)
 ntaxa(physeq1.rarified)
