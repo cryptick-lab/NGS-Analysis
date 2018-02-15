@@ -1,0 +1,49 @@
+---
+title: "Resources"
+output: html_document
+---
+
+The internet has an infinite number of resources available, if you can google than you can code. Youtube tutorials are an excellent way also that give you a visual of what you need to do.
+
+Below are just _some_ of the resources available tailor around genomics analysis in most cases - however the Data and Software Carpentry resources are an excellent starting point for general information.
+
+## General software and data resources
+* [Software Carpentry](https://software-carpentry.org/)
+    + The Unix Shell - Required (this is a great starting point)
+    + Version control with Git - very important when interacting with the notebooks and scipts in this directory
+    + Version control with Mercurial - optional (not needed for these purposes)
+    + Using Databases and SQL - optional extra
+    + Programming with Python - highly recommended
+    + R for Reproducible Scientific Analysis - required
+    + Programming with MATLAB - optional extra (reference towards programming in R)
+    + Automation and Make - optional extra
+
+* [Data Carpentry](http://www.datacarpentry.org/lessons/)
+    + Ecology workshop home page - recommended
+    + Data organisation in spreadsheets - recommended
+    + Data cleaning with Openefine - optional extra
+    + Data Management with SQL - optional extra
+    + Data Analysis and Visualization in R - recommended
+    + Data Analysis and Visualization in Python - recommended
+
+There are a number of online modules and courses are avilable too, some of which you have to pay for but there are many free resources available too.
+
+Popular sites include:
+
+* [Courses.edx](https://courses.edx.org)
+    + [DNA sequencing](https://www.coursera.org/learn/dna-sequencing) - the lessons labelled 'practical' are patiuclarly useful as they have split screen and run through the code line by line. Although they do not use amplicon based NGS examples they do inlclude good fundamental lessons (including how to read a fastq file)
+    + [Bioinformatics methods 1](https://www.coursera.org/learn/bioinformatics-methods-1) - while it does not have recorded practical it goes have a 'post-lab lecture' which is helpful. Their handouts are very detailed, however again they do not give examples specific to NGS but more general bioinformatics.
+*	[Coursera](https://www.coursera.org)
+*	[Datacamp](https://www.datacamp.com/home)
+
+## NGS Sequence analysis
+
+This pipeline makes use of USEARCH and QIIME2 for analysis and taxonomy assignment of next generation sequencing data - however there are a number of different programs and options available.
+
+## Microbial analysis
+
+Some good tutorials available for microbial analysis - of which we make use of here are available for you to browse and pick what you like.
+There can be alot of overlap in these so its up to you to see what works for you. Generally those in R allow more customisation however may be more difficult to grasp initially. GUI's are good to get a quick handle on your data, however you are usually limited in the customisation of the graphical outputs from these programs.
+
+
+## R information
