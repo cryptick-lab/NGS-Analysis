@@ -262,14 +262,19 @@ $(document).ready(function () {
 
 
 <p>Following the <a href="https://joey711.github.io/phyloseq/plot_richness-examples.html">phyloseq alpha diversity examples</a></p>
-<p>All (samples and control) prune &gt; 0</p>
+<p>All taxa (for samples and control) prune &gt; 0</p>
 <pre class="r"><code>physeq_prune &lt;- prune_species(speciesSums(physeq1) &gt; 0, physeq1)</code></pre>
 <pre class="r"><code>p = plot_richness(physeq_prune, measures=c(&quot;Chao1&quot;, &quot;Shannon&quot;))</code></pre>
 <p>Remove x axis and label</p>
 <pre class="r"><code>p + theme(axis.title.x=element_blank(),
       axis.text.x=element_blank(),
       axis.ticks.x=element_blank())</code></pre>
-<p><img src="images/alpha-bw.png" /> # Colour samples by a variable</p>
+<div class="figure">
+<img src="images/alpha-bw.png" />
+
+</div>
+<div id="colour-samples-by-a-variable" class="section level1">
+<h1>Colour samples by a variable</h1>
 <pre class="r"><code>p = plot_richness(physeq_prune, measures=c(&quot;Chao1&quot;, &quot;Shannon&quot;), color = &quot;Genus_Species&quot;)
 p + theme(axis.title.x=element_blank(),
       axis.text.x=element_blank(),
@@ -277,6 +282,16 @@ p + theme(axis.title.x=element_blank(),
 <div class="figure">
 <img src="images/alpha-col.png" />
 
+</div>
+</div>
+<div id="alpha-diversity-separated-by-variable" class="section level1">
+<h1>alpha diversity separated by variable</h1>
+<pre class="r"><code>p = plot_richness(physeq_prune, x=&quot;Host_common&quot;, measures=c(&quot;Chao1&quot;, &quot;Shannon&quot;), color = &quot;Genus_Species&quot;)
+p</code></pre>
+<div class="figure">
+<img src="images/alpha-col-sep.png" />
+
+</div>
 </div>
 
 
