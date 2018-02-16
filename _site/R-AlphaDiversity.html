@@ -262,10 +262,24 @@ $(document).ready(function () {
 
 
 <p>Following the <a href="https://joey711.github.io/phyloseq/plot_richness-examples.html">phyloseq alpha diversity examples</a></p>
-<p>All taxa (for samples and control) prune &gt; 0</p>
+<div id="prune-taxa" class="section level3">
+<h3>Prune taxa</h3>
+<p>For this purposes I have taken the subset that includes samples only (i.e. excluded controls). Here we prune OTUS that are not present in any of the samples – BUT DON’T TRIM MORE THAN THAT! Many richness estimates are modeled on singletons and doubletons in the abundance data. You need to leave them in the dataset if you want a meaningful estimate.</p>
 <pre class="r"><code>physeq_prune &lt;- prune_species(speciesSums(physeq1) &gt; 0, physeq1)</code></pre>
+<pre><code>## Warning: &#39;prune_species&#39; is deprecated.
+## Use &#39;prune_taxa&#39; instead.
+## See help(&quot;Deprecated&quot;) and help(&quot;phyloseq-deprecated&quot;).
+
+## Warning: &#39;speciesSums&#39; is deprecated.
+## Use &#39;taxa_sums&#39; instead.
+## See help(&quot;Deprecated&quot;) and help(&quot;phyloseq-deprecated&quot;).
+</code></pre>
+</div>
+<div id="plot-examples" class="section level3">
+<h3>Plot Examples</h3>
+<p>You can produce a range of alpha diversity estimates, however it is often slow to sped things up we’ll just use <code>Chao1</code> and <code>Shannon</code>. Other include: <code>Observed</code>, <code>ACE</code>, <code>Simpson</code>, <code>Fisher</code> etc.</p>
 <pre class="r"><code>p = plot_richness(physeq_prune, measures=c(&quot;Chao1&quot;, &quot;Shannon&quot;))</code></pre>
-<p>Remove x axis and label</p>
+<p>If you have a lot of samples it can look nicer to remove x axis and labels</p>
 <pre class="r"><code>p + theme(axis.title.x=element_blank(),
       axis.text.x=element_blank(),
       axis.ticks.x=element_blank())</code></pre>
@@ -273,8 +287,10 @@ $(document).ready(function () {
 <img src="images/alpha-bw.png" />
 
 </div>
+</div>
 <div id="colour-samples-by-a-variable" class="section level1">
 <h1>Colour samples by a variable</h1>
+<p>You may want to color your samples depending on a factor:</p>
 <pre class="r"><code>p = plot_richness(physeq_prune, measures=c(&quot;Chao1&quot;, &quot;Shannon&quot;), color = &quot;Genus_Species&quot;)
 p + theme(axis.title.x=element_blank(),
       axis.text.x=element_blank(),
@@ -284,13 +300,28 @@ p + theme(axis.title.x=element_blank(),
 
 </div>
 </div>
-<div id="alpha-diversity-separated-by-variable" class="section level1">
-<h1>alpha diversity separated by variable</h1>
+<div id="separated-by-variable" class="section level1">
+<h1>Separated by variable</h1>
+<p>You may also want to group samples based on a factor, which you can overlay ontop of the color factor.</p>
 <pre class="r"><code>p = plot_richness(physeq_prune, x=&quot;Host_common&quot;, measures=c(&quot;Chao1&quot;, &quot;Shannon&quot;), color = &quot;Genus_Species&quot;)
 p</code></pre>
 <div class="figure">
 <img src="images/alpha-col-sep.png" />
 
+</div>
+<div id="alpha-diversity-in-microbiome" class="section level3">
+<h3>Alpha diversity in microbiome</h3>
+<p>Additionally the <a href="http://microbiome.github.io/microbiome/Diversity.html">microbiome package</a> allows further options on alpha diversiy</p>
+<p>This returns a table with selected diversity indicators</p>
+<pre class="r"><code>tab_alpha &lt;- diversities(samples_only, index = &quot;all&quot;)
+head(tab_alpha)</code></pre>
+<pre><code>        inverse_simpson gini_simpson  shannon    fisher coverage
+Sample1        8.312981    0.8797062 2.994656 14.381426        3
+Sample2        2.956049    0.6617106 1.706885  4.509570        1
+Sample3        9.076785    0.8898288 2.632313  4.932194        4
+Sample4        5.562666    0.8202301 2.350704  6.644247        2
+Sample5        4.418682    0.7736882 2.395877  5.964442        2
+Sample6        2.961176    0.6622964 1.748629  8.315854        1</code></pre>
 </div>
 </div>
 
