@@ -270,7 +270,7 @@ $(document).ready(function () {
 <pre class="r"><code>samples_only &lt;- subset_samples(physeq1, Sample_Type == &quot;Sample&quot;)</code></pre>
 <p><strong>Subset controls</strong></p>
 <pre class="r"><code>controls &lt;- subset_samples(physeq1, Sample_Type == &quot;Control&quot;)</code></pre>
-<p>Check the number of samples in your sample_only object compared to your entire physeq1 object.</p>
+<p>Check the number of samples in your <code>sample_only</code> object compared to your entire <code>physeq1</code> and <code>control</code> objects.</p>
 <pre class="r"><code>nsamples(physeq)
 nsamples(samples_only)
 nsamples(control)</code></pre>
@@ -284,6 +284,13 @@ PHfr = filter_taxa(PHr, function(x) mean(x) &gt; 1e-5, TRUE)</code></pre>
 <p>Remeber you can check the number of taxa at any stage by</p>
 <pre class="r"><code>ntaxa(PHr)
 ntaxa(PHfr)</code></pre>
+<p><strong>Remove rare taxa</strong> Remove taxa not seen more than 3 times in at least 20% of the samples. This protects against an OTU with small mean &amp; trivially large C.V.</p>
+<pre class="r"><code>physeq1ft &lt;- filter_taxa(physeq1, function(x) sum(x &gt; 3) &gt; (0.2*length(x)), TRUE)</code></pre>
+<p><strong>Standardise abundances</strong></p>
+<p>Standardize abundances to the median sequencing depth</p>
+<pre class="r"><code>total = median(sample_sums(physeq1ft))
+standf = function(x, t=total) round(t * (x / sum(x)))
+physeq1stf = transform_sample_counts(physeq1ft, standf)</code></pre>
 <hr />
 </div>
 <div id="subsetting-data-by-taxa" class="section level3">
@@ -326,7 +333,7 @@ nsamples(physeq1.rarified)</code></pre>
   xlab(&quot;Read counts&quot;) +
   theme(axis.title.y = element_blank())</code></pre>
 <div class="figure">
-<img src="data/sampling-depth.png" />
+<img src="images/sampling-depth.png" />
 
 </div>
 </div>

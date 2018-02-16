@@ -9,8 +9,10 @@ navbar:
       icon: ion-person
       href: about.html
     - text: "Resources"
+      icon: fa-book
       href: resources.html
     - text: "USEARCH Analysis"
+      icon: fa-laptop
       href: usearch-analysis.html
     - text: "QIIME2"
       menu:
@@ -38,3 +40,5 @@ output:
   html_document:
     theme: cosmo
     highlight: textmate
+    include:
+      after_body: footer.html

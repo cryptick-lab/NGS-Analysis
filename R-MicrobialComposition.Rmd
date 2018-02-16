@@ -2,3 +2,54 @@
 title: "Microbial Composition"
 ---
 
+Load libraries
+```{r eval=FALSE}
+
+library("phyloseq")
+library("tidyverse")
+library("readr")
+library("ape")
+library("plyr")
+library("microbiome")
+```
+
+For large data sets, it is best to sub-set your data into smaller sections to first visualise what is going on and to ensure scripts are working.
+
+For examples lets subset the original phyloseq object to just include *Ixodes tasmani* samples.
+
+```{r eval=FALSE}
+tasmani <- rownames(subset(meta(physeq1), Tick_Species == "tasmani"))
+tasmani <- prune_samples(tasmani, physeq1)
+nsamples(tasmani)
+ntaxa(tasmani)
+```
+
+For aesthetic purposes it is best to prune the taxa to only include the more abundant taxa, have a play around with this figure - in this case we used 100, but you may want to adjust this depending on the number of taxa in the sampleset.
+```{r eval = FALSE}
+tasmanifilt = filter_taxa(tasmani, function(x) mean(x) > 100, TRUE)
+ntaxa(tasmanifilt)
+```
+
+**Abundance data**
+```{r eval=FALSE}
+pcomp <- plot_composition(tasmanifilt,
+                      taxonomic.level = "OTU",
+                      sample.sort = "Host_common",
+                      x.label = "Host_common") +
+  guides(fill = guide_legend(ncol = 1))
+pcomp
+```
+![](images/Itasmani.png)
+
+
+**Compositional data**
+```{r eval = FALSE}
+p <- plot_composition(tasmanifilt,
+                      taxonomic.level = "OTU",
+                      sample.sort = "Host_common",
+                      x.label = "Host_commonr", transform = "compositional") +
+  guides(fill = guide_legend(ncol = 3))
+p
+```
+![](images/Itasmani-comp.png)
+

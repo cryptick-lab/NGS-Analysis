@@ -60,7 +60,7 @@ p
 ```
 
 ![](images/alpha-col-sep.png)
-
+<br></br>
 ### Alpha diversity in microbiome
 
 Additionally the [microbiome package](http://microbiome.github.io/microbiome/Diversity.html) allows further options on alpha diversiy

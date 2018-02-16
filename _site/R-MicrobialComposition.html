@@ -20,8 +20,8 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 <link href="site_libs/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" />
 
@@ -32,10 +32,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -192,10 +194,18 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="resources.html">Resources</a>
+  <a href="resources.html">
+    <span class="fa fa-book"></span>
+     
+    Resources
+  </a>
 </li>
 <li>
-  <a href="usearch-analysis.html">USEARCH Analysis</a>
+  <a href="usearch-analysis.html">
+    <span class="fa fa-laptop"></span>
+     
+    USEARCH Analysis
+  </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -229,6 +239,9 @@ $(document).ready(function () {
       <a href="R-PhyloseqIntro.html">Phyloseq Intro</a>
     </li>
     <li>
+      <a href="R-SubsettingData.html">Exploring Data</a>
+    </li>
+    <li>
       <a href="R-AlphaDiversity.html">Alpha Diversity &amp; Seq depth</a>
     </li>
     <li>
@@ -256,8 +269,46 @@ $(document).ready(function () {
 </div>
 
 
+<p>Load libraries</p>
+<pre class="r"><code>library(&quot;phyloseq&quot;)
+library(&quot;tidyverse&quot;)
+library(&quot;readr&quot;)
+library(&quot;ape&quot;)
+library(&quot;plyr&quot;)
+library(&quot;microbiome&quot;)</code></pre>
+<p>For large data sets, it is best to sub-set your data into smaller sections to first visualise what is going on and to ensure scripts are working.</p>
+<p>For examples lets subset the original phyloseq object to just include <em>Ixodes tasmani</em> samples.</p>
+<pre class="r"><code>tasmani &lt;- rownames(subset(meta(physeq1), Tick_Species == &quot;tasmani&quot;))
+tasmani &lt;- prune_samples(tasmani, physeq1)
+nsamples(tasmani)
+ntaxa(tasmani)</code></pre>
+<p>For aesthetic purposes it is best to prune the taxa to only include the more abundant taxa, have a play around with this figure - in this case we used 100, but you may want to adjust this depending on the number of taxa in the sampleset.</p>
+<pre class="r"><code>tasmanifilt = filter_taxa(tasmani, function(x) mean(x) &gt; 100, TRUE)
+ntaxa(tasmanifilt)</code></pre>
+<p><strong>Abundance data</strong></p>
+<pre class="r"><code>pcomp &lt;- plot_composition(tasmanifilt,
+                      taxonomic.level = &quot;OTU&quot;,
+                      sample.sort = &quot;Host_common&quot;,
+                      x.label = &quot;Host_common&quot;) +
+  guides(fill = guide_legend(ncol = 1))
+pcomp</code></pre>
+<div class="figure">
+<img src="images/Itasmani.png" />
 
+</div>
+<p><strong>Compositional data</strong></p>
+<pre class="r"><code>p &lt;- plot_composition(tasmanifilt,
+                      taxonomic.level = &quot;OTU&quot;,
+                      sample.sort = &quot;Host_common&quot;,
+                      x.label = &quot;Host_commonr&quot;, transform = &quot;compositional&quot;) +
+  guides(fill = guide_legend(ncol = 3))
+p</code></pre>
+<div class="figure">
+<img src="images/Itasmani-comp.png" />
 
+</div>
+
+<p>2018 Vector and Waterborne Pathogens Research Group. 2018. S Egan.</p>
 
 
 

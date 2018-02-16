@@ -39,6 +39,21 @@ ntaxa(PHr)
 ntaxa(PHfr)
 ```
 
+**Remove rare taxa**
+Remove taxa not seen more than 3 times in at least 20% of the samples. This protects against an OTU with small mean & trivially large C.V.
+
+```{r eval=FALSE}
+physeq1ft <- filter_taxa(physeq1, function(x) sum(x > 3) > (0.2*length(x)), TRUE)
+```
+
+**Standardise abundances**
+
+Standardize abundances to the median sequencing depth
+```{r eval=FALSE}
+total = median(sample_sums(physeq1ft))
+standf = function(x, t=total) round(t * (x / sum(x)))
+physeq1stf = transform_sample_counts(physeq1ft, standf)
+```
 ***
 
 ### Subsetting data by taxa
