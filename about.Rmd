@@ -1,16 +1,15 @@
 ---
-title: "About"
+title: "Vector and Waterborne Pathogens Research Group"
 ---
-
-![](VWBPRG.jpeg)
-
-### Vector and Waterborne pathogens Research Group
 Murdoch University
+<br></br>
+![](images/VWBPRG.jpeg)
+<br></br>
+![](images/Cryptick-group.png)
 
 More Information - head to our [webpage](http://www.murdoch.edu.au/Research-capabilities/Vector-and-Waterborne-Pathogens-Group/)
 
 
-<br></br>
 
 Website created by: 
 

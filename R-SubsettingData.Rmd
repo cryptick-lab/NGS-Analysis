@@ -11,19 +11,20 @@ You will likely want to subset your dataset so that you only analyse your sample
 
 **Subset your samples (i.e. exclude controls)**
 ```{r eval=FALSE}
-samples_only <- rownames(subset(meta(physeq1), Sample_Type == "Sample"))
-samples_only <- prune_samples(samples_only, physeq1)
+samples_only <- subset_samples(physeq1, Sample_Type == "Sample")
 ```
-Check the number of samples in your sample_only object compared to your entire physeq1 object.
+
+**Subset controls**
+```{r eval=FALSE}
+controls <- subset_samples(physeq1, Sample_Type == "Control")
+```
+
+Check the number of samples in your `sample_only` object compared to your entire `physeq1` and `control` objects.
 ```{r eval=FALSE}
 nsamples(physeq)
 nsamples(samples_only)
+nsamples(control)
 ```
-Check your controls contain no important taxa 
-```{r eval=FALSE}
-controls <- rownames(subset(meta(physeq1), Sample_Type == "Control")) controls <- prune_samples(controls, physeq1)
-```
-
 ***
 
 ### Transforming and filtering data
@@ -91,4 +92,4 @@ ggplot(sample_sum_df, aes(x = sum)) +
   xlab("Read counts") +
   theme(axis.title.y = element_blank())
 ```
-![](data/sampling-depth.png)
+![](images/sampling-depth.png)

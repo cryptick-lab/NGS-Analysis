@@ -267,13 +267,13 @@ $(document).ready(function () {
 <p>Sub-set samples - exlude controls You will likely want to subset your dataset so that you only analyse your samples, i.e. exclude any PCR or extraction controls. Of course I recommend you check these samples first to ensure there is not important taxa in these samples. For example in the case of tick microbiome, we know there are certain tick-associated bacteria that we do not want to see in our control samples - otherwise this would indicate contamination.</p>
 <hr />
 <p><strong>Subset your samples (i.e. exclude controls)</strong></p>
-<pre class="r"><code>samples_only &lt;- rownames(subset(meta(physeq1), Sample_Type == &quot;Sample&quot;))
-samples_only &lt;- prune_samples(samples_only, physeq1)</code></pre>
+<pre class="r"><code>samples_only &lt;- subset_samples(physeq1, Sample_Type == &quot;Sample&quot;)</code></pre>
+<p><strong>Subset controls</strong></p>
+<pre class="r"><code>controls &lt;- subset_samples(physeq1, Sample_Type == &quot;Control&quot;)</code></pre>
 <p>Check the number of samples in your sample_only object compared to your entire physeq1 object.</p>
 <pre class="r"><code>nsamples(physeq)
-nsamples(samples_only)</code></pre>
-<p>Check your controls contain no important taxa</p>
-<pre class="r"><code>controls &lt;- rownames(subset(meta(physeq1), Sample_Type == &quot;Control&quot;)) controls &lt;- prune_samples(controls, physeq1)</code></pre>
+nsamples(samples_only)
+nsamples(control)</code></pre>
 <hr />
 </div>
 <div id="transforming-and-filtering-data" class="section level3">

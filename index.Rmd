@@ -5,7 +5,7 @@ title: "Homepage"
 
 Welcome to the Vector and Waterborne Pathogens Research Group NGS Analysis page.
 <br></br>
-![](VWBPRG.jpeg)
+![](images/VWBPRG.jpeg)
 <br></br>
 We hope this helps walk you through the analysis of your NGS data.
 

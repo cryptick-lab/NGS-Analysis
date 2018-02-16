@@ -20,8 +20,8 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 <link href="site_libs/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" />
 
@@ -32,10 +32,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -229,6 +231,9 @@ $(document).ready(function () {
       <a href="R-PhyloseqIntro.html">Phyloseq Intro</a>
     </li>
     <li>
+      <a href="R-SubsettingData.html">Exploring Data</a>
+    </li>
+    <li>
       <a href="R-AlphaDiversity.html">Alpha Diversity &amp; Seq depth</a>
     </li>
     <li>
@@ -256,7 +261,23 @@ $(document).ready(function () {
 </div>
 
 
+<p>Following the <a href="https://joey711.github.io/phyloseq/plot_richness-examples.html">phyloseq alpha diversity examples</a></p>
+<p>All (samples and control) prune &gt; 0</p>
+<pre class="r"><code>physeq_prune &lt;- prune_species(speciesSums(physeq1) &gt; 0, physeq1)</code></pre>
+<pre class="r"><code>p = plot_richness(physeq_prune, measures=c(&quot;Chao1&quot;, &quot;Shannon&quot;))</code></pre>
+<p>Remove x axis and label</p>
+<pre class="r"><code>p + theme(axis.title.x=element_blank(),
+      axis.text.x=element_blank(),
+      axis.ticks.x=element_blank())</code></pre>
+<p><img src="images/alpha-bw.png" /> # Colour samples by a variable</p>
+<pre class="r"><code>p = plot_richness(physeq_prune, measures=c(&quot;Chao1&quot;, &quot;Shannon&quot;), color = &quot;Genus_Species&quot;)
+p + theme(axis.title.x=element_blank(),
+      axis.text.x=element_blank(),
+      axis.ticks.x=element_blank())</code></pre>
+<div class="figure">
+<img src="images/alpha-col.png" />
 
+</div>
 
 
 
