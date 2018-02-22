@@ -11,7 +11,7 @@
 
 
 
-<title>Beta Diversity and PCoA</title>
+<title>Vector and Waterborne Pathogens Research Group</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -264,42 +264,16 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Beta Diversity and PCoA</h1>
+<h1 class="title toc-ignore">Vector and Waterborne Pathogens Research Group</h1>
 
 </div>
 
 
-<p>There are many different options when it comes to beta diversity analayis and plot ordination. The phyloseq documentation is a good place to start to understand the different types of analysis. You can also use the help function in r <code>?ordinate</code> and <code>?plot_ordination</code>.</p>
-<p>The operation of the plot_ordination function also depends a lot on the: <a href="https://joey711.github.io/phyloseq/distance.html">Distance</a> and <a href="https://joey711.github.io/phyloseq/ordinate.html">Ordinate</a> functions.</p>
-<p>The <code>subset_ord_plot</code> function is a “convenience function” intended to make it easier to retrieve a plot-derived <code>data.frame</code> with a subset of points according to a <code>threshold</code> and <code>method</code>. The meaning of the <code>threshold</code> depends upon the <code>method</code>. Phyloseq examples are avilable <a href="http://joey711.github.io/phyloseq/subset_ord_plot-examples">here</a>.</p>
-<p>In this workflow we will use the plot ordinate feature to determine what variables affect the diversity of the tick microbiome.</p>
-<div id="mds-on-bray-distances" class="section level3">
-<h3>MDS on Bray Distances</h3>
-<pre class="r"><code>ord_MDS &lt;- ordinate(samples_only, &quot;MDS&quot;, &quot;bray&quot;)
-p &lt;- plot_ordination(samples_only, ord_MDS, type = &quot;samples&quot;, color = &quot;Genus_Species&quot;, shape = &quot;Tick_Instar&quot;, title = &quot;MDS ordination&quot;) + geom_point(size = 1)
-print(p)</code></pre>
-<div class="figure">
-<img src="images/MDS-ord.png" />
-
-</div>
-<p>To facet the figure by a variable use ggplot command <code>facet_wrap</code></p>
-<pre class="r"><code>p + facet_wrap(~Genus_Species)</code></pre>
-<div class="figure">
-<img src="images/MDS-ord-facet.png" />
-
-</div>
-<p>Another way that is useful to group samples is to use ggplot geom_polygon feature, however this is best used when there are only a few samples to plot and all samples of the same variable group closely together.</p>
-<pre class="r"><code>p2 &lt;- plot_ordination(samples_only, ord_MDS, type=&quot;samples&quot;, color=&quot;Genus_Species&quot;)
-p2 + geom_polygon(aes(fill=Genus_Species)) + geom_point(size=1) + ggtitle(&quot;Genus_Species&quot;)</code></pre>
+<p>Murdoch University <br></br> <img src="images/VWBPRG.jpeg" /> <br></br> <img src="images/group.png" /></p>
+<p><em>More Information</em> - head to our <a href="http://www.murdoch.edu.au/Research-capabilities/Vector-and-Waterborne-Pathogens-Group/">webpage</a></p>
 <hr />
-</div>
-<div id="mds-pcoa-on-unifrac-distances" class="section level3">
-<h3>MDS (“PCoA”) on Unifrac Distances</h3>
-<p>Use the ordinate function to simultaneously perform weightd UniFrac and then perform a Principal Coordinate Analysis on that distance matrix (first line). Next pass that data and the ordination results to plot_ordination to create the ggplot2 output graphic with default ggplot2 settings.</p>
-<p>The first line of code to ordinate the data can take a long time for large datasets</p>
-<pre class="r"><code>ord_PCoA_unifrac = ordinate(samples_only, &quot;PCoA&quot;, &quot;unifrac&quot;, weighted=TRUE)
-plot_ordination(samples_only, ordu, color=&quot;Genus_Species&quot;, shape=&quot;Tick_Instar&quot;)</code></pre>
-</div>
+<p><em>Website created by: </em></p>
+<p>Siobhon Egan <a href="mailto:siobhon.egan@murdoch.edu.au">siobhon.egan@murdoch.edu.au</a></p>
 
 <p>Vector and Waterborne Pathogens Research Group. 2018. S Egan.</p>
 

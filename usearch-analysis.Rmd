@@ -63,7 +63,7 @@ mkdir $read_summary
  done
 ```
  
-To look at just one fasta or fastq files, for example inspect your concatenate dereplicated sequences. The -secs 5 options is good when just wanting a snap shot of a large sequences files, however can be deleted if you can it to scan the entire file.
+To look at just one fasta or fastq files, for example inspect your concatenate sequences. The -secs 5 options is good when just wanting a snap shot of a large sequences file, however it can be deleted if you can it to scan the entire file.
 
 ```{bash eval=FALSE}
 usearch10 -fastx_info sequences.fastq -secs 5 -output reads_info.txt

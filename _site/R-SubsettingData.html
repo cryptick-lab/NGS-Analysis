@@ -194,10 +194,18 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="resources.html">Resources</a>
+  <a href="resources.html">
+    <span class="fa fa-book"></span>
+     
+    Resources
+  </a>
 </li>
 <li>
-  <a href="usearch-analysis.html">USEARCH Analysis</a>
+  <a href="usearch-analysis.html">
+    <span class="fa fa-laptop"></span>
+     
+    USEARCH Analysis
+  </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -264,7 +272,7 @@ $(document).ready(function () {
 <div id="pre-processing-data" class="section level3">
 <h3>Pre-processing data</h3>
 <p>The phyloseq package also includes functions for filtering, subsetting, and merging abundance data. Filtering in phyloseq is designed in a modular fashion similar to the approach in the genefilter package. This includes the prune_taxa and prune_samples methods for directly removing unwanted indices, as well as the filterfun_sample and genefilter_sample functions for building arbitrarily complex sample-wise filtering criteria, and the filter_taxa function for taxa-wise filtering. You can try experimenting with different combinations of these functions. For example you may want to filter by sample, then by taxa. Use the basic commands functions to explore the different in the sub-sets.</p>
-<p>Sub-set samples - exlude controls You will likely want to subset your dataset so that you only analyse your samples, i.e. exclude any PCR or extraction controls. Of course I recommend you check these samples first to ensure there is not important taxa in these samples. For example in the case of tick microbiome, we know there are certain tick-associated bacteria that we do not want to see in our control samples - otherwise this would indicate contamination.</p>
+<p><strong>Sub-set samples - exlude controls</strong> You will likely want to subset your dataset so that you only analyse your samples, i.e. exclude any PCR or extraction controls. Of course I recommend you check these samples first to ensure there is not important taxa in these samples. For example in the case of tick microbiome, we know there are certain tick-associated bacteria that we do not want to see in our control samples - otherwise this would indicate contamination.</p>
 <hr />
 <p><strong>Subset your samples (i.e. exclude controls)</strong></p>
 <pre class="r"><code>samples_only &lt;- subset_samples(physeq1, Sample_Type == &quot;Sample&quot;)</code></pre>
@@ -338,6 +346,7 @@ nsamples(physeq1.rarified)</code></pre>
 </div>
 </div>
 
+<p>Vector and Waterborne Pathogens Research Group. 2018. S Egan.</p>
 
 
 

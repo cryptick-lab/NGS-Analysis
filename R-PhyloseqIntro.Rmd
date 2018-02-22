@@ -45,7 +45,7 @@ Set working directory
 ```{r eval=FALSE}
 setwd("~/tick_meta_analysis/data")
 ```
-*Remember the useful package for data management in `[R ProjectTemplate](http://projecttemplate.net/getting_started.html)`*
+Remember the useful package for data management in [R ProjectTemplate](http://projecttemplate.net/getting_started.html)
 
 ### Importing data and creating a physeq object
 

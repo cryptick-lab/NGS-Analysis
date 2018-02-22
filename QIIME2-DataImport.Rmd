@@ -8,6 +8,7 @@ This workflow follows documentation from QIIME2 documents on [data import](https
 This notebook continues on from the notebook on native installation of QIIME2 and the USEARCH pipeline.
 
 **Assumptions**
+
 * Using a macOS environment
 * Installed QIIME2 following their [native installation guide](https://docs.qiime2.org/2017.12/install/native/)
 * Worked through the USEARCH Pipeline as outlined [INSERT LINK HERE]
