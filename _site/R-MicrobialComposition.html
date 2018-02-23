@@ -307,8 +307,25 @@ p</code></pre>
 <img src="images/Itasmani-comp.png" />
 
 </div>
+<hr />
+<p>For Large datasets however this can often not be a useful way to show the microbial composition of the samples. Here we will use heat maps to show the relative abundance of taxa in samples</p>
+<div id="heat-maps" class="section level3">
+<h3>Heat maps</h3>
+<p>Here we use the <em>Ixodes tasmani</em> subset for quicker graphing</p>
+<pre class="r"><code>tasmani &lt;- subset_samples(physeq1, Tick_Species== &quot;tasmani&quot;)</code></pre>
+<p>Then we will filter the top 300 OTUs</p>
+<pre class="r"><code>tasmani_300 &lt;- prune_taxa(names(sort(taxa_sums(tasmani),TRUE)[1:300]), tasmani)
+plot_heatmap(tasmani_300, sample.label=&quot;Host_common&quot;)</code></pre>
+<div class="figure">
+<img src="images/heatmap_tasmani.png" />
 
-<p>2018 Vector and Waterborne Pathogens Research Group. 2018. S Egan.</p>
+</div>
+<p>We can then subset a smaller set based on taxa</p>
+<pre class="r"><code>tasmani_Alphapro &lt;- subset_taxa(tasmani, Class==&quot;Alphaproteobacteria&quot;)
+plot_heatmap(tasmani_Alphapro)</code></pre>
+</div>
+
+<p>Vector and Waterborne Pathogens Research Group. 2018. S Egan.</p>
 
 
 

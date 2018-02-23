@@ -300,6 +300,12 @@ p2 + geom_polygon(aes(fill=Genus_Species)) + geom_point(size=1) + ggtitle(&quot;
 <pre class="r"><code>ord_PCoA_unifrac = ordinate(samples_only, &quot;PCoA&quot;, &quot;unifrac&quot;, weighted=TRUE)
 plot_ordination(samples_only, ordu, color=&quot;Genus_Species&quot;, shape=&quot;Tick_Instar&quot;)</code></pre>
 </div>
+<div id="heatmap-of-ordination" class="section level3">
+<h3>Heatmap of ordination</h3>
+<p>We can also present the ordination methods as a heat map. This works best for smaller datasets so we will subset the large <code>physeq1</code> data to only <em>Ixodes tasmani</em></p>
+<pre class="r"><code>tasmani &lt;- subset_samples(physeq1, Tick_Species== &quot;tasmani&quot;)</code></pre>
+<p>plot_heatmap(gpac, “DCA”, “none”, “SampleType”, “Family”)</p>
+</div>
 
 <p>Vector and Waterborne Pathogens Research Group. 2018. S Egan.</p>
 

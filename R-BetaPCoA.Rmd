@@ -51,3 +51,21 @@ ord_PCoA_unifrac = ordinate(samples_only, "PCoA", "unifrac", weighted=TRUE)
 plot_ordination(samples_only, ordu, color="Genus_Species", shape="Tick_Instar")
 ```
 
+***
+
+### Heatmap of ordination
+
+We can also present the ordination methods as a heat map. This works best for smaller datasets so we will subset the large `physeq1` data to only *Ixodes tasmani*
+
+```{r eval=FALSE}
+tasmani <- subset_samples(physeq1, Tick_Species== "tasmani")
+```
+
+```{r eval=FALSE}
+plot_heatmap(tasmani, "NMDS", "jaccard")
+```
+![](images/heatmap_tasmani_NMDS_jaccard.png)
+
+```{r eval=FALSE}
+plot_heatmap(tasmani, "DCA", "none", "Host_common", "Family")
+```

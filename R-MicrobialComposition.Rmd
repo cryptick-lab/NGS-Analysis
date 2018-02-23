@@ -53,3 +53,29 @@ p
 ```
 ![](images/Itasmani-comp.png)
 
+***
+
+For Large datasets however this can often not be a useful way to show the microbial composition of the samples. Here we will use heat maps to show the relative abundance of taxa in samples
+
+### Heat maps
+
+Here we use the *Ixodes tasmani* subset for quicker graphing
+
+```{r eval=FALSE}
+tasmani <- subset_samples(physeq1, Tick_Species== "tasmani")
+```
+
+Then we will filter the top 300 OTUs
+```{r eval=FALSE}
+tasmani_300 <- prune_taxa(names(sort(taxa_sums(tasmani),TRUE)[1:300]), tasmani)
+plot_heatmap(tasmani_300, sample.label="Host_common")
+```
+
+![](images/heatmap_tasmani.png)
+
+
+We can then subset a smaller set based on taxa
+```{r eval=FALSE}
+tasmani_Alphapro <- subset_taxa(tasmani, Class=="Alphaproteobacteria")
+plot_heatmap(tasmani_Alphapro)
+```
