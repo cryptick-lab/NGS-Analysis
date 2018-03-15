@@ -3,50 +3,89 @@ title: "Resources"
 output: html_document
 ---
 
-The internet has an infinite number of resources available, if you can google than you can code. Youtube tutorials are an excellent way also that give you a visual of what you need to do.
+The internet has an infinite number of resources available - if you can google than you can code! 
 
-Below are just _some_ of the resources available tailor around genomics analysis in most cases - however the Data and Software Carpentry resources are an excellent starting point for general information.
+Don't forget about youtube - an excellent resources for those that are visual learners.
+
+Below are just _some_ of the resources available, mainly tailored around genomics, however the Data and Software Carpentry resources are an excellent starting point for general information.
 
 ## General software and data resources
 * [Software Carpentry](https://software-carpentry.org/)
-    + The Unix Shell - Required (this is a great starting point)
-    + Version control with Git - very important when interacting with the notebooks and scipts in this directory
-    + Version control with Mercurial - optional (not needed for these purposes)
-    + Using Databases and SQL - optional extra
-    + Programming with Python - highly recommended
-    + R for Reproducible Scientific Analysis - required
-    + Programming with MATLAB - optional extra (reference towards programming in R)
-    + Automation and Make - optional extra
-
+    + The Unix shell - *REQUIRED* (this is an essential start for beginners!)
+    + Version control with git - very important when interacting with the notebooks and scipts in this directory, however if coding is still a little scary you can also stick to their webpage or download the [desktop version](https://desktop.github.com/)
+    + Version control with mercurial - optional (perhaps skip this until you are more adept)
+    + Using databases and SQL - optional extra, useful if metadata is an issue for you
+    + Programming with python - highly recommended
+    + Plotting and programming in python - optional
+    + Programming with R - highly recommended 
+    + R for reproducible scientific analysis - *REQUIRED*
+    + Programming with MATLAB - optional
+    + Automation and make - optional
+<br></br>
 * [Data Carpentry](http://www.datacarpentry.org/lessons/)
-    + Ecology workshop home page - recommended
-    + Data organisation in spreadsheets - recommended
-    + Data cleaning with Openefine - optional extra
-    + Data Management with SQL - optional extra
-    + Data Analysis and Visualization in R - recommended
-    + Data Analysis and Visualization in Python - recommended
-
+    + Ecology Lessons
+        - Data organisation in spreadsheets - recommended
+        - Data cleaning with Openefine - optional
+        - Data management with SQL - optional
+        - Data analysis and visualization in R - *HIGHLY RECOMMENDED* for anyone wanting to expand their R knowledge
+        - Data Analysis and visualization in python - recommended
+    + Genomics Lessons
+        - Projection organization and management - recommended
+        - Introduction to the command line - if you have done the Unix shell lesson you can likely skip this
+        - Data wrangling and processing - good for basic information on how to view files and various file formats
+        - Introduction to cloud computing for genomics - unless you are using an Amazon account this is not needed
+        - Data Analysis and Visualization in R - *HIGHLY RECOMMENDED*
+    
 There are a number of online modules and courses are avilable too, some of which you have to pay for but there are many free resources available too.
 
 Popular sites include:
 
 * [Courses.edx](https://courses.edx.org)
-    + [DNA sequencing](https://www.coursera.org/learn/dna-sequencing) - the lessons labelled 'practical' are patiuclarly useful as they have split screen and run through the code line by line. Although they do not use amplicon based NGS examples they do inlclude good fundamental lessons (including how to read a fastq file)
+    + [DNA sequencing](https://www.coursera.org/learn/dna-sequencing) - the lessons labelled 'practical' are particularly useful as they have split screen and run through the code line by line. Although they do not use amplicon based NGS examples they do inlclude good fundamental lessons (including how to read a fastq file)
     + [Bioinformatics methods 1](https://www.coursera.org/learn/bioinformatics-methods-1) - while it does not have recorded practical it goes have a 'post-lab lecture' which is helpful. Their handouts are very detailed, however again they do not give examples specific to NGS but more general bioinformatics.
-*	[Coursera](https://www.coursera.org)
-*	[Datacamp](https://www.datacamp.com/home)
+*	[Coursera](https://www.coursera.org) - a whealth of courses to make your way through
+*	[Datacamp](https://www.datacamp.com/home) - a fantastic resource for data science and anything coding related. The "on-screen" terminal has some pros and cons to it, give the free lessons ago (there is more than enough to keep you busy) and see how you like i - just make sure you take good notes!
 
 ## NGS Sequence analysis
 
-This pipeline makes use of USEARCH and QIIME2 for analysis and taxonomy assignment of next generation sequencing data - however there are a number of different programs and options available.
+This pipeline makes use of [USEARCH](https://www.drive5.com/usearch/) for preprocessing and [QIIME2](https://qiime2.org/) for taxonomy assignment and analysis - both of these come with a number of different tutorials with example data for you to work through. I strongly suggest you work through these **critically** don't just copy and paste and press eneter (even thought it is tempting!) - make sure you understand what and why you are doing things. 
 
-* [Introduction to R for Genomics](http://www.datacarpentry.org/R-genomics/01-intro-to-R.html) - the module on cloud computing may not be applicable to many
+Other comparable alternatives
+
+* [QIIME2](https://docs.qiime2.org/2018.2/plugins/) - although this webpage uses QIIME only from the taxonomy step onwards, pre-processing steps can be done in QIIME2 make using of various Plugins
+* [Mothur](https://www.mothur.org/wiki/Analysis_examples) - a lot of information and resources available
+* [VSEARCH](https://github.com/torognes/vsearch) - made as an alternative to USEARCH
+* [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) - a common tool used for basic fastq commands and manipulation
+
+Some other reference and analysis tools for genomics
+
 * [RNAseq analysis](https://bioinformatics-core-shared-training.github.io/RNAseq-R/) - a link to similar content of RNAseq by combine Australia is also available [here](http://combine-australia.github.io/RNAseq-R/) 
+* [Next Gen Seek](http://nextgenseek.com)
+* [Bits of DNA](http://liorpachter.wordpress.com/seq)
+* [RNA-Seq Blog](http://www.rna-seqblog.com)
+* [Journal of Next Generation Sequencing & Applications](http://www.omicsonline.org/next-generationsequencing-
+applications.php)
+* [CoreGenomics](http://core-genomics.blogspot.com)
+* [Next-Gen Sequencing](http://nextgenseq.blogspot.com)
+* [Omics! Omics!](http://omicsomics.blogspot.com)
+* [In Between Lines of Code](http://flxlexblog.wordpress.com)
+* [Kevin’s GATTACA World](http://kevin-gattaca.blogspot.com)
+* [Blog @ Illumina](http://blog.illumina.com)
+* [Next Generation Technologist](http://www.yuzuki.org)
+* [Applied compuational genomics](https://github.com/quinlan-lab/applied-computational-genomics)
+* [OSSU bioinformatics](https://github.com/ossu/bioinformatics)
+
 
 ## Microbial analysis
 
 Some good tutorials available for microbial analysis - of which we make use of here are available for you to browse and pick what you like.
 There can be alot of overlap in these so its up to you to see what works for you. Generally those in R allow more customisation however may be more difficult to grasp initially. GUI's are good to get a quick handle on your data, however you are usually limited in the customisation of the graphical outputs from these programs.
+
+* [phyloseq](https://joey711.github.io/phyloseq/)
+* [microbiomeSeq](http://userweb.eng.gla.ac.uk/umer.ijaz/projects/microbiomeSeq_Tutorial.html#install)
+* [R microbiota](https://rpubs.com/dillmcfarlan/R_microbiotaSOP)
+* [MicrobiobeMiseq](http://deneflab.github.io/MicrobeMiseq/)
+* [Bioconductor Microbiome](https://bioconductor.org/help/course-materials/2017/BioC2017/Day1/Workshops/Microbiome/MicrobiomeWorkflowII.html)
 
 
 ## R information

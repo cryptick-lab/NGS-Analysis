@@ -20,8 +20,8 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 <link href="site_libs/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" />
 
@@ -32,10 +32,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -192,10 +194,18 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="resources.html">Resources</a>
+  <a href="resources.html">
+    <span class="fa fa-book"></span>
+     
+    Resources
+  </a>
 </li>
 <li>
-  <a href="usearch-analysis.html">USEARCH Analysis</a>
+  <a href="usearch-analysis.html">
+    <span class="fa fa-laptop"></span>
+     
+    USEARCH Analysis
+  </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -229,6 +239,9 @@ $(document).ready(function () {
       <a href="R-PhyloseqIntro.html">Phyloseq Intro</a>
     </li>
     <li>
+      <a href="R-SubsettingData.html">Exploring Data</a>
+    </li>
+    <li>
       <a href="R-AlphaDiversity.html">Alpha Diversity &amp; Seq depth</a>
     </li>
     <li>
@@ -256,30 +269,43 @@ $(document).ready(function () {
 </div>
 
 
-<p>The internet has an infinite number of resources available, if you can google than you can code. Youtube tutorials are an excellent way also that give you a visual of what you need to do.</p>
-<p>Below are just <em>some</em> of the resources available tailor around genomics analysis in most cases - however the Data and Software Carpentry resources are an excellent starting point for general information.</p>
+<p>The internet has an infinite number of resources available - if you can google than you can code!</p>
+<p>Don’t forget about youtube - an excellent resources for those that are visual learners.</p>
+<p>Below are just <em>some</em> of the resources available, mainly tailored around genomics, however the Data and Software Carpentry resources are an excellent starting point for general information.</p>
 <div id="general-software-and-data-resources" class="section level2">
 <h2>General software and data resources</h2>
 <ul>
 <li><a href="https://software-carpentry.org/">Software Carpentry</a>
 <ul>
-<li>The Unix Shell - Required (this is a great starting point)</li>
-<li>Version control with Git - very important when interacting with the notebooks and scipts in this directory</li>
-<li>Version control with Mercurial - optional (not needed for these purposes)</li>
-<li>Using Databases and SQL - optional extra</li>
-<li>Programming with Python - highly recommended</li>
-<li>R for Reproducible Scientific Analysis - required</li>
-<li>Programming with MATLAB - optional extra (reference towards programming in R)</li>
-<li>Automation and Make - optional extra</li>
+<li>The Unix shell - <em>REQUIRED</em> (this is an essential start for beginners!)</li>
+<li>Version control with git - very important when interacting with the notebooks and scipts in this directory, however if coding is still a little scary you can also stick to their webpage or download the <a href="https://desktop.github.com/">desktop version</a></li>
+<li>Version control with mercurial - optional (perhaps skip this until you are more adept)</li>
+<li>Using databases and SQL - optional extra, useful if metadata is an issue for you</li>
+<li>Programming with python - highly recommended</li>
+<li>Plotting and programming in python - optional</li>
+<li>Programming with R - highly recommended</li>
+<li>R for reproducible scientific analysis - <em>REQUIRED</em></li>
+<li>Programming with MATLAB - optional</li>
+<li>Automation and make - optional <br></br></li>
 </ul></li>
 <li><a href="http://www.datacarpentry.org/lessons/">Data Carpentry</a>
 <ul>
-<li>Ecology workshop home page - recommended</li>
+<li>Ecology Lessons
+<ul>
 <li>Data organisation in spreadsheets - recommended</li>
-<li>Data cleaning with Openefine - optional extra</li>
-<li>Data Management with SQL - optional extra</li>
-<li>Data Analysis and Visualization in R - recommended</li>
-<li>Data Analysis and Visualization in Python - recommended</li>
+<li>Data cleaning with Openefine - optional</li>
+<li>Data management with SQL - optional</li>
+<li>Data analysis and visualization in R - <em>HIGHLY RECOMMENDED</em> for anyone wanting to expand their R knowledge</li>
+<li>Data Analysis and visualization in python - recommended</li>
+</ul></li>
+<li>Genomics Lessons
+<ul>
+<li>Projection organization and management - recommended</li>
+<li>Introduction to the command line - if you have done the Unix shell lesson you can likely skip this</li>
+<li>Data wrangling and processing - good for basic information on how to view files and various file formats</li>
+<li>Introduction to cloud computing for genomics - unless you are using an Amazon account this is not needed</li>
+<li>Data Analysis and Visualization in R - <em>HIGHLY RECOMMENDED</em></li>
+</ul></li>
 </ul></li>
 </ul>
 <p>There are a number of online modules and courses are avilable too, some of which you have to pay for but there are many free resources available too.</p>
@@ -287,24 +313,51 @@ $(document).ready(function () {
 <ul>
 <li><a href="https://courses.edx.org">Courses.edx</a>
 <ul>
-<li><a href="https://www.coursera.org/learn/dna-sequencing">DNA sequencing</a> - the lessons labelled ‘practical’ are patiuclarly useful as they have split screen and run through the code line by line. Although they do not use amplicon based NGS examples they do inlclude good fundamental lessons (including how to read a fastq file)</li>
+<li><a href="https://www.coursera.org/learn/dna-sequencing">DNA sequencing</a> - the lessons labelled ‘practical’ are particularly useful as they have split screen and run through the code line by line. Although they do not use amplicon based NGS examples they do inlclude good fundamental lessons (including how to read a fastq file)</li>
 <li><a href="https://www.coursera.org/learn/bioinformatics-methods-1">Bioinformatics methods 1</a> - while it does not have recorded practical it goes have a ‘post-lab lecture’ which is helpful. Their handouts are very detailed, however again they do not give examples specific to NGS but more general bioinformatics.</li>
 </ul></li>
-<li><a href="https://www.coursera.org">Coursera</a></li>
-<li><a href="https://www.datacamp.com/home">Datacamp</a></li>
+<li><a href="https://www.coursera.org">Coursera</a> - a whealth of courses to make your way through</li>
+<li><a href="https://www.datacamp.com/home">Datacamp</a> - a fantastic resource for data science and anything coding related. The “on-screen” terminal has some pros and cons to it, give the free lessons ago (there is more than enough to keep you busy) and see how you like i - just make sure you take good notes!</li>
 </ul>
 </div>
 <div id="ngs-sequence-analysis" class="section level2">
 <h2>NGS Sequence analysis</h2>
-<p>This pipeline makes use of USEARCH and QIIME2 for analysis and taxonomy assignment of next generation sequencing data - however there are a number of different programs and options available.</p>
+<p>This pipeline makes use of <a href="https://www.drive5.com/usearch/">USEARCH</a> for preprocessing and <a href="https://qiime2.org/">QIIME2</a> for taxonomy assignment and analysis - both of these come with a number of different tutorials with example data for you to work through. I strongly suggest you work through these <strong>critically</strong> don’t just copy and paste and press eneter (even thought it is tempting!) - make sure you understand what and why you are doing things.</p>
+<p>Other comparable alternatives</p>
 <ul>
-<li><a href="http://www.datacarpentry.org/R-genomics/01-intro-to-R.html">Introduction to R for Genomics</a> - the module on cloud computing may not be applicable to many</li>
+<li><a href="https://docs.qiime2.org/2018.2/plugins/">QIIME2</a> - although this webpage uses QIIME only from the taxonomy step onwards, pre-processing steps can be done in QIIME2 make using of various Plugins</li>
+<li><a href="https://www.mothur.org/wiki/Analysis_examples">Mothur</a> - a lot of information and resources available</li>
+<li><a href="https://github.com/torognes/vsearch">VSEARCH</a> - made as an alternative to USEARCH</li>
+<li><a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> - a common tool used for basic fastq commands and manipulation</li>
+</ul>
+<p>Some other reference and analysis tools for genomics</p>
+<ul>
 <li><a href="https://bioinformatics-core-shared-training.github.io/RNAseq-R/">RNAseq analysis</a> - a link to similar content of RNAseq by combine Australia is also available <a href="http://combine-australia.github.io/RNAseq-R/">here</a></li>
+<li><a href="http://nextgenseek.com">Next Gen Seek</a></li>
+<li><a href="http://liorpachter.wordpress.com/seq">Bits of DNA</a></li>
+<li><a href="http://www.rna-seqblog.com">RNA-Seq Blog</a></li>
+<li><a href="http://www.omicsonline.org/next-generationsequencing-%20applications.php">Journal of Next Generation Sequencing &amp; Applications</a></li>
+<li><a href="http://core-genomics.blogspot.com">CoreGenomics</a></li>
+<li><a href="http://nextgenseq.blogspot.com">Next-Gen Sequencing</a></li>
+<li><a href="http://omicsomics.blogspot.com">Omics! Omics!</a></li>
+<li><a href="http://flxlexblog.wordpress.com">In Between Lines of Code</a></li>
+<li><a href="http://kevin-gattaca.blogspot.com">Kevin’s GATTACA World</a></li>
+<li><a href="http://blog.illumina.com">Blog @ Illumina</a></li>
+<li><a href="http://www.yuzuki.org">Next Generation Technologist</a></li>
+<li><a href="https://github.com/quinlan-lab/applied-computational-genomics">Applied compuational genomics</a></li>
+<li><a href="https://github.com/ossu/bioinformatics">OSSU bioinformatics</a></li>
 </ul>
 </div>
 <div id="microbial-analysis" class="section level2">
 <h2>Microbial analysis</h2>
 <p>Some good tutorials available for microbial analysis - of which we make use of here are available for you to browse and pick what you like. There can be alot of overlap in these so its up to you to see what works for you. Generally those in R allow more customisation however may be more difficult to grasp initially. GUI’s are good to get a quick handle on your data, however you are usually limited in the customisation of the graphical outputs from these programs.</p>
+<ul>
+<li><a href="https://joey711.github.io/phyloseq/">phyloseq</a></li>
+<li><a href="http://userweb.eng.gla.ac.uk/umer.ijaz/projects/microbiomeSeq_Tutorial.html#install">microbiomeSeq</a></li>
+<li><a href="https://rpubs.com/dillmcfarlan/R_microbiotaSOP">R microbiota</a></li>
+<li><a href="http://deneflab.github.io/MicrobeMiseq/">MicrobiobeMiseq</a></li>
+<li><a href="https://bioconductor.org/help/course-materials/2017/BioC2017/Day1/Workshops/Microbiome/MicrobiomeWorkflowII.html">Bioconductor Microbiome</a></li>
+</ul>
 </div>
 <div id="r-information" class="section level2">
 <h2>R information</h2>
@@ -323,6 +376,7 @@ $(document).ready(function () {
 </ul>
 </div>
 
+<p>Vector and Waterborne Pathogens Research Group. 2018. S Egan.</p>
 
 
 
