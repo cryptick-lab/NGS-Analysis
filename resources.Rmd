@@ -104,3 +104,4 @@ There are a number of cheatsheets and other reference documenation available for
 * Other useful cheatsheets by DataCamp are available [here](https://www.datacamp.com/community/data-science-cheatsheets).
 * Links to other useful resources availbale [here](http://www.datasciencefree.com/cheatsheets.html), [here](https://r-dir.com/reference/crib-sheets.html), [here](https://www.analyticsvidhya.com/blog/2017/02/top-28-cheat-sheets-for-machine-learning-data-science-probability-sql-big-data/) and [here](https://sites.google.com/site/rdatamining/docs/R-refcard-data-mining.pdf?attredirects=0)
 
+***
