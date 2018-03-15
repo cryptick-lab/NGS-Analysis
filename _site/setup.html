@@ -202,20 +202,22 @@ $(document).ready(function () {
 </li>
 <li>
   <a href="setup.html">
-    <span class="fa fa-folder-open"></span>
+    <span class="fa fa-building"></span>
      
     Set up
   </a>
 </li>
 <li>
   <a href="usearch-analysis.html">
-    <span class="fa fa-desktop"></span>
+    <span class="fa fa-binoculars"></span>
      
     USEARCH Analysis
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-puzzle-piece"></span>
+     
     QIIME2
      
     <span class="caret"></span>
@@ -237,6 +239,8 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-puzzle-piece"></span>
+     
     R analysis
      
     <span class="caret"></span>
@@ -346,6 +350,36 @@ $(document).ready(function () {
 <p>It combines all the tools above - such as Bash and R and includes a lot more. It is great if you are interested in python scripting. In addition it also gives you an anaconda environment which is a common requirement for some program (in this case QIIME2). It can serve as a ‘one stop shop’ in respect to being able to execute Bash and Python code, it allows easy install of dependencies (which is partiuclarly prevelent in Python language) it allows you to use markdown with ease, and integrates with github. RStudio and a number of other programs are also integrates into the anaconda environment.</p>
 <p>For download of Anconda - Jupyter notebook click <a href="http://jupyter.org/install">here</a>.</p>
 <p>A good (but perhaps long) video tutorial is available <a href="https://www.youtube.com/watch?v=CwFq3YDU6_Y">here</a>.</p>
+<hr />
+</div>
+<div id="usearch" class="section level2">
+<h2>USEARCH</h2>
+<p>To do this analysis you will need to install USEARCH. This step has already been done if you are using the Cryptick Lab iMac - here 64-bit versions of the latest USEARCH 8, 9 and 10 packages have already been downloaded and installed in the path so you can skip this step.</p>
+<p>For the purpose of this workflow we will assume the free 32-bit versions are sufficent (usually okay for 1-2 illumina MiSeq runs, depending on the amount of data generated).</p>
+<p>The script in this workflow uses all three USEARCH versions so they will all need to be installed locally if you wish to use this workflow exactly how it appears. It can be tailored to the version you have - however you need to do this carefully, as some features do change between versions. For example some points of different are: USEARCH v8 has a command to strip primers, that is not available in subsequent versions, and it does not have UNOISE commands, only UPARSE. USEARCH v9 has UNOISE2 and USEARCH v10 has UNOISE3.</p>
+<p>The following instructions are for a MacOS or linux operating system. For details on a windows operating system see <a href="https://www.drive5.com/usearch/manual/problems_running.html">USEARCH documentation</a>.</p>
+<p><strong>Download USEARCH</strong></p>
+<p>To download USEARCH go to the <a href="https://www.drive5.com/usearch/download.html">download page</a> and select the appriate platform and version number. You will then be sent a download link to your email.</p>
+<p>Save the file in an easy to locate path that you will not touch. I suggest adding a new folder in your home directory called <code>Programs</code>, you can rename the file to something easier e.g. <code>usearch9.2.34bit</code> this will let you know it is version 9.2 32-bit.</p>
+<p><strong>Execute permissions</strong></p>
+<p>Once you have moved and saved it where you will not touch the file or any parent folders (i.e. the path) you will need to ensure that you have read and execute permissions for the binary file.</p>
+<p>Within the Bash evironment (terminal for MacOS or your Git Bash for Windows) nagive to the directory:</p>
+<pre><code>cd /Users/username/Programs</code></pre>
+<p>You will then need to use the <code>chmod</code> command to ensure you have read and execute permissions for the binary file. If you have multiple binary files (i.e. downloaded multiple USEARCH versions) you will need to do this for each.</p>
+<pre><code>chmod +x usearch9.2.32bit</code></pre>
+<p><strong>Updaing path</strong></p>
+<p>To avoid refering to the complete path everything you want to execute a usearch command you can update your path using the Bash environment.</p>
+<p>Navigate to your home directory by running opening up a new terminal window, and do the following:</p>
+<pre><code>cd ~</code></pre>
+<p>To edit your path, you need need to open the <code>.bash_profile</code> in a text editor, such as the following:</p>
+<pre><code>vi .bash_profile</code></pre>
+<p>This opens up a text editor (in this case vi) to edit your path. It is <strong>very</strong> important you <em>add</em> to your path, and <em>do <strong>not</strong> delete it!</em>.</p>
+<p>Currently your path may look something like:</p>
+<pre><code>export PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;</code></pre>
+<p>To update your path add to it by using a semi-colon to seperate and add the new location, such as the example below:</p>
+<pre><code>export PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/Users/username/Programs&quot;</code></pre>
+<p>To check your path you can use the following command <code>echo $PATH</code>.</p>
+<p>For more detailed information on updating the path environment see <a href="https://stackoverflow.com/questions/22465332/setting-path-environment-variable-in-osx-permanently">here</a></p>
 <hr />
 </div>
 
