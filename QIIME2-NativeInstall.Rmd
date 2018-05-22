@@ -32,17 +32,20 @@ You will then need to install QIIME2. The developers recommend you do this in a 
 
 From the Bash window execute the following
 ```{bash eval=FALSE}
-wget https://data.qiime2.org/distro/core/qiime2-2017.12-py35-osx-conda.yml
-conda env create -n qiime2-2017.12 --file qiime2-2017.12-py35-osx-conda.yml
+wget https://data.qiime2.org/distro/core/qiime2-2018.4-py35-osx-conda.yml
+conda env create -n qiime2-2018.4 --file qiime2-2018.4-py35-osx-conda.yml
 
 # OPTIONAL CLEANUP
-rm qiime2-2017.12-py35-osx-conda.yml
+rm qiime2-2018.4-py35-osx-conda.yml
 ```
+
+<div class="alert alert-info">
+If you receive errors during the installation process, such as `gfortran` errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running `conda env remove -n qiime2-2018.4` to remove the failed environments, then running `conda clean -y --all` to clean the local conda installation, and finally re-running the installation instructions above.</div>
 
 **Step three - Activate QIIME2 environment**
 Activate the QIIME2 environment. This needs to be done everytime you want to "open" QIIME2
 ```{bash eval=FALSE}
-source activate qiime2-2017.12
+source activate qiime2-2018.4
 ```
 
 To check that it has been installed correctly
@@ -54,7 +57,7 @@ qiime --help
 
 ### Basic usage
 Run qiime to see a list of available subcommands:
-```{python eval=FALSE}
+```{r eval=FALSE}
 qiime
 ```
 
@@ -62,13 +65,13 @@ There will be several subcommands listed, including plugin commands (e.g. `featu
 
 You can discover what plugins you currently have installed, as well as other information about your QIIME deployment, by running qiime info: qiime
 
-```{python eval=FALSE}
+```{r eval=FALSE}
 qiime info
 ```
 
 Supply `--help` to any command to display information about the command, including any subcommands, options, and arguments the command defines. For example, to learn more about the `feature-table` plugin command, run:
 
-```{python eval=FALSE}
+```{r eval=FALSE}
 qiime feature-table --help
 ```
 
@@ -80,20 +83,20 @@ Try learning about other commands using `--help`. For example, what actions are 
 If you are using Bash or Zsh as your shell, you can enable tab completion, which substantially improves the usability of the QIIME 2 command-line interface (CLI). When tab completion is enabled, pressing the tab key will attempt to complete the command or option you have typed, or provide you with a list of available commands or options based on what you have typed so far. This reduces the amount of typing you have to do and makes commands and options more easily discoverable without passing --help to every command you’re wanting to run.
 
 *For a Bash environment run the following:*
-```{python eval=FALSE}
+```{r eval=FALSE}
 source tab-qiime
 ```
 
 *Verify tab completion*
 
 To test that tab completion is working, try typing in the following partial command, and without actually running the command, press the tab key (you may need to press it a couple of times). If tab completion is working, the command should auto-complete to qiime info.
-```{python eval=FALSE}
+```{r eval=FALSE}
 qiime i
 ```
 
 **Viewing qzv file formats**
 Files in the format `.qzv` can be viewed from within the terminal, where a webpage will open with the figure/table.
-```{python eval=FALSE}
+```{r eval=FALSE}
 qiime tools view table.qzv
 ```
 

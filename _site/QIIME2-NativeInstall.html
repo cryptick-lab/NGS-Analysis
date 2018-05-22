@@ -20,8 +20,8 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 <link href="site_libs/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" />
 
@@ -32,10 +32,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -192,13 +194,30 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="resources.html">Resources</a>
+  <a href="resources.html">
+    <span class="fa fa-book"></span>
+     
+    Resources
+  </a>
 </li>
 <li>
-  <a href="usearch-analysis.html">USEARCH Analysis</a>
+  <a href="setup.html">
+    <span class="fa fa-building"></span>
+     
+    Set up
+  </a>
+</li>
+<li>
+  <a href="usearch-analysis.html">
+    <span class="fa fa-binoculars"></span>
+     
+    USEARCH Analysis
+  </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-puzzle-piece"></span>
+     
     QIIME2
      
     <span class="caret"></span>
@@ -220,6 +239,8 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-puzzle-piece"></span>
+     
     R analysis
      
     <span class="caret"></span>
@@ -227,6 +248,9 @@ $(document).ready(function () {
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="R-PhyloseqIntro.html">Phyloseq Intro</a>
+    </li>
+    <li>
+      <a href="R-SubsettingData.html">Exploring Data</a>
     </li>
     <li>
       <a href="R-AlphaDiversity.html">Alpha Diversity &amp; Seq depth</a>
@@ -271,13 +295,16 @@ $(document).ready(function () {
 conda install wget</code></pre>
 <p><strong>Step Two - Install QIIME2</strong> You will then need to install QIIME2. The developers recommend you do this in a new environment.</p>
 <p>From the Bash window execute the following</p>
-<pre class="bash"><code>wget https://data.qiime2.org/distro/core/qiime2-2017.12-py35-osx-conda.yml
-conda env create -n qiime2-2017.12 --file qiime2-2017.12-py35-osx-conda.yml
+<pre class="bash"><code>wget https://data.qiime2.org/distro/core/qiime2-2018.4-py35-osx-conda.yml
+conda env create -n qiime2-2018.4 --file qiime2-2018.4-py35-osx-conda.yml
 
 # OPTIONAL CLEANUP
-rm qiime2-2017.12-py35-osx-conda.yml</code></pre>
+rm qiime2-2018.4-py35-osx-conda.yml</code></pre>
+<div class="alert alert-info">
+If you receive errors during the installation process, such as <code>gfortran</code> errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running <code>conda env remove -n qiime2-2018.4</code> to remove the failed environments, then running <code>conda clean -y --all</code> to clean the local conda installation, and finally re-running the installation instructions above.
+</div>
 <p><strong>Step three - Activate QIIME2 environment</strong> Activate the QIIME2 environment. This needs to be done everytime you want to “open” QIIME2</p>
-<pre class="bash"><code>source activate qiime2-2017.12</code></pre>
+<pre class="bash"><code>source activate qiime2-2018.4</code></pre>
 <p>To check that it has been installed correctly</p>
 <pre class="bash"><code>qiime --help</code></pre>
 <hr />
@@ -285,27 +312,30 @@ rm qiime2-2017.12-py35-osx-conda.yml</code></pre>
 <div id="basic-usage" class="section level3">
 <h3>Basic usage</h3>
 <p>Run qiime to see a list of available subcommands:</p>
-<pre class="python"><code>qiime</code></pre>
+<pre class="r"><code>qiime</code></pre>
 <p>There will be several subcommands listed, including plugin commands (e.g. <code>feature-table</code>, <code>diversity</code>) and built-in commands (e.g. <code>info</code>, <code>tools</code>).</p>
 <p>You can discover what plugins you currently have installed, as well as other information about your QIIME deployment, by running qiime info: qiime</p>
-<pre class="python"><code>qiime info</code></pre>
+<pre class="r"><code>qiime info</code></pre>
 <p>Supply <code>--help</code> to any command to display information about the command, including any subcommands, options, and arguments the command defines. For example, to learn more about the <code>feature-table</code> plugin command, run:</p>
-<pre class="python"><code>qiime feature-table --help</code></pre>
+<pre class="r"><code>qiime feature-table --help</code></pre>
 <p>This will list the actions (subcommands) made available by the feature-table plugin, as well as information about the plugin itself (e.g. citation, website, user support).</p>
 <p>Try learning about other commands using <code>--help</code>. For example, what actions are available in the built-in tools command?</p>
 <p><strong>Enable command-line tab completion</strong> If you are using Bash or Zsh as your shell, you can enable tab completion, which substantially improves the usability of the QIIME 2 command-line interface (CLI). When tab completion is enabled, pressing the tab key will attempt to complete the command or option you have typed, or provide you with a list of available commands or options based on what you have typed so far. This reduces the amount of typing you have to do and makes commands and options more easily discoverable without passing –help to every command you’re wanting to run.</p>
 <p><em>For a Bash environment run the following:</em></p>
-<pre class="python"><code>source tab-qiime</code></pre>
+<pre class="r"><code>source tab-qiime</code></pre>
 <p><em>Verify tab completion</em></p>
 <p>To test that tab completion is working, try typing in the following partial command, and without actually running the command, press the tab key (you may need to press it a couple of times). If tab completion is working, the command should auto-complete to qiime info.</p>
-<pre class="python"><code>qiime i</code></pre>
+<pre class="r"><code>qiime i</code></pre>
 <p><strong>Viewing qzv file formats</strong> Files in the format <code>.qzv</code> can be viewed from within the terminal, where a webpage will open with the figure/table.</p>
-<pre class="python"><code>qiime tools view table.qzv</code></pre>
+<pre class="r"><code>qiime tools view table.qzv</code></pre>
 <div class="alert alert-warning">
 <strong>Issues viewing your qzv files? </strong> If you find you are having issues visualizing the qzv files from your terminal. You can visit the QIIME view <a href="https://view.qiime2.org/" class="uri">https://view.qiime2.org/</a> webpage and drag &amp; drop your qzv files to view.
 </div>
 </div>
 
+<p>
+<br></br>Vector and Waterborne Pathogens Research Group. 2018. S Egan.
+</p>
 
 
 
