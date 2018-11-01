@@ -57,7 +57,7 @@ Other comparable alternatives
 * [VSEARCH](https://github.com/torognes/vsearch) - made as an alternative to USEARCH
 * [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) - a common tool used for basic fastq commands and manipulation
 
-Some other reference and analysis tools for genomics
+Some other useful references and analysis tools for genomics
 
 * [RNAseq analysis](https://bioinformatics-core-shared-training.github.io/RNAseq-R/) - a link to similar content of RNAseq by combine Australia is also available [here](http://combine-australia.github.io/RNAseq-R/) 
 * [Next Gen Seek](http://nextgenseek.com)
@@ -76,16 +76,30 @@ applications.php)
 * [OSSU bioinformatics](https://github.com/ossu/bioinformatics)
 
 
-## Microbial analysis
+## Microbial and Metageonomics analysis
 
-Some good tutorials available for microbial analysis - of which we make use of here are available for you to browse and pick what you like.
-There can be alot of overlap in these so its up to you to see what works for you. Generally those in R allow more customisation however may be more difficult to grasp initially. GUI's are good to get a quick handle on your data, however you are usually limited in the customisation of the graphical outputs from these programs.
+Microbial analysis has revieved the most attention with respect to amplicon based NGS approaches; however with some refining these pipelines can also be used for other amplicon based NGS studies (e.g. COI (metazoa), ITS (fungi), TrnL (plant), 18S (protozoa) just to name a few)
+There can be alot of overlap in these so its up to you to see what works for you. Generally those in R allow more customisation however may be more difficult to grasp initially. GUI's are good to get a quick handle on your data, however you are usually limited in the customisation of the graphical outputs from these programs. Some of these are more of a stand alone package however the majority will utilise a common format (e.g. phyloseq objects are common throughout many of these). 
 
-* [phyloseq](https://joey711.github.io/phyloseq/)
-* [microbiomeSeq](http://userweb.eng.gla.ac.uk/umer.ijaz/projects/microbiomeSeq_Tutorial.html#install)
-* [R microbiota](https://rpubs.com/dillmcfarlan/R_microbiotaSOP)
-* [MicrobiobeMiseq](http://deneflab.github.io/MicrobeMiseq/)
-* [Bioconductor Microbiome](https://bioconductor.org/help/course-materials/2017/BioC2017/Day1/Workshops/Microbiome/MicrobiomeWorkflowII.html)
+* [phyloseq](https://joey711.github.io/phyloseq/) - Analyze microbiome census data using R
+* [microbiomeSeq](http://userweb.eng.gla.ac.uk/umer.ijaz/projects/microbiomeSeq_Tutorial.html#install) - An R package for microbial community analysis in an environmental context
+* [metacoder](https://grunwaldlab.github.io/metacoder_documentation/) - An R package for metabarcoding research planning and analysis
+* [microbiome R](http://microbiome.github.io/microbiome/) - Microbiome R package (extending phyloseq)
+* [microbiomeutilities](https://microsud.github.io/microbiomeutilities/) - Extending and supporting package based on microbiome and phyloseq (currently in developmental stage)
+* [R microbiota](https://rpubs.com/dillmcfarlan/R_microbiotaSOP) - Microbiota analysis in R
+* [MicrobiobeMiseq](http://deneflab.github.io/MicrobeMiseq/) - Analyses of microbial community composition and diversity in R using phyloseq
+* [Bioconductor Microbiome](https://bioconductor.org/help/course-materials/2017/BioC2017/Day1/Workshops/Microbiome/MicrobiomeWorkflowII.html) - Microbiome data analysis: from raw reads to community analysis
+* [Ampvis2](https://microsud.github.io/Tools-Microbiome-Analysis/) - Tools for visualising amplicon data
+* [dada2](https://benjjneb.github.io/dada2/index.html) - Fast and accurate sample inference from amplicon data with single-nucleotide resolution
+* [mare](https://github.com/katrikorpela/mare) - Pipeline for microbiota analysis based on 16S-amplicon reads
+* [metagenomeSeq](http://cbcb.umd.edu/software/metagenomeSeq/) - Statistical analysis for sparse high-throughput sequencing
+* [Rhea](https://lagkouvardos.github.io/Rhea/) - A set of R scripts for the analysis of microbial profiles
+* [taxize](https://github.com/ropensci/taxize) - A taxonomic toolbelt for R
+* [LabDSV](http://ecology.msu.montana.edu/labdsv/R/) - Ordination and multivariate analysis for ecology
+* [phylogeo](http://zachcp.github.io/phylogeo) - An R package for geographic analysis and visualization of microbiome data
+* [qiimer](https://github.com/kylebittinger/qiimer) - R functions to read QIIME output files and create figures
+* [RAM](https://rdrr.io/cran/RAM/) - R for amplicon-sequencing-based microbial-ecology
+
 
 
 ## R information
