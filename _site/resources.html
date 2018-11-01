@@ -22,7 +22,9 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 <link href="site_libs/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -91,6 +93,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -341,7 +346,7 @@ $(document).ready(function () {
 <li><a href="https://github.com/torognes/vsearch">VSEARCH</a> - made as an alternative to USEARCH</li>
 <li><a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> - a common tool used for basic fastq commands and manipulation</li>
 </ul>
-<p>Some other reference and analysis tools for genomics</p>
+<p>Some other useful references and analysis tools for genomics</p>
 <ul>
 <li><a href="https://bioinformatics-core-shared-training.github.io/RNAseq-R/">RNAseq analysis</a> - a link to similar content of RNAseq by combine Australia is also available <a href="http://combine-australia.github.io/RNAseq-R/">here</a></li>
 <li><a href="http://nextgenseek.com">Next Gen Seek</a></li>
@@ -359,15 +364,28 @@ $(document).ready(function () {
 <li><a href="https://github.com/ossu/bioinformatics">OSSU bioinformatics</a></li>
 </ul>
 </div>
-<div id="microbial-analysis" class="section level2">
-<h2>Microbial analysis</h2>
-<p>Some good tutorials available for microbial analysis - of which we make use of here are available for you to browse and pick what you like. There can be alot of overlap in these so its up to you to see what works for you. Generally those in R allow more customisation however may be more difficult to grasp initially. GUI’s are good to get a quick handle on your data, however you are usually limited in the customisation of the graphical outputs from these programs.</p>
+<div id="microbial-and-metageonomics-analysis" class="section level2">
+<h2>Microbial and Metageonomics analysis</h2>
+<p>Microbial analysis has revieved the most attention with respect to amplicon based NGS approaches; however with some refining these pipelines can also be used for other amplicon based NGS studies (e.g. COI (metazoa), ITS (fungi), TrnL (plant), 18S (protozoa) just to name a few) There can be alot of overlap in these so its up to you to see what works for you. Generally those in R allow more customisation however may be more difficult to grasp initially. GUI’s are good to get a quick handle on your data, however you are usually limited in the customisation of the graphical outputs from these programs. Some of these are more of a stand alone package however the majority will utilise a common format (e.g. phyloseq objects are common throughout many of these).</p>
 <ul>
-<li><a href="https://joey711.github.io/phyloseq/">phyloseq</a></li>
-<li><a href="http://userweb.eng.gla.ac.uk/umer.ijaz/projects/microbiomeSeq_Tutorial.html#install">microbiomeSeq</a></li>
-<li><a href="https://rpubs.com/dillmcfarlan/R_microbiotaSOP">R microbiota</a></li>
-<li><a href="http://deneflab.github.io/MicrobeMiseq/">MicrobiobeMiseq</a></li>
-<li><a href="https://bioconductor.org/help/course-materials/2017/BioC2017/Day1/Workshops/Microbiome/MicrobiomeWorkflowII.html">Bioconductor Microbiome</a></li>
+<li><a href="https://joey711.github.io/phyloseq/">phyloseq</a> - Analyze microbiome census data using R</li>
+<li><a href="http://userweb.eng.gla.ac.uk/umer.ijaz/projects/microbiomeSeq_Tutorial.html#install">microbiomeSeq</a> - An R package for microbial community analysis in an environmental context</li>
+<li><a href="https://grunwaldlab.github.io/metacoder_documentation/">metacoder</a> - An R package for metabarcoding research planning and analysis</li>
+<li><a href="http://microbiome.github.io/microbiome/">microbiome R</a> - Microbiome R package (extending phyloseq)</li>
+<li><a href="https://microsud.github.io/microbiomeutilities/">microbiomeutilities</a> - Extending and supporting package based on microbiome and phyloseq (currently in developmental stage)</li>
+<li><a href="https://rpubs.com/dillmcfarlan/R_microbiotaSOP">R microbiota</a> - Microbiota analysis in R</li>
+<li><a href="http://deneflab.github.io/MicrobeMiseq/">MicrobiobeMiseq</a> - Analyses of microbial community composition and diversity in R using phyloseq</li>
+<li><a href="https://bioconductor.org/help/course-materials/2017/BioC2017/Day1/Workshops/Microbiome/MicrobiomeWorkflowII.html">Bioconductor Microbiome</a> - Microbiome data analysis: from raw reads to community analysis</li>
+<li><a href="https://microsud.github.io/Tools-Microbiome-Analysis/">Ampvis2</a> - Tools for visualising amplicon data</li>
+<li><a href="https://benjjneb.github.io/dada2/index.html">dada2</a> - Fast and accurate sample inference from amplicon data with single-nucleotide resolution</li>
+<li><a href="https://github.com/katrikorpela/mare">mare</a> - Pipeline for microbiota analysis based on 16S-amplicon reads</li>
+<li><a href="http://cbcb.umd.edu/software/metagenomeSeq/">metagenomeSeq</a> - Statistical analysis for sparse high-throughput sequencing</li>
+<li><a href="https://lagkouvardos.github.io/Rhea/">Rhea</a> - A set of R scripts for the analysis of microbial profiles</li>
+<li><a href="https://github.com/ropensci/taxize">taxize</a> - A taxonomic toolbelt for R</li>
+<li><a href="http://ecology.msu.montana.edu/labdsv/R/">LabDSV</a> - Ordination and multivariate analysis for ecology</li>
+<li><a href="http://zachcp.github.io/phylogeo">phylogeo</a> - An R package for geographic analysis and visualization of microbiome data</li>
+<li><a href="https://github.com/kylebittinger/qiimer">qiimer</a> - R functions to read QIIME output files and create figures</li>
+<li><a href="https://rdrr.io/cran/RAM/">RAM</a> - R for amplicon-sequencing-based microbial-ecology</li>
 </ul>
 </div>
 <div id="r-information" class="section level2">
