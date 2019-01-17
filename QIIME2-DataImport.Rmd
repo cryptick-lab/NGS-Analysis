@@ -54,7 +54,7 @@ Now in the QIIME environment, navigate to the relevent excute the following:
 qiime tools import \
 --input-path table.from_txt_json.biom \
 --type 'FeatureTable[Frequency]' \
---source-format BIOMV100Format \
+--input-format BIOMV100Format \
 --output-path feature-table-1.qza
 ```
 </div>
