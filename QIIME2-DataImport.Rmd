@@ -1,5 +1,6 @@
 ---
 title: "Data Import and Preliminary Analysis"
+output: pdf_document
 ---
 
 This workflow follows documentation from QIIME2 documents on [data import](https://docs.qiime2.org/2017.12/tutorials/importing/). 
@@ -24,11 +25,11 @@ This notebook continues on from the notebook on native installation of QIIME2 an
 
 ##### (a) Import BIOM file
 
-```{python eval=FALSE}
+```{bash eval=FALSE}
 qiime tools import \
 --input-path unoise_otu_biom.biom \
 --type 'FeatureTable[Frequency]' \
---source-format BIOMV100Format \
+--input-format BIOMV100Format \
 --output-path feature-table-1.qza
 ```
 
@@ -36,7 +37,7 @@ qiime tools import \
 **Note** The input-path will dependend on where your biom file is located and what it is called. In this example the biom file is called `unoise_otu_biom` and is located in the current working directory.</div>
 
 **Output artifacts:**
-```{python eval=FALSE}
+```{bash eval=FALSE}
 feature-table-1.qza
 ```
 <div class="alert alert-danger">
@@ -45,12 +46,12 @@ There are currently issues with the UNOISE3 output of the biom file. If you are 
 
 This needs to be in the qiime environment, unless you have the biom package installed locally. 
 Navigate to the final unoise file /7.unoise_all (it should have the file unoise_otu_tab.txt) and execute the following:
-```{python eval=FALSE}
+```{bash eval=FALSE}
 biom convert -i unoise_otu_tab.txt -o table.from_txt_json.biom --table-type="OTU table" --to-json
 ```
 
 Now in the QIIME environment, navigate to the relevent excute the following:
-```{python eval=FALSE}
+```{bash eval=FALSE}
 qiime tools import \
 --input-path table.from_txt_json.biom \
 --type 'FeatureTable[Frequency]' \
@@ -61,7 +62,7 @@ qiime tools import \
 
 ##### (b) Import per-feature unaligned sequence data (i.e., representative sequences)
 
-```{python eval=FALSE}
+```{bash eval=FALSE}
 qiime tools import \
 --input-path unoise_zotus_relabeled.fasta \
 --output-path sequences.qza \
@@ -72,7 +73,7 @@ qiime tools import \
 **Note** The input-path will dependend on where your sequences file is located and what it is called. In this example the sequences file is called `sequences`, with the file extension `.fna` and is located in the current directory.</div>
 
 **Output artifacts:**
-```{python eval=FALSE}
+```{bash eval=FALSE}
 sequences.qza
 ```
 
@@ -92,7 +93,7 @@ Once the BIOM file and sequences have been import then the feature table and dat
 
 ##### (a) Create Feature Table Summary
 
-```{python eval=FALSE}
+```{bash eval=FALSE}
 qiime feature-table summarize \
 --i-table feature-table-1.qza \
 --o-visualization table.qzv \
@@ -100,32 +101,32 @@ qiime feature-table summarize \
 ```
 
 **Output artifacts:**
-```{python eval=FALSE}
+```{bash eval=FALSE}
 table.qzv
 ```
 <div class="alert alert-danger">
 **Error messages while creating Feature Table?**
 If you are having trouble with the above code it is most likely there is an issue with your metadata and/or your sequences matching your metadata. To check this is the case you can run the above script without the last line adding in your metadata:
-```{python eval=FALSE}
+```{bash eval=FALSE}
 qiime feature-table summarize \
 --i-table feature-table-1.qza \
 --o-visualization table.qzv 
 ```
 
 **Output visualization:**
-```{python eval=FALSE}
+```{bash eval=FALSE}
 table.qzv
 ```
 Go to the second tab interactive sample detail and check the name of the samples matches what is in your metadata. If you are still having issues see QIIME documenation of metadata available [here](https://docs.qiime2.org/2017.12/tutorials/metadata/).</div>
 
 ##### (b) Create Feature Table Sequences
-```{python eval=FALSE}
+```{bash eval=FALSE}
 qiime feature-table tabulate-seqs \
 --i-data sequences.qza \
 --o-visualization sequences.qzv
 ```
 **Output visualization:**
-```{python eval=FALSE}
+```{bash eval=FALSE}
 sequences.qzv
 ```
 

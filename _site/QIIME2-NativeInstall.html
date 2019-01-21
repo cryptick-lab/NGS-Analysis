@@ -22,7 +22,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 <link href="site_libs/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -92,8 +93,14 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -109,7 +116,6 @@ body {
   padding-top: 56px;
   margin-top: -56px;
 }
-
 .section h2 {
   padding-top: 56px;
   margin-top: -56px;
@@ -129,6 +135,43 @@ body {
 .section h6 {
   padding-top: 56px;
   margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -150,18 +193,77 @@ $(document).ready(function () {
 });
 </script>
 
-
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -293,18 +395,19 @@ $(document).ready(function () {
 <p>Open a new Bash terminal and execute the following This will update your conda environment and also install the wget plug to be able to easily install packages</p>
 <pre class="bash"><code>conda update conda
 conda install wget</code></pre>
-<p><strong>Step Two - Install QIIME2</strong> You will then need to install QIIME2. The developers recommend you do this in a new environment.</p>
+<p><strong>Step Two - Install QIIME2</strong></p>
+<p>You will then need to install QIIME2. The developers recommend you do this in a new environment. The current QIIME2 release is <code>qiime2-2018.11</code> - however it is recommended you see <a href="https://docs.qiime2.org/">QIIME2</a> for the most up-to-date information</p>
 <p>From the Bash window execute the following</p>
-<pre class="bash"><code>wget https://data.qiime2.org/distro/core/qiime2-2018.4-py35-osx-conda.yml
-conda env create -n qiime2-2018.4 --file qiime2-2018.4-py35-osx-conda.yml
+<pre class="bash"><code>wget https://data.qiime2.org/distro/core/qiime2-2018.11-py35-osx-conda.yml
+conda env create -n qiime2-2018.11 --file qiime2-2018.11-py35-osx-conda.yml
 
 # OPTIONAL CLEANUP
-rm qiime2-2018.4-py35-osx-conda.yml</code></pre>
+rm qiime2-2018.11-py35-osx-conda.yml</code></pre>
 <div class="alert alert-info">
-If you receive errors during the installation process, such as <code>gfortran</code> errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running <code>conda env remove -n qiime2-2018.4</code> to remove the failed environments, then running <code>conda clean -y --all</code> to clean the local conda installation, and finally re-running the installation instructions above.
+If you receive errors during the installation process, such as <code>gfortran</code> errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running <code>conda env remove -n qiime2-2018.11</code> to remove the failed environments, then running <code>conda clean -y --all</code> to clean the local conda installation, and finally re-running the installation instructions above.
 </div>
 <p><strong>Step three - Activate QIIME2 environment</strong> Activate the QIIME2 environment. This needs to be done everytime you want to “open” QIIME2</p>
-<pre class="bash"><code>source activate qiime2-2018.4</code></pre>
+<pre class="bash"><code>source activate qiime2-2018.11</code></pre>
 <p>To check that it has been installed correctly</p>
 <pre class="bash"><code>qiime --help</code></pre>
 <hr />

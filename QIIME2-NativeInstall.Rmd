@@ -28,24 +28,26 @@ conda install wget
 ```
 
 **Step Two - Install QIIME2**
+
 You will then need to install QIIME2. The developers recommend you do this in a new environment.
+The current QIIME2 release is `qiime2-2018.11` - however it is recommended you see [QIIME2](https://docs.qiime2.org/) for the most up-to-date information
 
 From the Bash window execute the following
 ```{bash eval=FALSE}
-wget https://data.qiime2.org/distro/core/qiime2-2018.4-py35-osx-conda.yml
-conda env create -n qiime2-2018.4 --file qiime2-2018.4-py35-osx-conda.yml
+wget https://data.qiime2.org/distro/core/qiime2-2018.11-py35-osx-conda.yml
+conda env create -n qiime2-2018.11 --file qiime2-2018.11-py35-osx-conda.yml
 
 # OPTIONAL CLEANUP
-rm qiime2-2018.4-py35-osx-conda.yml
+rm qiime2-2018.11-py35-osx-conda.yml
 ```
 
 <div class="alert alert-info">
-If you receive errors during the installation process, such as `gfortran` errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running `conda env remove -n qiime2-2018.4` to remove the failed environments, then running `conda clean -y --all` to clean the local conda installation, and finally re-running the installation instructions above.</div>
+If you receive errors during the installation process, such as `gfortran` errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running `conda env remove -n qiime2-2018.11` to remove the failed environments, then running `conda clean -y --all` to clean the local conda installation, and finally re-running the installation instructions above.</div>
 
 **Step three - Activate QIIME2 environment**
 Activate the QIIME2 environment. This needs to be done everytime you want to "open" QIIME2
 ```{bash eval=FALSE}
-source activate qiime2-2018.4
+source activate qiime2-2018.11
 ```
 
 To check that it has been installed correctly
