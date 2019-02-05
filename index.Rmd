@@ -7,8 +7,13 @@ Welcome to the Vector and Waterborne Pathogens Research Group NGS Analysis page.
 <br></br>
 ![](images/VWBPRG.jpeg)
 <br></br>
-We hope this helps walk you through the analysis of your NGS data.
 
-This is just *one* way to analyse your data, the internet is wealth of information on software programs, coding languages and a number of different GUIs which you can use.
+This webpage was created me (Siobhon Egan) during an internship program at [Pawsey Supercomputing Centre](https://pawsey.org.au/) provided by [CSIRO](https://www.csiro.au/) in 2017/2018.
 
-We hope this helps by taming the flood of what can be a never ending world of NGS data analysis. We have endevroued to credit the resource and works of other people where we have used them - but if you feel we have not credited your work please send an email to siobhon.egan@murdoch.edu.au
+It takes you through analysis of bacterial 16S amplicon next-generation sequencing data - however it can be easily adapted to suit various other amplicon sequence data. 
+
+As with anything coding and bioinformatics related this is just *one* method of data analysis.
+The internet is wealth of information on programs, coding languages, plug ins and a number of different GUIs which you can use.
+
+The aim of this webpage is to help by "taming the flood" of what can seem like a never ending world of NGS data analysis. 
+I have endevroued to credit the resource and works of other people where appropriate - but if you feel your work has not been credited please send an email to siobhon.egan@murdoch.edu.au
