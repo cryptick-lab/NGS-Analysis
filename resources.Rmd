@@ -1,6 +1,8 @@
 ---
 title: "Resources"
-output: html_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 The internet has an infinite number of resources available - if you can google than you can code! 

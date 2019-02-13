@@ -1,6 +1,8 @@
 ---
 title: "Data Import and Preliminary Analysis"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 This workflow follows documentation from QIIME2 documents on [data import](https://docs.qiime2.org/2017.12/tutorials/importing/). 

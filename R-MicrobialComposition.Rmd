@@ -1,5 +1,8 @@
 ---
 title: "Microbial Composition"
+output:
+  html_document:
+    df_print: paged
 ---
 
 Load libraries

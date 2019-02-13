@@ -1,5 +1,8 @@
 ---
 title: "Subsetting Data"
+output:
+  html_document:
+    df_print: paged
 ---
 ### Pre-processing data
 The phyloseq package also includes functions for filtering, subsetting, and merging abundance data. Filtering in phyloseq is designed in a modular fashion similar to the approach in the genefilter package. This includes the prune_taxa and  prune_samples methods for directly removing unwanted indices, as well as the filterfun_sample and genefilter_sample functions for building arbitrarily complex sample-wise filtering criteria, and the filter_taxa function for taxa-wise filtering. You can try experimenting with different combinations of these functions. For example you may want to filter by sample, then by taxa. Use the basic commands functions to explore the different in the sub-sets.

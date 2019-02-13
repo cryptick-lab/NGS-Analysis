@@ -16,7 +16,13 @@ navbar:
       href: setup.html
     - text: "USEARCH Analysis"
       icon: fa-binoculars
-      href: usearch-analysis.html
+      menu:
+        - text: "Getting started"
+          href: usearch-getting-started.html
+        - text: "USEARCH v11"
+          href: usearch-v11.html
+        - text: "USEARCH previous"
+          href: usearch-previous.html
     - text: "QIIME2"
       icon: fa-puzzle-piece
       menu:

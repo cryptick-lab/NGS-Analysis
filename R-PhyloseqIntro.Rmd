@@ -1,5 +1,8 @@
 ---
 title: "Phyloseq Introduction and Import"
+output:
+  html_document:
+    df_print: paged
 ---
 
 ### Phyloseq and Microbiome analysis in R

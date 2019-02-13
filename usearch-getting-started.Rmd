@@ -1,0 +1,70 @@
+---
+title: "USEARCH - Getting started"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+To do this analysis you will need to install USEARCH. If you head to the latest [USEARCHv11 analysis page](https://cryptick-lab.github.io/NGS-Analysis/_site/usearch-v11.html) it will use only USEARCHv11. Previous scripts have made use of USEARCH v8, v9 and v10.
+
+For the purpose of this workflow we will assume the free 32-bit versions are sufficent (usually okay for 1-2 illumina MiSeq runs, depending on the amount of data generated).
+
+Remember not all commands and options are available between USEARCH versions, so make sure you read the documentation carefully.
+
+The following instructions are for a MacOS or linux operating system. For details on a windows operating system see [USEARCH documentation](https://www.drive5.com/usearch/manual/problems_running.html).
+
+**Download USEARCH**
+
+To download USEARCH go to the [download page](https://www.drive5.com/usearch/download.html) and select the appriate platform and version number. You will then be sent a download link to your email. 
+
+Save the file in an easy to locate path that you will not touch. I suggest adding a new folder in your home directory called `Programs`, you can rename the file to something easier e.g. `usearch11.0.34bit` this will let you know it is version 11.0 32-bit. 
+
+**Execute permissions**
+
+Once you have moved and saved it where you will not touch the file or any parent folders (i.e. the path) you will need to ensure that you have read and execute permissions for the binary file.
+
+Within the Bash evironment (terminal for MacOS or your Git Bash for Windows) nagive to the directory:
+
+```
+cd /Users/username/Programs
+```
+
+You will then need to use the `chmod` command to ensure you have read and execute permissions for the binary file. If you have multiple binary files (i.e. downloaded multiple USEARCH versions) you will need to do this for each.
+
+```
+chmod +x usearch11.0.34bit
+```
+
+**Updaing path**
+
+To avoid refering to the complete path everything you want to execute a usearch command you can update your path using the Bash environment.
+
+Navigate to your home directory by running opening up a new terminal window, and do the following:
+```
+cd ~
+```
+
+To edit your path, you need need to open the `.bash_profile` in a text editor, such as the following: 
+```
+vi .bash_profile
+```
+
+This opens up a text editor (in this case vi) to edit your path. It is **very** important you *add* to your path, and  *do **not** delete it!*. 
+
+Currently your path may look something like:
+
+```
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+```
+
+To update your path add to it by using a semi-colon to seperate and add the new location, such as the example below:
+```
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/Users/username/Programs"
+```
+
+To check your path you can use the following command `echo $PATH`.
+
+For more detailed information on updating the path environment see [here](https://stackoverflow.com/questions/22465332/setting-path-environment-variable-in-osx-permanently)
+
+***

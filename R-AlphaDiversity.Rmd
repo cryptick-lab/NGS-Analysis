@@ -1,5 +1,8 @@
 ---
 title: "Alpha Diversity and Sequencing Depth"
+output:
+  html_document:
+    df_print: paged
 ---
 
 Following the [phyloseq alpha diversity examples](https://joey711.github.io/phyloseq/plot_richness-examples.html)

@@ -1,5 +1,8 @@
 ---
 title: "Taxonomy Assignment"
+output:
+  html_document:
+    df_print: paged
 ---
 
 <script type="text/javascript">

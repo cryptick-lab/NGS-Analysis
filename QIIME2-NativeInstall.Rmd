@@ -1,5 +1,8 @@
 ---
 title: "Native Install"
+output:
+  html_document:
+    df_print: paged
 ---
 
 

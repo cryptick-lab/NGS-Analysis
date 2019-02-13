@@ -22,7 +22,10 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 <link href="site_libs/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -92,8 +95,14 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -109,7 +118,6 @@ body {
   padding-top: 56px;
   margin-top: -56px;
 }
-
 .section h2 {
   padding-top: 56px;
   margin-top: -56px;
@@ -129,6 +137,43 @@ body {
 .section h6 {
   padding-top: 56px;
   margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -150,18 +195,77 @@ $(document).ready(function () {
 });
 </script>
 
-
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -207,12 +311,25 @@ $(document).ready(function () {
     Set up
   </a>
 </li>
-<li>
-  <a href="usearch-analysis.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-binoculars"></span>
      
     USEARCH Analysis
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="usearch-getting-started.html">Getting started</a>
+    </li>
+    <li>
+      <a href="usearch-v11.html">USEARCH v11</a>
+    </li>
+    <li>
+      <a href="usearch-previous.html">USEARCH previous</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -279,6 +396,16 @@ $(document).ready(function () {
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#bash">Bash</a></li>
+<li><a href="#git">Git</a></li>
+<li><a href="#text-editor">Text Editor</a></li>
+<li><a href="#r">R</a></li>
+<li><a href="#anaconda---jupyter-notebook-optional">Anaconda - Jupyter notebook (optional)</a></li>
+<li><a href="#some-other-things-youll-need">Some other things you’ll need</a></li>
+</ul>
+</div>
 
 <p>For this analysis (and coding in general) you will need to ensure you computer has a few things installed.</p>
 <p>This will depend on your operating system and of course what interfaces you intend to use.</p>
@@ -342,45 +469,31 @@ $(document).ready(function () {
 <p><a href="https://www.youtube.com/watch?v=q0PjTAylwoU">Video Tutorial</a> Install R by downloading and running <a href="http://cran.r-project.org/bin/windows/base/release.htm">this .exe file</a> from <a href="http://cran.r-project.org/index.html">CRAN</a>. Also, please install the <a href="http://www.rstudio.com/ide/download/desktop">RStudio IDE</a>. Note that if you have separate user and admin accounts, you should run the installers as administrator (right-click on .exe file and select “Run as administrator” instead of double-clicking). Otherwise problems may occur later, for example when installing R packages.</p>
 <p><strong>macOS</strong></p>
 <p><a href="https://www.youtube.com/watch?v=5-ly3kyxwEg">Video Tutorial</a> Install R by downloading and running <a href="http://cran.r-project.org/bin/macosx/R-latest.pkg">this .pkg file</a> from <a href="http://cran.r-project.org/index.html">CRAN</a>. Also, please install the <a href="http://www.rstudio.com/ide/download/desktop">RStudio IDE</a>.</p>
+<p><strong>Recommendation</strong> R is much more than statistics, and making graphs, it is a never-ending tool that is constantly being updated. Before we know it R will be able to cook your dinner and go to the shops too! But for now check out its great range of features for project management. It can talk all types of coding languages, and is useful to keep track of exactly what you are doing. You can even make your own webpage to help keep track of all that code and information, just like I am doing here! Some links to get you started: - <a href="https://rmarkdown.rstudio.com/lesson-1.html">R markdown</a> - <a href="https://shiny.rstudio.com/">R shiny</a> - <a href="https://www.r-project.org/">R project for statistical computing</a> - <a href="https://swcarpentry.github.io/r-novice-gapminder/02-project-intro/">Project management with RStudio</a> - <a href="https://bookdown.org/">R bookdown</a></p>
 <hr />
 </div>
-<div id="anaconda---jupyter-notebook" class="section level2">
-<h2>Anaconda - Jupyter notebook</h2>
-<p>Although Jupyter notebook is not neccessary to run the NGS analysis outlined in this webpage it is a very useful, easy to use and well documented tool.</p>
+<div id="anaconda---jupyter-notebook-optional" class="section level2">
+<h2>Anaconda - Jupyter notebook (optional)</h2>
+<p>Although Jupyter notebook is not neccessary to run the NGS analysis outlined in this webpage it is a very useful, easy to use and well documented tool. I have played around with both and I always seem to go back to RStudio + command line (MacOS), but take your pick!</p>
 <p>It combines all the tools above - such as Bash and R and includes a lot more. It is great if you are interested in python scripting. In addition it also gives you an anaconda environment which is a common requirement for some program (in this case QIIME2). It can serve as a ‘one stop shop’ in respect to being able to execute Bash and Python code, it allows easy install of dependencies (which is partiuclarly prevelent in Python language) it allows you to use markdown with ease, and integrates with github. RStudio and a number of other programs are also integrates into the anaconda environment.</p>
 <p>For download of Anconda - Jupyter notebook click <a href="http://jupyter.org/install">here</a>.</p>
 <p>A good (but perhaps long) video tutorial is available <a href="https://www.youtube.com/watch?v=CwFq3YDU6_Y">here</a>.</p>
 <hr />
 </div>
-<div id="usearch" class="section level2">
-<h2>USEARCH</h2>
-<p>To do this analysis you will need to install USEARCH. This step has already been done if you are using the Cryptick Lab iMac - here 64-bit versions of the latest USEARCH 8, 9 and 10 packages have already been downloaded and installed in the path so you can skip this step.</p>
-<p>For the purpose of this workflow we will assume the free 32-bit versions are sufficent (usually okay for 1-2 illumina MiSeq runs, depending on the amount of data generated).</p>
-<p>The script in this workflow uses all three USEARCH versions so they will all need to be installed locally if you wish to use this workflow exactly how it appears. It can be tailored to the version you have - however you need to do this carefully, as some features do change between versions. For example some points of different are: USEARCH v8 has a command to strip primers, that is not available in subsequent versions, and it does not have UNOISE commands, only UPARSE. USEARCH v9 has UNOISE2 and USEARCH v10 has UNOISE3.</p>
-<p>The following instructions are for a MacOS or linux operating system. For details on a windows operating system see <a href="https://www.drive5.com/usearch/manual/problems_running.html">USEARCH documentation</a>.</p>
-<p><strong>Download USEARCH</strong></p>
-<p>To download USEARCH go to the <a href="https://www.drive5.com/usearch/download.html">download page</a> and select the appriate platform and version number. You will then be sent a download link to your email.</p>
-<p>Save the file in an easy to locate path that you will not touch. I suggest adding a new folder in your home directory called <code>Programs</code>, you can rename the file to something easier e.g. <code>usearch9.2.34bit</code> this will let you know it is version 9.2 32-bit.</p>
-<p><strong>Execute permissions</strong></p>
-<p>Once you have moved and saved it where you will not touch the file or any parent folders (i.e. the path) you will need to ensure that you have read and execute permissions for the binary file.</p>
-<p>Within the Bash evironment (terminal for MacOS or your Git Bash for Windows) nagive to the directory:</p>
-<pre><code>cd /Users/username/Programs</code></pre>
-<p>You will then need to use the <code>chmod</code> command to ensure you have read and execute permissions for the binary file. If you have multiple binary files (i.e. downloaded multiple USEARCH versions) you will need to do this for each.</p>
-<pre><code>chmod +x usearch9.2.32bit</code></pre>
-<p><strong>Updaing path</strong></p>
-<p>To avoid refering to the complete path everything you want to execute a usearch command you can update your path using the Bash environment.</p>
-<p>Navigate to your home directory by running opening up a new terminal window, and do the following:</p>
-<pre><code>cd ~</code></pre>
-<p>To edit your path, you need need to open the <code>.bash_profile</code> in a text editor, such as the following:</p>
-<pre><code>vi .bash_profile</code></pre>
-<p>This opens up a text editor (in this case vi) to edit your path. It is <strong>very</strong> important you <em>add</em> to your path, and <em>do <strong>not</strong> delete it!</em>.</p>
-<p>Currently your path may look something like:</p>
-<pre><code>export PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;</code></pre>
-<p>To update your path add to it by using a semi-colon to seperate and add the new location, such as the example below:</p>
-<pre><code>export PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/Users/username/Programs&quot;</code></pre>
-<p>To check your path you can use the following command <code>echo $PATH</code>.</p>
-<p>For more detailed information on updating the path environment see <a href="https://stackoverflow.com/questions/22465332/setting-path-environment-variable-in-osx-permanently">here</a></p>
-<hr />
+<div id="some-other-things-youll-need" class="section level2">
+<h2>Some other things you’ll need</h2>
+<div id="usearch" class="section level4">
+<h4>USEARCH</h4>
+<p>See the <a href="https://cryptick-lab.github.io/NGS-Analysis/_site/usearch-getting-started.html">usearch getting started</a> page for information on installing and excuting commands using USEARCH.</p>
+</div>
+<div id="qiime2" class="section level4">
+<h4>QIIME2</h4>
+<p>The <a href="https://cryptick-lab.github.io/NGS-Analysis/_site/QIIME2-NativeInstall.html">QIIME2 native install</a> page will get you started for your QIIME analysis.</p>
+</div>
+<div id="rstudio-packages" class="section level4">
+<h4>RStudio packages</h4>
+<p>The pages on RStudio, starting with <a href="https://cryptick-lab.github.io/NGS-Analysis/_site/R-PhyloseqIntro.html">Phyloseq Intro</a> will walk you through any additional RStudio packages you will need.</p>
+</div>
 </div>
 
 <p>
