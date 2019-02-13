@@ -428,6 +428,7 @@ $(document).ready(function () {
 <p>I strongly suggest you take a small sub-set of your data though the pipeline outlined below step-by-step first to get an understanding of what each command is doing. Importantly it will also allow to explore the influence of the different variables on your dataset.</p>
 <p>Once you are happy with the parameters and that the script is working you can use the full script to analyse all your samples. Open your favourite text editor and combine all the sections of your workflow into a document with the file extension <code>.sh</code>. For example <code>16S_usearchv11.sh</code></p>
 <p>Simply edit the script with your parameters, and save it in a directory with your raw fastq files.</p>
+<p>All sub-scripts and a complete version of the pipeline can be found on my github repo <a href="https://github.com/siobhon-egan/usearch_analysis">siobhon-egan/usearch_analysis</a>.</p>
 <p>In a bash terminal navigate to your directory and perform the following to execute the script and save the terminal output to a text file.</p>
 <pre class="bash"><code>cd /Users/name/Documents/NGS-Analysis
 chmod +x 16S_usearchv11.sh
@@ -524,7 +525,9 @@ done
 <p>This command extracts segments <em>between</em> matches to a primer fair. Input can be <code>fasta</code> or <code>fastq</code>. Primer sequences must be in 5<code>-3</code> direction, and it does support <a href="https://drive5.com/usearch/manual/IUPAC_codes.html">IUPAC codes for sequence wildcard letter</a>. The <code>-strand</code> option must be specific, where <code>-strand plus</code> searches for hits on the forward stand only and <code>-strand both</code> searches for hits on both forward and reverse-complemented strands. The <code>-maxdiff</code> option specifies the maximum allowed number of mismatches with a primer, default = 2. See USEARCH documentation for more information.</p>
 <p>It is recommended that primers be trimmed before quality filtering of <code>fastq</code> files, as every base can cause an increase in the <a href="https://drive5.com/usearch/manual/exp_errs.html">expected errors</a>.</p>
 <p>A common alternative to using the <code>search_pcr2</code> command is the <code>fastx_truncate</code> <a href="https://drive5.com/usearch/manual/cmd_fastx_truncate.html">command</a>. Depending on your data you may like to make your own choice, however I feel searching for the primer set specifically yeilds a more reliable result.</p>
-<pre><code>merged_data=&quot;2.merged_reads&quot;
+<pre class="bash"><code>#!/bin/bash
+
+merged_data=&quot;2.merged_reads&quot;
 primer_matched=&quot;3a.primer_matches&quot;
 primer_not_matched=&quot;3b.primer_mismatches&quot;
 # Eneter primer sequences 5`-3` (degenerate bases OK)
@@ -540,10 +543,7 @@ echo &quot;&quot;
 Creating working directories
 
 mkdir ${primer_matched}
-mkdir ${primer_not_matched}
-
-#*****************************************************************************************
-# Step 1: Finding seqs with FWD primer
+mkdir ${primer_not_matche
 
 for file3 in ${merged_data}/*.fastq
     do
@@ -590,7 +590,8 @@ done</code></pre>
 <div id="renaming-sequences" class="section level2">
 <h2>Renaming sequences</h2>
 <p>There are no usearch commands or other parameters in this step, it is simply a series of bash commands to ensure the sequence labels are compatable for downstream OTU/ZOTU clustering.</p>
-<pre class="bash"><code>QF_reads=&quot;4.quality_filtered&quot;
+<pre class="bash"><code>#!/bin/bash
+QF_reads=&quot;4.quality_filtered&quot;
 labeled_data=&quot;5.labeled_data&quot;
 
 echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -634,7 +635,9 @@ rm -r working2
 <p><a href="https://www.drive5.com/usearch/manual/cmd_fastx_uniques.html">fastx_uniques command</a> - This command finds the set of unique sequences in an input file, also called dereplication. In this case the input is a fasta file. Sequences are compared letter-by-letter and must be identical over the full length of both sequences (substrings do not match).</p>
 <p><a href="https://www.drive5.com/usearch/manual/cmd_sortbysize.html">sortbysize command</a> - This command sorts sequences by decreasing size annotation, which usually refers to the size of a cluster. In this case we also add a <code>-maxsize</code> option to specify singletons i.e. 1.</p>
 <p><a href="https://www.drive5.com/usearch/manual9.2/cmd_search_exact.html">search_exact command</a> - This command searches for exact, full-length matches to a database sequence. This alogorithm is only available with usearch8, however even for large datasets the 32-bit version is fine as it does not need to store alot of memory.</p>
-<pre class="bash"><code>labeled_data=&quot;5.labeled_data&quot;
+<pre class="bash"><code>#!/bin/bash
+
+labeled_data=&quot;5.labeled_data&quot;
 derep_dir=&quot;6.derep_data&quot;
 low_abund_seqs=&quot;7.low_abund_sequences&quot;
 SF=&quot;8.singleton_filtered&quot;
@@ -713,9 +716,11 @@ done
 <p>Clustering criteria The goal of UPARSE-OTU is to identify a set of OTU representative sequences (a subset of the input sequences) satisfying the following criteria.</p>
 <p>All pairs of OTU sequences should have &lt; 97% pair-wise sequence identity. An OTU sequence should be the most abundant within a 97% neighborhood. Chimeric sequences should be discarded. All non-chimeric input sequences should match at least one OTU with ≥ 97% identity. UPARSE-OTU uses a greedy algorithm to find a biologically relevant solution, as follows. Since high-abundance reads are more likely to be correct amplicon sequences, and hence are more likely to be true biological sequences, UPARSE-OTU considers input sequences in order of decreasing abundance. This means that OTU centroids tend to be selected from the more abundant reads, and hence are more likely to be correct biological sequences.</p>
 <p><em>Reference</em> Edgar, R.C. (2013) UPARSE: Highly accurate OTU sequences from microbial amplicon reads, Nature Methods. <a href="https://www.nature.com/articles/nmeth.2604">Pubmed:23955772, dx.doi.org/10.1038/nmeth.2604</a>.</p>
-<pre class="bash"><code>SF=&quot;8.singleton_filtered&quot;
+<pre class="bash"><code>#!/bin/bash
+
+SF=&quot;8.singleton_filtered&quot;
 cluster=&quot;9.cluster&quot;
-uparse_otus=&quot;13a.uparse_otus&quot;
+uparse_otus=&quot;9a.uparse_otus&quot;
 
 echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 echo UPARSE on all
@@ -723,20 +728,20 @@ echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mkdir ${cluster}
 
-    cat ${SF}/*.fasta &gt; ${cluster}/all_SF.fasta
+   cat ${SF}/*.fasta &gt; ${cluster}/all_SF.fasta
 
 cd ${cluster}
+
+  usearch11 -fastx_uniques all_SF.fasta -fastaout all_SF_DR.fasta -sizeout
 
 mkdir ${uparse_otus}
 cd ${uparse_otus}
 
-usearch11 -fastx_uniques ../all_SF.fasta -fastaout all_SF_DR.fasta -sizeout
+  usearch11 -cluster_otus ../all_SF_DR.fasta -otus uparse_otus.fasta -relabel OTU
 
-usearch11 -cluster_otus all_SF_DR.fasta -otus uparse_otus.fasta -relabel OTU
+  usearch11 -usearch_global ../all_SF.fasta -db uparse_otus.fasta -strand both -id 0.97 -otutabout uparse_otu_tab.txt -biomout uparse_otu_biom.biom
 
-usearch11 -usearch_global ../all_SF.fasta -db uparse_otus.fasta -strand both -id 0.97 -otutabout uparse_otu_tab.txt -biomout uparse_otu_biom.biom
-
-usearch11 -cluster_agg uparse_otus.fasta -treeout uparse_otus.tree -clusterout clusters.txt
+  usearch11 -cluster_agg uparse_otus.fasta -treeout uparse_otus.tree -clusterout clusters.txt
 
 cd ..</code></pre>
 </div>
@@ -749,29 +754,26 @@ cd ..</code></pre>
 <p>Correct biological sequences are recovered from the reads, resolving distinct sequences down to a single difference (often) or two or more differences (almost always).</p>
 <p>Errors are corrected as follows: 1. Reads with sequencing and PCR point error are identified and removed. 2. Chimeras are removed.</p>
 <p><em>Reference</em> Edgar, R.C. (2016), UNOISE2: Improved error-correction for Illumina 16S and ITS amplicon reads.<a href="https://www.biorxiv.org/content/early/2016/10/15/081257">http://dx.doi.org/10.1101/081257</a></p>
-<pre class="bash"><code>cluster=&quot;13.cluster&quot;
-unoise_zotus=&quot;13b.zotus&quot;
-# Remember is must be Usearch 10 for the unoise3 algorithm
-usearch=&quot;usearch10&quot;
+<pre class="bash"><code>#!/bin/bash
+
+cluster=&quot;9.cluster&quot;
+unoise_zotus=&quot;9b.unoise_zotus&quot;
 
 echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 echo UNOISE on all
 echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-cd ${cluster}
 
 mkdir ${unoise_zotus}
 cd ${unoise_zotus}
 
-usearch11 -fastx_uniques ../all_SF.fasta -fastaout all_SF_DR.fasta -sizeout
+  usearch11 -unoise3 ../all_SF_DR.fasta -zotus unoise_zotus.fasta -tabbedout unoise_tab.txt
 
-usearch11 -unoise3 all_SF_DR.fasta -zotus unoise_zotus.fasta -tabbedout unoise_tab.txt
+  usearch11 -fastx_relabel unoise_zotus.fasta -prefix Otu -fastaout unoise_zotus_relabelled.fasta -keep_annots
 
-usearch11 -fastx_relabel unoise_zotus.fasta -prefix Otu -fastaout unoise_zotus_relabelled.fasta -keep_annots
+  usearch11 -otutab ../all_SF_DR.fasta -zotus unoise_zotus_relabelled.fasta -otutabout unoise_otu_tab.txt -biomout unoise_otu_biom.biom -mapout unoise_map.txt -notmatched unoise_notmatched.fasta -dbmatched dbmatches.fasta -sizeout
 
-usearch11 -otutab all_SF_DR.fasta -zotus unoise_zotus_relabelled.fasta -otutabout unoise_otu_tab.txt -biomout unoise_otu_biom.biom -mapout unoise_map.txt -notmatched unoise_notmatched.fasta -dbmatched dbmatches.fasta -sizeout
-
-usearch11 -cluster_agg unoise_zotus_relabelled.fasta -treeout unoise_zotus.tree -clusterout clusters.txt -id 0.80 -linkage min
+  usearch11 -cluster_agg unoise_zotus_relabelled.fasta -treeout unoise_zotus.tree -clusterout clusters.txt -id 0.80 -linkage min
 
 cd ..
 cd ..</code></pre>

@@ -35,6 +35,8 @@ Once you are happy with the parameters and that the script is working you can us
 
 Simply edit the script with your parameters, and save it in a directory with your raw fastq files.
 
+All sub-scripts and a complete version of the pipeline can be found on my github repo [siobhon-egan/usearch_analysis](https://github.com/siobhon-egan/usearch_analysis).
+
 In a bash terminal navigate to your directory and perform the following to execute the script and save the terminal output to a text file.
 
 ```{bash eval=FALSE}
@@ -167,7 +169,9 @@ It is recommended that primers be trimmed before quality filtering of `fastq` fi
 A common alternative to using the `search_pcr2` command is the `fastx_truncate` [command](https://drive5.com/usearch/manual/cmd_fastx_truncate.html). Depending on your data you may like to make your own choice, however I feel searching for the primer set specifically yeilds a more reliable result. 
 
 
-```
+```{bash eval=FALSE}
+#!/bin/bash
+
 merged_data="2.merged_reads"
 primer_matched="3a.primer_matches"
 primer_not_matched="3b.primer_mismatches"
@@ -184,10 +188,7 @@ echo ""
 Creating working directories
 
 mkdir ${primer_matched}
-mkdir ${primer_not_matched}
-
-#*****************************************************************************************
-# Step 1: Finding seqs with FWD primer
+mkdir ${primer_not_matche
 
 for file3 in ${merged_data}/*.fastq
 	do
@@ -243,6 +244,7 @@ done
 There are no usearch commands or other parameters in this step, it is simply a series of bash commands to ensure the sequence labels are compatable for downstream OTU/ZOTU clustering.
 
 ```{bash eval=FALSE}
+#!/bin/bash
 QF_reads="4.quality_filtered"
 labeled_data="5.labeled_data"
 
@@ -293,6 +295,8 @@ rm -r working2
 [search_exact command](https://www.drive5.com/usearch/manual9.2/cmd_search_exact.html) - This command searches for exact, full-length matches to a database sequence. This alogorithm is only available with usearch8, however even for large datasets the 32-bit version is fine as it does not need to store alot of memory.
 
 ```{bash eval=FALSE}
+#!/bin/bash
+
 labeled_data="5.labeled_data"
 derep_dir="6.derep_data"
 low_abund_seqs="7.low_abund_sequences"
@@ -388,9 +392,11 @@ Edgar, R.C. (2013) UPARSE: Highly accurate OTU sequences from microbial amplicon
 [Pubmed:23955772, dx.doi.org/10.1038/nmeth.2604](https://www.nature.com/articles/nmeth.2604).
 
 ```{bash eval=FALSE}
+#!/bin/bash
+
 SF="8.singleton_filtered"
 cluster="9.cluster"
-uparse_otus="13a.uparse_otus"
+uparse_otus="9a.uparse_otus"
 
 echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 echo UPARSE on all
@@ -398,20 +404,20 @@ echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mkdir ${cluster}
 
-    cat ${SF}/*.fasta > ${cluster}/all_SF.fasta
+   cat ${SF}/*.fasta > ${cluster}/all_SF.fasta
 
 cd ${cluster}
+
+  usearch11 -fastx_uniques all_SF.fasta -fastaout all_SF_DR.fasta -sizeout
 
 mkdir ${uparse_otus}
 cd ${uparse_otus}
 
-usearch11 -fastx_uniques ../all_SF.fasta -fastaout all_SF_DR.fasta -sizeout
+  usearch11 -cluster_otus ../all_SF_DR.fasta -otus uparse_otus.fasta -relabel OTU
 
-usearch11 -cluster_otus all_SF_DR.fasta -otus uparse_otus.fasta -relabel OTU
+  usearch11 -usearch_global ../all_SF.fasta -db uparse_otus.fasta -strand both -id 0.97 -otutabout uparse_otu_tab.txt -biomout uparse_otu_biom.biom
 
-usearch11 -usearch_global ../all_SF.fasta -db uparse_otus.fasta -strand both -id 0.97 -otutabout uparse_otu_tab.txt -biomout uparse_otu_biom.biom
-
-usearch11 -cluster_agg uparse_otus.fasta -treeout uparse_otus.tree -clusterout clusters.txt
+  usearch11 -cluster_agg uparse_otus.fasta -treeout uparse_otus.tree -clusterout clusters.txt
 
 cd ..
 ```
@@ -436,29 +442,26 @@ Errors are corrected as follows:
 Edgar, R.C. (2016), UNOISE2: Improved error-correction for Illumina 16S and ITS amplicon reads.[http://dx.doi.org/10.1101/081257](https://www.biorxiv.org/content/early/2016/10/15/081257)
 
 ```{bash eval=FALSE}
-cluster="13.cluster"
-unoise_zotus="13b.zotus"
-# Remember is must be Usearch 10 for the unoise3 algorithm
-usearch="usearch10"
+#!/bin/bash
+
+cluster="9.cluster"
+unoise_zotus="9b.unoise_zotus"
 
 echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 echo UNOISE on all
 echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-cd ${cluster}
 
 mkdir ${unoise_zotus}
 cd ${unoise_zotus}
 
-usearch11 -fastx_uniques ../all_SF.fasta -fastaout all_SF_DR.fasta -sizeout
+  usearch11 -unoise3 ../all_SF_DR.fasta -zotus unoise_zotus.fasta -tabbedout unoise_tab.txt
 
-usearch11 -unoise3 all_SF_DR.fasta -zotus unoise_zotus.fasta -tabbedout unoise_tab.txt
+  usearch11 -fastx_relabel unoise_zotus.fasta -prefix Otu -fastaout unoise_zotus_relabelled.fasta -keep_annots
 
-usearch11 -fastx_relabel unoise_zotus.fasta -prefix Otu -fastaout unoise_zotus_relabelled.fasta -keep_annots
+  usearch11 -otutab ../all_SF_DR.fasta -zotus unoise_zotus_relabelled.fasta -otutabout unoise_otu_tab.txt -biomout unoise_otu_biom.biom -mapout unoise_map.txt -notmatched unoise_notmatched.fasta -dbmatched dbmatches.fasta -sizeout
 
-usearch11 -otutab all_SF_DR.fasta -zotus unoise_zotus_relabelled.fasta -otutabout unoise_otu_tab.txt -biomout unoise_otu_biom.biom -mapout unoise_map.txt -notmatched unoise_notmatched.fasta -dbmatched dbmatches.fasta -sizeout
-
-usearch11 -cluster_agg unoise_zotus_relabelled.fasta -treeout unoise_zotus.tree -clusterout clusters.txt -id 0.80 -linkage min
+  usearch11 -cluster_agg unoise_zotus_relabelled.fasta -treeout unoise_zotus.tree -clusterout clusters.txt -id 0.80 -linkage min
 
 cd ..
 cd ..
