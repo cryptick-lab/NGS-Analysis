@@ -405,10 +405,7 @@ $(document).ready(function () {
 <li><a href="#quality-control-and-removing-dimer-sequences">Quality control and removing dimer sequences</a></li>
 <li><a href="#renaming-sequences">Renaming sequences</a></li>
 <li><a href="#removing-low-abundant-sequences">Removing low abundant sequences</a></li>
-<li><a href="#clustering">Clustering</a><ul>
-<li><a href="#uparse-algorithm-to-generate-otus">UPARSE algorithm to generate OTUs</a></li>
-<li><a href="#unoise3-algorithm-to-generate-zotus">UNOISE3 algorithm to generate ZOTUs</a></li>
-</ul></li>
+<li><a href="#clustering">Clustering</a></li>
 <li><a href="#what-next">What next?</a></li>
 </ul>
 </div>
@@ -709,8 +706,8 @@ done
 <h2>Clustering</h2>
 <p>This step is where you may encounter issues with enough memory, for 1 or 2 MiSeq runs, the 32-bit versions of usearch may be okay, however any larger and you will need to use the 64-bit, paid versions. There are alternative freely available software for this step such as vsearch, and it may be worth your time exploring these options if you encounter such limits. For this case we will assume you either have a small data set or have access to the 64-bit versions for larger datasets.</p>
 <p>There are two main alogorithms we recommend you do both and see what works. In my opinion I think that uparse OTUs are sufficent for 16S microbiome analysis in most cases. However if you are after more specific information (i.e. genotypes) or perhaps you targeted a more specific gene region (i.e. your primer were genus/family specific), you may want to go with ZOTUs. In short I think you should do both and make the descision of which makes biological sense in your study.</p>
-<div id="uparse-algorithm-to-generate-otus" class="section level3">
-<h3>UPARSE algorithm to generate OTUs</h3>
+<div id="uparse-algorithm-to-generate-otus" class="section level4">
+<h4>UPARSE algorithm to generate OTUs</h4>
 <p>The UPARSE algorithm is available in usearch 11 (and previous versions). If you have a large dataset you will need the 64-bit version as it does hold memory. Detailed documentation on this algorithm can be found <a href="https://drive5.com/usearch/manual/uparseotu_algo.html">here</a>.</p>
 <p>The UPARSE-OTU algorithm constructs a set of OTU representative sequences from NGS amplicon reads. R</p>
 <p>Clustering criteria The goal of UPARSE-OTU is to identify a set of OTU representative sequences (a subset of the input sequences) satisfying the following criteria.</p>
@@ -741,12 +738,15 @@ cd ${uparse_otus}
 
   usearch11 -usearch_global ../all_SF.fasta -db uparse_otus.fasta -strand both -id 0.97 -otutabout uparse_otu_tab.txt -biomout uparse_otu_biom.biom
 
-  usearch11 -cluster_agg uparse_otus.fasta -treeout uparse_otus.tree -clusterout clusters.txt
+  usearch11 -calc_distmx uparse_otus.fasta -tabbedout uparse_otus_distmx.txt -maxdist 0.2 -termdist 0.3
+  
+  usearch11 -cluster_aggd uparse_otus_distmx.txt -treeout uparse_otus_clusters.tree -clusterout uparse_otus_clusters.txt \
+      -id 0.80 -linkage min
 
 cd ..</code></pre>
 </div>
-<div id="unoise3-algorithm-to-generate-zotus" class="section level3">
-<h3>UNOISE3 algorithm to generate ZOTUs</h3>
+<div id="unoise3-algorithm-to-generate-zotus" class="section level4">
+<h4>UNOISE3 algorithm to generate ZOTUs</h4>
 <p>The UNOISE3 algorithm is only available in USEARCH10 onwards. If you have a large data set you will need the 64-bit version as it does hold memory. Detailed documation on this algorithm can be found <a href="https://drive5.com/usearch/manual/cmd_unoise3.html">here</a>.</p>
 <p>There is a UNOISE2 option in Usearch9.2 with documentation available <a href="https://www.drive5.com/usearch/manual9.2/unoise_pipeline.html">here</a>.</p>
 <p>This algorithm is specifically designed for Illumina sequences.</p>
@@ -773,7 +773,10 @@ cd ${unoise_zotus}
 
   usearch11 -otutab ../all_SF_DR.fasta -zotus unoise_zotus_relabelled.fasta -otutabout unoise_otu_tab.txt -biomout unoise_otu_biom.biom -mapout unoise_map.txt -notmatched unoise_notmatched.fasta -dbmatched dbmatches.fasta -sizeout
 
-  usearch11 -cluster_agg unoise_zotus_relabelled.fasta -treeout unoise_zotus.tree -clusterout clusters.txt -id 0.80 -linkage min
+  usearch11 -calc_distmx unoise_zotus.fasta -tabbedout unoise_zotus_distmx.txt -maxdist 0.2 -termdist 0.3
+  
+  usearch11 -cluster_aggd unoise_zotus_distmx.txt -treeout unoise_zotus_clusters.tree -clusterout unoise_zotus_clusters.txt \
+      -id 0.80 -linkage min
 
 cd ..
 cd ..</code></pre>
