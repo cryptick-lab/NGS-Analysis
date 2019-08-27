@@ -20,3 +20,8 @@ The internet is wealth of information on programs, coding languages, plug ins an
 
 The aim of this webpage is to help by "taming the flood" of what can seem like a never ending world of NGS data analysis. 
 I have endevroued to credit the resource and works of other people where appropriate - but if you feel your work has not been credited please send an email to siobhon.egan@murdoch.edu.au
+
+For more information on the research group head to our [website](http://www.murdoch.edu.au/Research-capabilities/Vector-and-Waterborne-Pathogens-Group/).
+
+I also maintain some resources on my personal [github page](https://github.com/siobhon-egan), or see my [website](https://siobhon-egan.github.io).
+

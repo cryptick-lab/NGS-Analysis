@@ -3,6 +3,9 @@ title: "Diversity and Phylogeny Analysis"
 output:
   html_document:
     df_print: paged
+    toc: true
+    toc_float: true
+    toc_depth: 5
 ---
 
 This workflow follows documentation from QIIME2 documents on [tutorials](√) - mainly the moving pictures tutorial. 

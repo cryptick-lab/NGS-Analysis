@@ -5,9 +5,6 @@ navbar:
     - text: "Home"
       icon: fa-home
       href: index.html
-    - text: "About"
-      icon: ion-person
-      href: about.html
     - text: "Resources"
       icon: fa-book
       href: resources.html

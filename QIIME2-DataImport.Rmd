@@ -3,6 +3,9 @@ title: "Data Import and Preliminary Analysis"
 output:
   html_document:
     df_print: paged
+    toc: true
+    toc_float: true
+    toc_depth: 5
 ---
 
 This workflow follows documentation from QIIME2 documents on [data import](https://docs.qiime2.org/2017.12/tutorials/importing/). 

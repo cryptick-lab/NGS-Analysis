@@ -3,6 +3,9 @@ title: "Phyloseq Introduction and Import"
 output:
   html_document:
     df_print: paged
+    toc: true
+    toc_float: true
+    toc_depth: 5
 ---
 
 ### Phyloseq and Microbiome analysis in R

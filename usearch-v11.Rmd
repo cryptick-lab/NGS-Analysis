@@ -4,6 +4,7 @@ output:
   html_document:
     df_print: paged
     toc: true
+    toc_float: true
 ---
 
 
@@ -374,7 +375,7 @@ This step is where you may encounter issues with enough memory, for 1 or 2 MiSeq
 
 There are two main alogorithms we recommend you do both and see what works. In my opinion I think that uparse OTUs are sufficent for 16S microbiome analysis in most cases. However if you are after more specific information (i.e. genotypes) or perhaps you targeted a more specific gene region (i.e. your primer were genus/family specific), you may want to go with ZOTUs. In short I think you should do both and make the descision of which makes biological sense in your study.
 
-#### UPARSE algorithm to generate OTUs
+### UPARSE algorithm to generate OTUs
 The UPARSE algorithm is available in usearch 11 (and previous versions). If you have a large dataset you will need the 64-bit version as it does hold memory. Detailed documentation on this algorithm can be found [here](https://drive5.com/usearch/manual/uparseotu_algo.html).
 
 The UPARSE-OTU algorithm constructs a set of OTU representative sequences from NGS amplicon reads. R
@@ -425,7 +426,7 @@ cd ${uparse_otus}
 cd ..
 ```
 
-#### UNOISE3 algorithm to generate ZOTUs
+### UNOISE3 algorithm to generate ZOTUs
 
 The UNOISE3 algorithm is only available in USEARCH10 onwards. If you have a large data set you will need the 64-bit version as it does hold memory. Detailed documation on this algorithm can be found [here](https://drive5.com/usearch/manual/cmd_unoise3.html).
 
@@ -462,7 +463,7 @@ cd ${unoise_zotus}
 
   usearch11 -fastx_relabel unoise_zotus.fasta -prefix Otu -fastaout unoise_zotus_relabelled.fasta -keep_annots
 
-  usearch11 -otutab ../all_SF_DR.fasta -zotus unoise_zotus_relabelled.fasta -otutabout unoise_otu_tab.txt -biomout unoise_otu_biom.biom -mapout unoise_map.txt -notmatched unoise_notmatched.fasta -dbmatched dbmatches.fasta -sizeout
+  usearch11 -otutab ../all_SF.fasta -zotus unoise_zotus_relabelled.fasta -otutabout unoise_otu_tab.txt -biomout unoise_otu_biom.biom -mapout unoise_map.txt -notmatched unoise_notmatched.fasta -dbmatched dbmatches.fasta -sizeout
 
   usearch11 -calc_distmx unoise_zotus.fasta -tabbedout unoise_zotus_distmx.txt -maxdist 0.2 -termdist 0.3
   

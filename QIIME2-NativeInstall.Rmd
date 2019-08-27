@@ -3,6 +3,9 @@ title: "Native Install"
 output:
   html_document:
     df_print: paged
+    toc: true
+    toc_float: true
+    toc_depth: 5
 ---
 
 

@@ -3,6 +3,9 @@ title: "Beta Diversity and PCoA"
 output:
   html_document:
     df_print: paged
+    toc: true
+    toc_float: true
+    toc_depth: 5
 ---
 
 There are many different options when it comes to beta diversity analayis and plot ordination. The phyloseq documentation is a good place to start to understand the different types of analysis. You can also use the help function in r `?ordinate` and `?plot_ordination`. 

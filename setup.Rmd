@@ -4,6 +4,7 @@ output:
   html_document:
     df_print: paged
     toc: true
+    toc_float: true
 ---
 
 For this analysis (and coding in general) you will need to ensure you computer has a few things installed.
