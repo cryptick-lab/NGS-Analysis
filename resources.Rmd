@@ -13,44 +13,69 @@ Don't forget about youtube - an excellent resources for those that are visual le
 
 Below are just _some_ of the resources available, mainly tailored around genomics, however the Data and Software Carpentry resources are an excellent starting point for general information.
 
-## General software & data
+***
+***
+
+# Where to start?
+
+It can be a bit daunting knowing where to start. There are so many programs, packages, applications, tutorials - it's important to remember you cannot do them all!
+
+My personal advice (remember I am mac/linux user) is to start my learning how to do commandline (i.e. terminal) and know some basics of the `bash` language.
+Once you can perform some basic commands then move on to learning R/RStudio.
+
+My reason for recommending RStudio is it will save you lots of time in the long term.
+The RStudio community is huge and everything is free so you never have to worry about no longer having access.
+There is a wealth of packages for RStudio you can do everything, the whole workflow - data entry, manipulating and summarising spreadsheets, statistical analysis, data visualisation and then writing your report/thesis/publication etc.
+It will save you long term as you won't have to learn so many additional programs (i.e. mapping programs, photoshop/figure editor software, statistics, the list goes on...).
+Most often people will pick and choose to do certain elements in RStudio and then use programs they are familar with for the other bits....the good news is you can take it at your own pace.
+
+**Siobhon's recommendations for beginners**
+
 * [Software Carpentry](https://software-carpentry.org/)
-    + The Unix shell - *REQUIRED* (this is an essential start for beginners!)
-    + Version control with git - very important when interacting with the notebooks and scipts in this directory, however if coding is still a little scary you can also stick to their webpage or download the [desktop version](https://desktop.github.com/)
-    + Version control with mercurial - optional (perhaps skip this until you are more adept)
-    + Using databases and SQL - optional extra, useful if metadata is an issue for you
-    + Programming with python - highly recommended
-    + Plotting and programming in python - optional
-    + Programming with R - highly recommended 
-    + R for reproducible scientific analysis - *REQUIRED*
-    + Programming with MATLAB - optional
-    + Automation and make - optional
+    + [The Unix Shell](http://swcarpentry.github.io/shell-novice/) - **REQUIRED** (this is an essential start for beginners!)
+    + [Version Control with Git](http://swcarpentry.github.io/git-novice) - this provides a platform for you to keep track and share your code. I suggest you come back to this later [desktop version](https://desktop.github.com/)
+    + [Programming with Python](http://swcarpentry.github.io/python-novice-inflammation) - come back to python, this is another scripting language. A popular one among many coders, but often for bioinformatics most programs use `bash` (the one you learnt in 'The Unix Shell' tutorial)
+    + [Programming with R](http://swcarpentry.github.io/r-novice-inflammation/) - **HIGHLY RECOMMENDED**
+    + [R for reproducible scientific analysis](http://swcarpentry.github.io/r-novice-gapminder/) - recommended extra, although you can probably skip some lessons
 <br></br>
+
+Even if you think your field is not ecology, trust me this is an excellent place to start learning RStudio.
+
 * [Data Carpentry](http://www.datacarpentry.org/lessons/)
     + Ecology Lessons
-        - Data organisation in spreadsheets - recommended
-        - Data cleaning with Openefine - optional
-        - Data management with SQL - optional
-        - Data analysis and visualization in R - *HIGHLY RECOMMENDED* for anyone wanting to expand their R knowledge
-        - Data Analysis and visualization in python - recommended
-    + Genomics Lessons
-        - Projection organization and management - recommended
-        - Introduction to the command line - if you have done the Unix shell lesson you can likely skip this
-        - Data wrangling and processing - good for basic information on how to view files and various file formats
-        - Introduction to cloud computing for genomics - unless you are using an Amazon account this is not needed
-        - Data Analysis and Visualization in R - *HIGHLY RECOMMENDED*
-    
-There are a number of online modules and courses are avilable too, some of which you have to pay for but there are many free resources available too.
+        - [Data organisation in spreadsheets](https://datacarpentry.org/spreadsheet-ecology-lesson/) - **HIGHLY RECOMMENDED**
+        - [Data analysis and visualization in R](https://datacarpentry.org/R-ecology-lesson/) - **REQUIRED**
 
-Popular sites include:
+While you maybe tempted to look at the Genomics lessons (of course go ahead if you have a burning desire!) they are still very much a work in progress, and I would not recommend them at this stage. 
+ 
+***
 
-* [Courses.edx](https://courses.edx.org)
-    + [DNA sequencing](https://www.coursera.org/learn/dna-sequencing) - the lessons labelled 'practical' are particularly useful as they have split screen and run through the code line by line. Although they do not use amplicon based NGS examples they do inlclude good fundamental lessons (including how to read a fastq file)
-    + [Bioinformatics methods 1](https://www.coursera.org/learn/bioinformatics-methods-1) - while it does not have recorded practical it goes have a 'post-lab lecture' which is helpful. Their handouts are very detailed, however again they do not give examples specific to NGS but more general bioinformatics.
-*	[Coursera](https://www.coursera.org) - a whealth of courses to make your way through
-*	[Datacamp](https://www.datacamp.com/home) - a fantastic resource for data science and anything coding related. The "on-screen" terminal has some pros and cons to it, give the free lessons ago (there is more than enough to keep you busy) and see how you like i - just make sure you take good notes!
+# R/RStudio 
 
-## NGS Sequence analysis
+In addition to the above [software carpentry](https://software-carpentry.org/lessons/index.html) and data [carpentry](https://datacarpentry.org/) resources some additional places to start include:
+
+* [Swirl](http://swirlstats.com/) is a great interactive tutorials that run directly in R. Useful for statistical analysis and basic functions.
+* [R Tutorial](http://www.r-tutor.com/r-introduction) offers here a couple of introductory tutorials on basic R concepts.
+* [Code School](http://tryr.codeschool.com/) provides some more tutorials on basic R syntax and basics.
+* [Quick-R](https://www.statmethods.net/r-tutorial/index.html) is great for tutorials on statistical analysis.
+* [STAT 457](https://stat545.stat.ubc.ca/) course website for the 2019-2020 edition of STAT 545A and STAT 547M, colloquially known as just “STAT 545”, delivered at The University of British Columbia in Vancouver, BC.
+
+**R Cheat Sheets**
+There are a number of cheatsheets and other reference documenation available for R.
+
+* A link to the offical R cheat sheets is [here](https://www.rstudio.com/resources/cheatsheets/).
+* Other useful cheatsheets by DataCamp are available [here](https://www.datacamp.com/community/data-science-cheatsheets).
+* Links to other useful resources availbale [here](http://www.datasciencefree.com/cheatsheets.html), [here](https://r-dir.com/reference/crib-sheets.html), [here](https://www.analyticsvidhya.com/blog/2017/02/top-28-cheat-sheets-for-machine-learning-data-science-probability-sql-big-data/) and [here](https://sites.google.com/site/rdatamining/docs/R-refcard-data-mining.pdf?attredirects=0)
+
+***
+
+# Sequence & Phylogenetics
+
+More coming soon - see my personal page [here](https://siobhon-egan.github.io/bioinfo-phylo/index.html) for some inspiration in the mean time.
+
+***
+
+# NGS Sequence analysis
 
 This pipeline makes use of [USEARCH](https://www.drive5.com/usearch/) for preprocessing and [QIIME2](https://qiime2.org/) for taxonomy assignment and analysis - both of these come with a number of different tutorials with example data for you to work through. I strongly suggest you work through these **critically** don't just copy and paste and press eneter (even thought it is tempting!) - make sure you understand what and why you are doing things. 
 
@@ -104,22 +129,58 @@ There can be alot of overlap in these so its up to you to see what works for you
 * [qiimer](https://github.com/kylebittinger/qiimer) - R functions to read QIIME output files and create figures
 * [RAM](https://rdrr.io/cran/RAM/) - R for amplicon-sequencing-based microbial-ecology
 
+## RNASeq
 
+...
 
-## R information
+## Database
 
-In addition to the above resources some additional R ones include:
+Links to useful taxonomy databases go here...
 
-* [Swirl](http://swirlstats.com/) is a great interactive tutorials that run directly in R. Useful for statistical analysis and basic functions.
-* [R Tutorial](http://www.r-tutor.com/r-introduction) offers here a couple of introductory tutorials on basic R concepts.
-* [Code School](http://tryr.codeschool.com/) provides some more tutorials on basic R syntax and basics.
-* [Quick-R](https://www.statmethods.net/r-tutorial/index.html) is great for tutorials on statistical analysis.
-
-**R Cheat Sheets**
-There are a number of cheatsheets and other reference documenation available for R.
-
-* A link to the offical R cheat sheets is [here](https://www.rstudio.com/resources/cheatsheets/).
-* Other useful cheatsheets by DataCamp are available [here](https://www.datacamp.com/community/data-science-cheatsheets).
-* Links to other useful resources availbale [here](http://www.datasciencefree.com/cheatsheets.html), [here](https://r-dir.com/reference/crib-sheets.html), [here](https://www.analyticsvidhya.com/blog/2017/02/top-28-cheat-sheets-for-machine-learning-data-science-probability-sql-big-data/) and [here](https://sites.google.com/site/rdatamining/docs/R-refcard-data-mining.pdf?attredirects=0)
 
 ***
+
+# Epidemiology and Statistics
+
+**Web/online resources**
+
+* [ClinEpiDB](https://clinepidb.org/ce/app/) - Advancing global public health by facilitating the exploration and analysis of epidemiological studies. ClinEpiDB, launched in February 2018, is an open-access online resource enabling investigators to maximize the utility and reach of their data and to make optimal use of data released by others.
+More coming soon
+* [Epitool](https://epitools.ausvet.com.au/) - This site is developed and maintained by [Ausvet](https://www.ausvet.com.au/). The site is intended for use by epidemiologists and researchers involved in estimating disease prevalence or demonstrating freedom from disease through structured surveys, or in other epidemiological applications.
+* [VassarStats](http://vassarstats.net/) - A useful and user-friendly tool for performing statistical computation (probabilities, regression, t-test, ANOVA and more)
+
+***
+
+# RMarkdown
+
+More coming soon
+
+
+## Writing your thesis
+
+...
+
+## Making a webpage
+
+...
+
+***
+
+# Mapping
+
+More coming soon
+
+***
+
+# Online modules and courses    
+There are a number of online modules and courses are avilable too, some of which you have to pay for but there are many free resources available too.
+
+Popular sites include:
+
+* [Courses.edx](https://courses.edx.org)
+    + [DNA sequencing](https://www.coursera.org/learn/dna-sequencing) - the lessons labelled 'practical' are particularly useful as they have split screen and run through the code line by line. Although they do not use amplicon based NGS examples they do inlclude good fundamental lessons (including how to read a fastq file)
+    + [Bioinformatics methods 1](https://www.coursera.org/learn/bioinformatics-methods-1) - while it does not have recorded practical it goes have a 'post-lab lecture' which is helpful. Their handouts are very detailed, however again they do not give examples specific to NGS but more general bioinformatics.
+*	[Coursera](https://www.coursera.org) - a whealth of courses to make your way through
+*	[Datacamp](https://www.datacamp.com/home) - a fantastic resource for data science and anything coding related. The "on-screen" terminal has some pros and cons to it, give the free lessons ago (there is more than enough to keep you busy) and see how you like i - just make sure you take good notes!
+
+
