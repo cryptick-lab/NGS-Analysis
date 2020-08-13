@@ -32,18 +32,18 @@ This analysis is for paired-end reads generated on the illumina MiSeq
 
 I strongly suggest you take a small sub-set of your data though the pipeline outlined below step-by-step first to get an understanding of what each command is doing. Importantly it will also allow to explore the influence of the different variables on your dataset.
 
-Once you are happy with the parameters and that the script is working you can use the full script to analyse all your samples. Open your favourite text editor and combine all the sections of your workflow into a document with the file extension `.sh`. For example `16S_usearchv11.sh`
+Once you are happy with the parameters and that the script is working you can use the full script to analyse all your samples. Open your favourite text editor and combine all the sections of your workflow into a document with the file extension `.sh`. For example `usearchv11_analysis.sh`
 
 Simply edit the script with your parameters, and save it in a directory with your raw fastq files.
 
 All sub-scripts and a complete version of the pipeline can be found on my github repo [siobhon-egan/usearch_analysis](https://github.com/siobhon-egan/usearch_analysis).
 
-In a bash terminal navigate to your directory and perform the following to execute the script and save the terminal output to a text file.
+In a bash terminal navigate to your directory and perform the following to execute the script and save the terminal output to a text file. Download the full script [here](https://github.com/siobhon-egan/usearch_analysis/blob/master/usearch11_analysis.sh)
 
 ```{bash eval=FALSE}
 cd /Users/name/Documents/NGS-Analysis
-chmod +x 16S_usearchv11.sh
-./16S_usearchv11.sh > 16S-NGS-usearchv11-output.txt
+chmod +x usearchv11_analysis.sh
+./usearchv11_analysis.sh > usearchv11_output.txt
 ```
 
 *Note: the code below assumes you have installed USEARCH v11, file name `usearch11` and it is executable (if not navigate to the file and type `chmod +x usearch11` in the command line). 
@@ -66,12 +66,12 @@ mkdir $read_summary
 
  for fq in $raw_data/*R1*.fastq
  do
-  usearch11 -fastx_info $fq -output $read_summary/1a_fwd_fastq_info.txt
+  usearch11 -fastx_info $fq -output ${read_summary}/1a_fwd_fastq_info.txt
  done
 
  for fq in $raw_data/*R2*.fastq
  do
-  usearch11 -fastx_info $fq -output $read_summary/1b_rev_fastq_info.txt
+  usearch11 -fastx_info $fq -output ${read_summary}/1b_rev_fastq_info.txt
  done
 ```
  
@@ -202,7 +202,7 @@ for file3 in ${merged_data}/*.fastq
 
 	usearch11 -search_pcr2 ${file3} -fwdprimer ${fwd_primer} \
 	-revprimer ${rev_primer} \
-	-strand both -fastqout "${primer_matched}/$(basename ${file3})" -notmatchedfq "${primer_not_matched}/$(basename ${file3})" -tabbedout pcr2_primermatches_output.txt
+	-strand both -fastqout "${primer_matched}/$(basename ${file3})" -notmatchedfq "${primer_not_matched}/$(basename ${file3})" -tabbedout ${primer_matched}/pcr2_primermatches_output.txt
 done
 ```
 

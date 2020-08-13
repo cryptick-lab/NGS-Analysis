@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>USEARCH - Getting started</title>
 
+<script src="site_libs/header-attrs-2.3.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -87,7 +88,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -236,6 +236,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -247,18 +248,6 @@ $(document).ready(function () {
   display: none;
 }
 </style>
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
 
 <!-- code folding -->
 
@@ -400,7 +389,7 @@ $(document).ready(function () {
 <p>The following instructions are for a MacOS or linux operating system. For details on a windows operating system see <a href="https://www.drive5.com/usearch/manual/problems_running.html">USEARCH documentation</a>.</p>
 <p><strong>Download USEARCH</strong></p>
 <p>To download USEARCH go to the <a href="https://www.drive5.com/usearch/download.html">download page</a> and select the appriate platform and version number. You will then be sent a download link to your email.</p>
-<p>Save the file in an easy to locate path that you will not touch. I suggest adding a new folder in your home directory called <code>Programs</code>, you can rename the file to something easier e.g. <code>usearch11.0.34bit</code> this will let you know it is version 11.0 32-bit.</p>
+<p>Save the file in an easy to locate path that you will not touch. I suggest adding a new folder in your home directory called <code>Programs</code>, you can rename the file to something easier e.g. <code>usearch11.0.34bit</code> this will let you know it is version 11.0 32-bit.</p>
 <p><strong>Execute permissions</strong></p>
 <p>Once you have moved and saved it where you will not touch the file or any parent folders (i.e. the path) you will need to ensure that you have read and execute permissions for the binary file.</p>
 <p>Within the Bash evironment (terminal for MacOS or your Git Bash for Windows) nagive to the directory:</p>
@@ -442,6 +431,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

@@ -7,7 +7,7 @@ output:
     toc_float: true
 ---
 
-The internet has an infinite number of resources available - if you can google than you can code! 
+The internet has an infinite number of resources available - if you can google than you can code!
 
 Don't forget about youtube - an excellent resources for those that are visual learners.
 
@@ -46,11 +46,11 @@ Even if you think your field is not ecology, trust me this is an excellent place
         - [Data organisation in spreadsheets](https://datacarpentry.org/spreadsheet-ecology-lesson/) - **HIGHLY RECOMMENDED**
         - [Data analysis and visualization in R](https://datacarpentry.org/R-ecology-lesson/) - **REQUIRED**
 
-While you maybe tempted to look at the Genomics lessons (of course go ahead if you have a burning desire!) they are still very much a work in progress, and I would not recommend them at this stage. 
- 
+While you maybe tempted to look at the Genomics lessons (of course go ahead if you have a burning desire!) they are still very much a work in progress, and I would not recommend them at this stage.
+
 ***
 
-# R/RStudio 
+# R/RStudio
 
 In addition to the above [software carpentry](https://software-carpentry.org/lessons/index.html) and data [carpentry](https://datacarpentry.org/) resources some additional places to start include:
 
@@ -77,7 +77,7 @@ More coming soon - see my personal page [here](https://siobhon-egan.github.io/bi
 
 # NGS Sequence analysis
 
-This pipeline makes use of [USEARCH](https://www.drive5.com/usearch/) for preprocessing and [QIIME2](https://qiime2.org/) for taxonomy assignment and analysis - both of these come with a number of different tutorials with example data for you to work through. I strongly suggest you work through these **critically** don't just copy and paste and press eneter (even thought it is tempting!) - make sure you understand what and why you are doing things. 
+This pipeline makes use of [USEARCH](https://www.drive5.com/usearch/) for preprocessing and [QIIME2](https://qiime2.org/) for taxonomy assignment and analysis - both of these come with a number of different tutorials with example data for you to work through. I strongly suggest you work through these **critically** don't just copy and paste and press eneter (even thought it is tempting!) - make sure you understand what and why you are doing things.
 
 Other comparable alternatives
 
@@ -88,7 +88,7 @@ Other comparable alternatives
 
 Some other useful references and analysis tools for genomics
 
-* [RNAseq analysis](https://bioinformatics-core-shared-training.github.io/RNAseq-R/) - a link to similar content of RNAseq by combine Australia is also available [here](http://combine-australia.github.io/RNAseq-R/) 
+* [RNAseq analysis](https://bioinformatics-core-shared-training.github.io/RNAseq-R/) - a link to similar content of RNAseq by combine Australia is also available [here](http://combine-australia.github.io/RNAseq-R/)
 * [Next Gen Seek](http://nextgenseek.com)
 * [Bits of DNA](http://liorpachter.wordpress.com/seq)
 * [RNA-Seq Blog](http://www.rna-seqblog.com)
@@ -108,7 +108,7 @@ applications.php)
 ## Microbial analysis
 
 Microbial analysis has revieved the most attention with respect to amplicon based NGS approaches; however with some refining these pipelines can also be used for other amplicon based NGS studies (e.g. COI (metazoa), ITS (fungi), TrnL (plant), 18S (protozoa) just to name a few). Plus there is of course overlap with other genomics tools as well.
-There can be alot of overlap in these so its up to you to see what works for you. Generally those in R allow more customisation however may be more difficult to grasp initially. GUI's are good to get a quick handle on your data, however you are usually limited in the customisation of the graphical outputs from these programs. Some of these are more of a stand alone package however the majority will utilise a common format (e.g. phyloseq objects are common throughout many of these). 
+There can be alot of overlap in these so its up to you to see what works for you. Generally those in R allow more customisation however may be more difficult to grasp initially. GUI's are good to get a quick handle on your data, however you are usually limited in the customisation of the graphical outputs from these programs. Some of these are more of a stand alone package however the majority will utilise a common format (e.g. phyloseq objects are common throughout many of these).
 
 * [phyloseq](https://joey711.github.io/phyloseq/) - Analyze microbiome census data using R
 * [microbiomeSeq](http://userweb.eng.gla.ac.uk/umer.ijaz/projects/microbiomeSeq_Tutorial.html#install) - An R package for microbial community analysis in an environmental context
@@ -133,9 +133,17 @@ There can be alot of overlap in these so its up to you to see what works for you
 
 ...
 
-## Database
+## Databases
 
-Links to useful taxonomy databases go here...
+* [TriTrypDB](https://tritrypdb.org/tritrypdb/) - kinetoplastid genomics resource
+* [VectorBase](https://www.vectorbase.org/downloads) - bioinformatics resource for invertebrate vectors of human pathogens
+* [CryptoDB](https://cryptodb.org/cryptodb/) - *Cryptosporidium* genomics resource
+* [Silva](https://www.arb-silva.de/) - high quality ribosomal RNA databases. SILVA provides comprehensive, quality checked and regularly updated datasets of aligned small (16S/18S, SSU) and large subunit (23S/28S, LSU) ribosomal RNA (rRNA) sequences for all three domains of life (Bacteria, Archaea and Eukarya).
+* [Greengenes](https://greengenes.secondgenome.com/) - 16S rRNA gene database of Bacteria and Archaea.
+* [EuPathDB](https://eupathdb.org/eupathdb/) - Eukaryotic pathogen database resource
+* [unite](https://unite.ut.ee/) - communication and identification of DNA based fungal species (based on internal transcribed spacer gene - ITS)
+* [BoldSystems](http://v3.boldsystems.org/index.php/resources/handbook?chapter=2_databases.html) - The Barcode of Life Data System is designed to support the generation and application of DNA barcode data. Includes the following: Animal identification using mitochondrial mitochondrial cytochrome oxidase subunit 1 (COI); Fungal using internal transcribed spacer (ITS); and Plant using chloroplast ribulose-bisphosphate carboxylase (RbcL) & plastid/nuclear Maturase K (Matk)
+* [VEuPathDB](https://veupathdb.org/) - This NIH Bioinformatics Resource Center (BRC) will support the integration of parasite resources currently provided by EuPathDB.org, fungal resources provided by FungiDB.org, and vector resources provided by VectorBase.org. 
 
 
 ***
@@ -172,7 +180,7 @@ More coming soon
 
 ***
 
-# Online modules and courses    
+# Online modules and courses
 There are a number of online modules and courses are avilable too, some of which you have to pay for but there are many free resources available too.
 
 Popular sites include:
@@ -182,5 +190,3 @@ Popular sites include:
     + [Bioinformatics methods 1](https://www.coursera.org/learn/bioinformatics-methods-1) - while it does not have recorded practical it goes have a 'post-lab lecture' which is helpful. Their handouts are very detailed, however again they do not give examples specific to NGS but more general bioinformatics.
 *	[Coursera](https://www.coursera.org) - a whealth of courses to make your way through
 *	[Datacamp](https://www.datacamp.com/home) - a fantastic resource for data science and anything coding related. The "on-screen" terminal has some pros and cons to it, give the free lessons ago (there is more than enough to keep you busy) and see how you like i - just make sure you take good notes!
-
-

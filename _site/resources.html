@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -14,6 +13,7 @@
 
 <title>Resources</title>
 
+<script src="site_libs/header-attrs-2.3.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -239,6 +239,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -571,9 +572,19 @@ div.tocify {
 <h2>RNASeq</h2>
 <p>…</p>
 </div>
-<div id="database" class="section level2">
-<h2>Database</h2>
-<p>Links to useful taxonomy databases go here…</p>
+<div id="databases" class="section level2">
+<h2>Databases</h2>
+<ul>
+<li><a href="https://tritrypdb.org/tritrypdb/">TriTrypDB</a> - kinetoplastid genomics resource</li>
+<li><a href="https://www.vectorbase.org/downloads">VectorBase</a> - bioinformatics resource for invertebrate vectors of human pathogens</li>
+<li><a href="https://cryptodb.org/cryptodb/">CryptoDB</a> - <em>Cryptosporidium</em> genomics resource</li>
+<li><a href="https://www.arb-silva.de/">Silva</a> - high quality ribosomal RNA databases. SILVA provides comprehensive, quality checked and regularly updated datasets of aligned small (16S/18S, SSU) and large subunit (23S/28S, LSU) ribosomal RNA (rRNA) sequences for all three domains of life (Bacteria, Archaea and Eukarya).</li>
+<li><a href="https://greengenes.secondgenome.com/">Greengenes</a> - 16S rRNA gene database of Bacteria and Archaea.</li>
+<li><a href="https://eupathdb.org/eupathdb/">EuPathDB</a> - Eukaryotic pathogen database resource</li>
+<li><a href="https://unite.ut.ee/">unite</a> - communication and identification of DNA based fungal species (based on internal transcribed spacer gene - ITS)</li>
+<li><a href="http://v3.boldsystems.org/index.php/resources/handbook?chapter=2_databases.html">BoldSystems</a> - The Barcode of Life Data System is designed to support the generation and application of DNA barcode data. Includes the following: Animal identification using mitochondrial mitochondrial cytochrome oxidase subunit 1 (COI); Fungal using internal transcribed spacer (ITS); and Plant using chloroplast ribulose-bisphosphate carboxylase (RbcL) &amp; plastid/nuclear Maturase K (Matk)</li>
+<li><a href="https://veupathdb.org/">VEuPathDB</a> - This NIH Bioinformatics Resource Center (BRC) will support the integration of parasite resources currently provided by EuPathDB.org, fungal resources provided by FungiDB.org, and vector resources provided by VectorBase.org.</li>
+</ul>
 <hr />
 </div>
 </div>
@@ -673,7 +684,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0

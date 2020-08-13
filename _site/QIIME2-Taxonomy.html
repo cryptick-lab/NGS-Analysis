@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>Taxonomy Assignment</title>
 
+<script src="site_libs/header-attrs-2.3.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -90,7 +91,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -239,6 +239,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -251,48 +252,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3,h4,h5",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -306,6 +268,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -491,18 +459,8 @@ div.tocify {
 </div>
 
 
-<script type="text/javascript">
-  // When the document is fully rendered...
-  $(document).ready(function() {
-    // ...select all header elements...
-    $('h1, h2, h3, h4, h5').each(function() {
-      // ...and add an id to them corresponding to their 'titles'
-      $(this).attr('id', $(this).html());
-    });
-  });
-</script>
 <p>This workflow follows documentation from QIIME2 documents on <a href="https://docs.qiime2.org/2017.12/tutorials/">tutorials</a> - mainly from the moving pictures tutorial.</p>
-<p><em>16S amplicon NGS analysis</em></p>
+<p>Once you master this you’ll want to run data input and taxonomy assignment in once quick script, see my personal github repo for this <a href="https://github.com/siobhon-egan/qiime2_analysis">here</a> <em>16S amplicon NGS analysis</em></p>
 <p>This notebook continues on from the notebook on data import &amp; preliminary analysis, and native installation of QIIME2 following the USEARCH pipeline.</p>
 <p>An analysis of both the <a href="https://www.arb-silva.de/">SILVA</a> and <a href="http://greengenes.lbl.gov/Download/">Greengenes</a> databases (current Jan 2018) found that for tick-microbiome analysis Greengenes allowed for finer resolution of taxonomy and thus is recommended and used here. Both GreenGenes and Silva along with other curated datasets have comparable results overall and it is suggested that for new analysis a comparison is made to determine thebest datasets for your use. Other taxonomy classifer methods can be used such as vsearch and BLAST+, see QIIME2 <code>feature-classifier</code> documenation for more information <a href="https://docs.qiime2.org/2017.12/plugins/available/feature-classifier/">here</a>.</p>
 <div id="training-feature-classifier" class="section level3">
@@ -564,7 +522,7 @@ ref-taxonomy.qza</code></pre>
 --p-r-primer TGCTGCCTCCCGTAGGAGT \
 --p-trunc-len 350 \
 --o-reads ref-seqs.qza</code></pre>
-<p>For V3-4 region primer set 515F-806R: (<a href="https://www.ncbi.nlm.nih.gov/pubmed/20534432">Caporaso et al. 2011</a>)</p>
+<p>For V3-4 region primer set 515F-806R: (<a href="https://www.ncbi.nlm.nih.gov/pubmed/20534432">Caporaso et al. 2011</a>)</p>
 <pre class="bash"><code>qiime feature-classifier extract-reads \
 --i-sequences 99_otus.qza \
 --p-f-primer GTGBCAGCMGCCGCGGTAA \
@@ -644,6 +602,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4,h5",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

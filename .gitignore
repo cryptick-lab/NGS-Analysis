@@ -5,3 +5,4 @@
 data/
 *.Rmd
 *.Rproj
+.DS_Store

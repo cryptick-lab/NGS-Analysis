@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>Homepage</title>
 
+<script src="site_libs/header-attrs-2.3.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -87,7 +88,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -236,6 +236,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -247,18 +248,6 @@ $(document).ready(function () {
   display: none;
 }
 </style>
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
 
 <!-- code folding -->
 
@@ -398,7 +387,7 @@ $(document).ready(function () {
 <p>This webpage was created me (Siobhon Egan) during an internship program at <a href="https://pawsey.org.au/">Pawsey Supercomputing Centre</a> provided by <a href="https://www.csiro.au/">CSIRO</a> in 2017/2018.</p>
 <p>It takes you through analysis of bacterial 16S amplicon next-generation sequencing data - however it can be easily adapted to suit various other amplicon sequence data.</p>
 <p>As with anything coding and bioinformatics related this is just <em>one</em> method of data analysis. The internet is wealth of information on programs, coding languages, plug ins and a number of different GUIs which you can use.</p>
-<p>The aim of this webpage is to help by “taming the flood” of what can seem like a never ending world of NGS data analysis. I have endevroued to credit the resource and works of other people where appropriate - but if you feel your work has not been credited please send an email to <a href="mailto:siobhon.egan@murdoch.edu.au">siobhon.egan@murdoch.edu.au</a></p>
+<p>The aim of this webpage is to help by “taming the flood” of what can seem like a never ending world of NGS data analysis. I have endevroued to credit the resource and works of other people where appropriate - but if you feel your work has not been credited please send an email to <a href="mailto:siobhon.egan@murdoch.edu.au" class="email">siobhon.egan@murdoch.edu.au</a></p>
 <p>For more information on the research group head to our <a href="http://www.murdoch.edu.au/Research-capabilities/Vector-and-Waterborne-Pathogens-Group/">website</a>.</p>
 <p>I also maintain some resources on my personal <a href="https://github.com/siobhon-egan">github page</a>, or see my <a href="https://siobhon-egan.github.io">website</a>.</p>
 
@@ -422,6 +411,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

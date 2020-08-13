@@ -24,6 +24,8 @@ This notebook continues on from the notebook on native installation of QIIME2 an
 * `biom` file: this is generated from the UNOISE algothrim in the USEARCH pipeline. At present the UNOISE pipeline generates a v1 format, however it is worth checking this is still the case on the USEARCH webpage before proceding further. See here for more information on the `biom` format.
 * `sequences` file: Unaligned sequence data is imported from a fasta formatted file containing DNA sequences that are not aligned (i.e., do not contain - or . characters). The sequences may contain degenerate nucleotide characters, such as N, but some QIIME2 actions may not support these characters. See the scikit-bio fasta format description for more information about the fasta format. From the USEARCH pipeline this will be the clustered (UNOISE or UPARSE) output fasta file
 
+Once you master this you'll want to run data input and taxonomy assignment in once quick script, see my personal github repo for this [here](https://github.com/siobhon-egan/qiime2_analysis)
+
 ***
 
 ### 1. BIOMV1.0.0 and Feature Table

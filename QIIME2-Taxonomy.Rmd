@@ -8,19 +8,10 @@ output:
     toc_depth: 5
 ---
 
-<script type="text/javascript">
-  // When the document is fully rendered...
-  $(document).ready(function() {
-    // ...select all header elements...
-    $('h1, h2, h3, h4, h5').each(function() {
-      // ...and add an id to them corresponding to their 'titles'
-      $(this).attr('id', $(this).html());
-    });
-  });
-</script>
-
 This workflow follows documentation from QIIME2 documents on [tutorials](https://docs.qiime2.org/2017.12/tutorials/) - mainly from the moving pictures tutorial. 
 
+
+Once you master this you'll want to run data input and taxonomy assignment in once quick script, see my personal github repo for this [here](https://github.com/siobhon-egan/qiime2_analysis)
 *16S amplicon NGS analysis*
 
 This notebook continues on from the notebook on data import & preliminary analysis, and native installation of QIIME2 following the USEARCH pipeline.

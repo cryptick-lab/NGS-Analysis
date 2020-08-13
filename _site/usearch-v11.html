@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>USEARCH v11 Amplicon Analysis</title>
 
+<script src="site_libs/header-attrs-2.3.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -90,7 +91,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -239,6 +239,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -251,48 +252,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -306,6 +268,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -504,13 +472,13 @@ div.tocify {
 <p>This analysis is for paired-end reads generated on the illumina MiSeq</p>
 <p><strong>Using this pipeline</strong></p>
 <p>I strongly suggest you take a small sub-set of your data though the pipeline outlined below step-by-step first to get an understanding of what each command is doing. Importantly it will also allow to explore the influence of the different variables on your dataset.</p>
-<p>Once you are happy with the parameters and that the script is working you can use the full script to analyse all your samples. Open your favourite text editor and combine all the sections of your workflow into a document with the file extension <code>.sh</code>. For example <code>16S_usearchv11.sh</code></p>
+<p>Once you are happy with the parameters and that the script is working you can use the full script to analyse all your samples. Open your favourite text editor and combine all the sections of your workflow into a document with the file extension <code>.sh</code>. For example <code>usearchv11_analysis.sh</code></p>
 <p>Simply edit the script with your parameters, and save it in a directory with your raw fastq files.</p>
 <p>All sub-scripts and a complete version of the pipeline can be found on my github repo <a href="https://github.com/siobhon-egan/usearch_analysis">siobhon-egan/usearch_analysis</a>.</p>
-<p>In a bash terminal navigate to your directory and perform the following to execute the script and save the terminal output to a text file.</p>
+<p>In a bash terminal navigate to your directory and perform the following to execute the script and save the terminal output to a text file. Download the full script <a href="https://github.com/siobhon-egan/usearch_analysis/blob/master/usearch11_analysis.sh">here</a></p>
 <pre class="bash"><code>cd /Users/name/Documents/NGS-Analysis
-chmod +x 16S_usearchv11.sh
-./16S_usearchv11.sh &gt; 16S-NGS-usearchv11-output.txt</code></pre>
+chmod +x usearchv11_analysis.sh
+./usearchv11_analysis.sh &gt; usearchv11_output.txt</code></pre>
 <p>*Note: the code below assumes you have installed USEARCH v11, file name <code>usearch11</code> and it is executable (if not navigate to the file and type <code>chmod +x usearch11</code> in the command line).</p>
 <hr />
 </div>
@@ -527,12 +495,12 @@ mkdir $read_summary
 
  for fq in $raw_data/*R1*.fastq
  do
-  usearch11 -fastx_info $fq -output $read_summary/1a_fwd_fastq_info.txt
+  usearch11 -fastx_info $fq -output ${read_summary}/1a_fwd_fastq_info.txt
  done
 
  for fq in $raw_data/*R2*.fastq
  do
-  usearch11 -fastx_info $fq -output $read_summary/1b_rev_fastq_info.txt
+  usearch11 -fastx_info $fq -output ${read_summary}/1b_rev_fastq_info.txt
  done</code></pre>
 <p>To look at just one fasta or fastq files, for example inspect your concatenate sequences. The -secs 5 options is good when just wanting a snap shot of a large sequences file, however it can be deleted if you can it to scan the entire file.</p>
 <pre class="bash"><code>usearch11 -fastx_info sequences.fastq -secs 5 -output reads_info.txt</code></pre>
@@ -634,7 +602,7 @@ for file3 in ${merged_data}/*.fastq
 
     usearch11 -search_pcr2 ${file3} -fwdprimer ${fwd_primer} \
     -revprimer ${rev_primer} \
-    -strand both -fastqout &quot;${primer_matched}/$(basename ${file3})&quot; -notmatchedfq &quot;${primer_not_matched}/$(basename ${file3})&quot; -tabbedout pcr2_primermatches_output.txt
+    -strand both -fastqout &quot;${primer_matched}/$(basename ${file3})&quot; -notmatchedfq &quot;${primer_not_matched}/$(basename ${file3})&quot; -tabbedout ${primer_matched}/pcr2_primermatches_output.txt
 done</code></pre>
 <hr />
 </div>
@@ -891,6 +859,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
